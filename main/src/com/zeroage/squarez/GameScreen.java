@@ -6,16 +6,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.zeroage.squarez.model.Block;
-import com.zeroage.squarez.model.Board;
-import com.zeroage.squarez.model.Figure;
-import com.zeroage.squarez.model.Matrix;
+import com.zeroage.squarez.model.*;
 
 public class GameScreen implements Screen
 {
@@ -76,6 +71,12 @@ public class GameScreen implements Screen
         boardHeight = Math.round(viewportHeight) - 7; // 2 (score line) + 3 (pocket) + 2 (spacers)
 
         board = new Board(boardWidth, boardHeight);
+
+        board.set(5, 5, new BasicBlock());
+        board.set(11, 11, new BasicBlock());
+        board.set(3, 13, new BasicBlock());
+        board.set(10, 2, new BasicBlock());
+
         figure = new Figure(3);
         board.put(figure);
 
@@ -143,8 +144,32 @@ public class GameScreen implements Screen
 
         debugRenderer.setProjectionMatrix(camera.combined);
 
+        drawFrame(delta);
         drawBoard(delta);
         drawFigure(delta);
+    }
+
+    private void drawBoard(float delta)
+    {
+        debugRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
+
+        board.iterate(new Matrix.Callback()
+        {
+            @Override
+            public void cell(int x, int y, Block block)
+            {
+                if (block != null) {
+                    float blockX = boardX  + x;
+                    float blockY = boardY + (boardHeight ) - y - 1;
+                    debugRenderer.rect(blockX, blockY, 1, 1);
+                }
+            }
+        });
+
+        debugRenderer.end();
+
+
     }
 
     private void drawFigure(float delta)
@@ -178,7 +203,7 @@ public class GameScreen implements Screen
         debugRenderer.end();
     }
 
-    private void drawBoard(float delta)
+    private void drawFrame(float delta)
     {
         debugRenderer.begin(ShapeRenderer.ShapeType.Line);
 
