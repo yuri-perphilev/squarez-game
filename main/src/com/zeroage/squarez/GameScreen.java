@@ -34,6 +34,7 @@ public class GameScreen implements Screen
     private int boardHeight;
 
     boolean figureTouched = false;
+    boolean figureMoved = false;
 
     private Board board;
     private Figure figure;
@@ -261,6 +262,7 @@ public class GameScreen implements Screen
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button)
         {
+            figureMoved = false;
             return false;
         }
 
@@ -270,9 +272,8 @@ public class GameScreen implements Screen
             float deltaX = screenX - x;
             float deltaY = screenY - y;
 
-            Gdx.app.log("squarez", String.format("x: %f, y:%f", deltaX, deltaY));
-            if (figureTouched) {
-
+            if (figureTouched || figureMoved) {
+                figureMoved = true;
                 if (deltaX <= -pixelsPerBlock) {
                     board.moveFigureLeft();
                     x = screenX;
