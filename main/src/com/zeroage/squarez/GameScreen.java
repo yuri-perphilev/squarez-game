@@ -22,22 +22,20 @@ public class GameScreen implements Screen
 
     private ShapeRenderer debugRenderer = new ShapeRenderer();
 
-    private float touchX = 0;
-    private float touchY = 0;
-    private int movePointer;
     private float viewportWidth;
     private float pixelsPerBlock;
     private float viewportHeight;
     private int boardWidth;
     private int boardHeight;
 
+    private float figureTouchX;
+    private float figureTouchY;
     boolean figureTouched = false;
     boolean figureMoving = false;
 
     private Board board;
     private Figure figure;
 
-    private float countdown = 1;
 
     @Override
     public void show()
@@ -96,43 +94,6 @@ public class GameScreen implements Screen
 
     private void update(float delta)
     {
-/*
-        countdown -= delta;
-        if (countdown <= 0) {
-            figure = new Figure(3);
-            board.put(figure);
-            countdown = 5;
-        }
-*/
-
-        // test figure is touched
-
-        Vector3 vec = new Vector3(touchX, touchY, 0);
-        camera.unproject(vec);
-
-        final float touchX = vec.x;
-        final float touchY = vec.y;
-
-        final int figureX = board.getFigureX();
-        final int figureY = board.getFigureY();
-
-        figureTouched = false;
-        figure.iterate(new Matrix.Callback()
-        {
-            @Override
-            public void cell(int x, int y, Block block)
-            {
-                if (block != null) {
-                    float blockX = boardX + figureX + x;
-                    float blockY = boardY + (boardHeight - figureY) - y - 1;
-
-                    if (touchX >= blockX && touchX < blockX + 1 &&
-                        touchY >= blockY && touchY < blockY + 1) {
-                        figureTouched = true;
-                    }
-                }
-            }
-        });
 
     }
 
@@ -252,23 +213,28 @@ public class GameScreen implements Screen
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button)
         {
-            if ((figureMoving && pointer == movePointer) || !figureMoving) {
-                GameScreen.this.touchX = screenX;
-                GameScreen.this.touchY = screenY;
+            Vector3 v = unproject(screenX, screenY);
+            if (isFigureTouched(v)) {
+                figureTouched = true;
+                figureTouchX = v.x;
+                figureTouchY = v.y;
+                Gdx.app.debug("SQZ", String.format("Touch x: %f, y: %f", figureTouchX, figureTouchY));
             }
-
-            if (figureMoving) {
-                board.rotateFigureLeft();
-            }
-
             return true;
         }
 
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button)
         {
-            if (pointer == movePointer) {
-                figureMoving = false;
+            if (figureTouched) {
+                if (figureMoving) {
+                    figureMoving = false;
+                }
+                else {
+                    board.rotateFigureRight();
+                }
+
+                figureTouched = false;
             }
             return true;
         }
@@ -276,31 +242,82 @@ public class GameScreen implements Screen
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer)
         {
-            GameScreen.this.movePointer = pointer;
-
-            float deltaX = screenX - touchX;
-            float deltaY = screenY - touchY;
-
             if (figureTouched || figureMoving) {
-                figureMoving = true;
-                if (deltaX <= -pixelsPerBlock) {
+                Vector3 v = unproject(screenX, screenY);
+
+                float deltaX = v.x - figureTouchX;
+                float deltaY = v.y - figureTouchY;
+
+                Gdx.app.debug("SQZ", String.format("Drag dx: %f, dy: %f", deltaX, deltaY));
+
+                if (deltaX <= -1) {
                     board.moveFigureLeft();
-                    touchX = screenX;
+                    figureTouchX = v.x;
                 }
-                else if (deltaX >= pixelsPerBlock) {
+                else if (deltaX >= 1) {
                     board.moveFigureRight();
-                    touchX = screenX;
+                    figureTouchX = v.x;
                 }
-                else if (deltaY <= -pixelsPerBlock) {
+                else if (deltaY <= -1) {
                     board.moveFigureUp();
-                    touchY = screenY;
+                    figureTouchY = v.y;
                 }
-                else if (deltaY >= pixelsPerBlock) {
+                else if (deltaY >= 1) {
                     board.moveFigureDown();
-                    touchY = screenY;
+                    figureTouchY = v.y;
                 }
+                figureMoving = true;
             }
             return true;
         }
+
+        private Vector3 unproject(int screenX, int screenY)
+        {
+            Vector3 vec = new Vector3(screenX, screenY, 0);
+            camera.unproject(vec);
+            return vec;
+        }
+    }
+
+    private boolean isFigureTouched(Vector3 v)
+    {
+        class FigureTouchDetector implements Matrix.Callback {
+            private int figureX;
+            private int figureY;
+            private float touchX;
+            private float touchY;
+            private boolean touched = false;
+
+            FigureTouchDetector(int figureX, int figureY, float touchX, float touchY)
+            {
+                this.figureX = figureX;
+                this.figureY = figureY;
+                this.touchX = touchX;
+                this.touchY = touchY;
+            }
+
+            @Override
+            public void cell(int x, int y, Block block)
+            {
+                if (block != null) {
+                    float blockX = boardX + figureX + x;
+                    float blockY = boardY + (boardHeight - figureY) - y - 1;
+
+                    if (touchX >= blockX && touchX < blockX + 1 &&
+                        touchY >= blockY && touchY < blockY + 1) {
+                        touched = true;
+                    }
+                }
+            }
+
+            boolean isTouched()
+            {
+                return touched;
+            }
+        }
+
+        FigureTouchDetector touchDetector = new FigureTouchDetector(board.getFigureX(), board.getFigureY(), v.x, v.y);
+        figure.iterate(touchDetector);
+        return touchDetector.isTouched();
     }
 }
