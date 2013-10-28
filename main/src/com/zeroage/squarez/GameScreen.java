@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector3;
 import com.zeroage.squarez.model.*;
 
@@ -23,10 +22,9 @@ public class GameScreen implements Screen
 
     private ShapeRenderer debugRenderer = new ShapeRenderer();
 
-    private float x = 0;
-    private float y = 0;
-    private float width;
-    private float height;
+    private float touchX = 0;
+    private float touchY = 0;
+    private int movePointer;
     private float viewportWidth;
     private float pixelsPerBlock;
     private float viewportHeight;
@@ -34,7 +32,7 @@ public class GameScreen implements Screen
     private int boardHeight;
 
     boolean figureTouched = false;
-    boolean figureMoved = false;
+    boolean figureMoving = false;
 
     private Board board;
     private Figure figure;
@@ -109,7 +107,7 @@ public class GameScreen implements Screen
 
         // test figure is touched
 
-        Vector3 vec = new Vector3(x, y, 0);
+        Vector3 vec = new Vector3(touchX, touchY, 0);
         camera.unproject(vec);
 
         final float touchX = vec.x;
@@ -254,81 +252,54 @@ public class GameScreen implements Screen
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button)
         {
-            GameScreen.this.x = screenX;
-            GameScreen.this.y = screenY;
-            return false;
+            if ((figureMoving && pointer == movePointer) || !figureMoving) {
+                GameScreen.this.touchX = screenX;
+                GameScreen.this.touchY = screenY;
+            }
+
+            if (figureMoving) {
+                board.rotateFigureLeft();
+            }
+
+            return true;
         }
 
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button)
         {
-            figureMoved = false;
-            return false;
+            if (pointer == movePointer) {
+                figureMoving = false;
+            }
+            return true;
         }
 
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer)
         {
-            float deltaX = screenX - x;
-            float deltaY = screenY - y;
+            GameScreen.this.movePointer = pointer;
 
-            if (figureTouched || figureMoved) {
-                figureMoved = true;
+            float deltaX = screenX - touchX;
+            float deltaY = screenY - touchY;
+
+            if (figureTouched || figureMoving) {
+                figureMoving = true;
                 if (deltaX <= -pixelsPerBlock) {
                     board.moveFigureLeft();
-                    x = screenX;
+                    touchX = screenX;
                 }
                 else if (deltaX >= pixelsPerBlock) {
                     board.moveFigureRight();
-                    x = screenX;
+                    touchX = screenX;
                 }
                 else if (deltaY <= -pixelsPerBlock) {
                     board.moveFigureUp();
-                    y = screenY;
+                    touchY = screenY;
                 }
                 else if (deltaY >= pixelsPerBlock) {
                     board.moveFigureDown();
-                    y = screenY;
+                    touchY = screenY;
                 }
             }
-            return true;
-        }
-    }
-
-    private class MyGestureListener extends GestureDetector.GestureAdapter
-    {
-
-        @Override
-        public boolean tap(float x, float y, int count, int button)
-        {
-            GameScreen.this.x = x;
-            GameScreen.this.y = y;
-            Gdx.app.log("squarez", String.format("x: %f, y:%f", x, y));
-            return false;
-        }
-
-        @Override
-        public boolean pan(float x, float y, float deltaX, float deltaY)
-        {
-            GameScreen.this.x = x;
-            GameScreen.this.y = y;
-
-            if (figureTouched) {
-                if (deltaX <= -1) {
-                    board.moveFigureLeft();
-                }
-                else if (deltaX >= 1) {
-                    board.moveFigureRight();
-                }
-                else if (deltaY <= -1) {
-                    board.moveFigureUp();
-                }
-                else if (deltaY >= 1) {
-                    board.moveFigureDown();
-                }
-            }
-
-            Gdx.app.log("squarez", String.format("x: %f, y:%f", deltaX, deltaY));
             return true;
         }
     }
