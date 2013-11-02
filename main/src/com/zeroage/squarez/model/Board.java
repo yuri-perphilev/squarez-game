@@ -218,10 +218,10 @@ public class Board extends Matrix
 
     public boolean isMoveValid(int x, int y, int newX, int newY)
     {
-        if (newX < 0 || newX + figure.width > width || newY + figure.height > height) {
-            return false;
-        }
-        if (newY < 0 && y >= newY) {
+//        if (newX < 0 || newX + figure.width > width || newY + figure.height > height) {
+//            return false;
+//        }
+        if (figureInPocket() && newY < y) {
             // in pocket move up is the only allowed move
             return false;
         }
@@ -231,19 +231,49 @@ public class Board extends Matrix
 
     private boolean noCollisionsDetected(Figure f, final int newX, final int newY)
     {
+        final boolean inPocket = figureInPocket();
 
-        class CollisionCounter implements Callback {
+        class CollisionCounter implements Callback
+        {
             public int collisions;
 
             @Override
             public void cell(int x, int y, Block block)
             {
-                Block boardBlock = Board.this.get(x + newX, y + newY);
+                int bx = x + newX;
+                int by = y + newY;
+                Block boardBlock = Board.this.get(bx, by);
+                if (block != null) {
+
+                    if (inPocket) {
+                        if (bx < 0 || bx >= 3 || by < -3) {
+                            collisions++;
+                        }
+                    }
+                    else {
+                        if (bx < 0 || bx >= width || by < 0 || by >= height) {
+                            collisions++;
+                        }
+                    }
+                }
+
+/*
+                // old version
+                if (block != null && by >= 0 && (bx < 0 || bx >= width || by >= height)) {
+                    collisions++;
+                }
+
+                if (block != null && by < 0 && (bx < 0 || bx >= 3 || by < -3)) {
+                    collisions++;
+                }
+*/
+
                 if (block != null && boardBlock != null) {
                     if (block.collidesWith(boardBlock) && boardBlock.collidesWith(block)) {
                         collisions++;
                     }
                 }
+
             }
         }
 
@@ -251,6 +281,31 @@ public class Board extends Matrix
         f.iterate(collisionCounter);
 
         return collisionCounter.collisions == 0;
+    }
+
+    public boolean figureInPocket()
+    {
+        class PocketDetector extends AbstractValueReturningCallback<Boolean> {
+
+            protected PocketDetector()
+            {
+                super(false);
+            }
+
+            @Override
+            public void cell(int x, int y, Block block)
+            {
+                int bx = x + figureX;
+                int by = y + figureY;
+                if (block != null && (bx >= 0 && bx < 3 && by >= -3 && by < 0)) {
+                    returnValue(true);
+                }
+            }
+        }
+
+        PocketDetector pocketDetector = new PocketDetector();
+        figure.iterate(pocketDetector);
+        return pocketDetector.getValue();
     }
 
     public void applyNewFigurePosition() {

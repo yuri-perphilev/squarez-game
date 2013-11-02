@@ -1,5 +1,7 @@
 package com.zeroage.squarez.model;
 
+import java.util.Arrays;
+
 public class Matrix<T>
 {
     protected final int width;
@@ -67,18 +69,68 @@ public class Matrix<T>
     }
 
 
-    public void iterate(Callback callback) {
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                callback.cell(i, j, get(i,j));
+    public <T> T iterate(Callback<T> callback) {
+        if (callback instanceof ValueReturningCallback) {
+            ValueReturningCallback<T> valueReturningCallback = (ValueReturningCallback<T>) callback;
+            for (int i = 0; i < width; i++) {
+                for (int j = 0; j < height; j++) {
+                    valueReturningCallback.cell(i, j, get(i,j));
+                    if (valueReturningCallback.isValueReturned()) {
+                        return valueReturningCallback.getValue();
+                    }
+                }
             }
         }
+        else {
+            for (int i = 0; i < width; i++) {
+                for (int j = 0; j < height; j++) {
+                    callback.cell(i, j, get(i,j));
+                }
+            }
+        }
+        return null;
     }
 
-    public static interface Callback
+    public static interface Callback<T>
     {
         public void cell(int x, int y, Block block);
     }
+
+    public static interface ValueReturningCallback<T> extends Callback<T>
+    {
+        boolean isValueReturned();
+        T getValue();
+    }
+
+    public static abstract class  AbstractValueReturningCallback<T> implements ValueReturningCallback<T>
+    {
+        private T value;
+        private T defaultValue;
+
+        protected AbstractValueReturningCallback(T defaultValue)
+        {
+            this.defaultValue = defaultValue;
+        }
+
+        protected void returnValue(T value)
+        {
+            this.value = value;
+        }
+
+        @Override
+        public boolean isValueReturned()
+        {
+            return value != null;
+        }
+
+        @Override
+        public T getValue()
+        {
+            return value != null ? value : defaultValue;
+        }
+    }
+
+
 
     @Override
     public String toString()
@@ -92,5 +144,35 @@ public class Matrix<T>
         }
 
         return b.toString();
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        Boolean isEquals = false;
+        if (obj instanceof Matrix) {
+            final Matrix that = (Matrix) obj;
+            if (that.width == this.width && that.height == this.height) {
+                isEquals = iterate(new AbstractValueReturningCallback<Boolean>(false)
+                {
+                    @Override
+                    public void cell(int x, int y, Block block)
+                    {
+                        if ((block == null && that.get(x, y) == null)  ||
+                            (block != null && that.get(x, y) != null && block.getType() == that.get(x, y).getType())) {
+                            returnValue(true);
+                        }
+                    }
+                });
+            }
+        }
+
+        return isEquals;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Arrays.deepHashCode(board);
     }
 }
