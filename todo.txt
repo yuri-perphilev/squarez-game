@@ -1,0 +1,45 @@
+TODO:
+====
+
+Common logic
+------------
+- Small 2x2 figure rotation (it should rotate within 2x2 bounds, not 3x3)
+
+
+Block types
+-----------
+x Missle
+x Bomb
+x Shield
+x Steel Pyramid
+x Cracked
+- Empty cell
+- Arrows
+- Splooge
+- Splooge container
+- Acid
+- Acid container
+- Unknown
+- Spikes
+- Activator
+- Releaser
+- Punishment box
+- Touch activated
+- No squarez
+- Ring of shields
+- Plus (double score)
+- Bonus time (time for figure arrangement increased for a given period or until penalty activated)
+- Penalty time (time for figure arrangement decreased for a given period or until bonus activated)
+
+Game
+----
+
+- When figure out of pocket, generate next one
+- Figure move trail
+- Bonus for the completely clean board
+- A game mode that starts with randomly filled board
+
+Bugs
+----
+
+- Clicking figure in pocket resets timer
