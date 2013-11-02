@@ -10,12 +10,15 @@ public class Board extends Matrix
     private Figure nextFigure;
     private int figureX;
     private int figureY;
+    private int nextFigureX;
+    private int nextFigureY;
     private int figureSize = 3;
 
     public Board(int boardWidth, int boardHeight)
     {
         super(boardWidth, boardHeight);
-        nextFigure = new Figure(figureSize);
+        nextFigure();
+        nextFigure();
     }
 
     public void fill(Area area, BlockType blockType)
@@ -148,16 +151,24 @@ public class Board extends Matrix
         return result;
     }
 
-    public void put(Figure figure)
+    public void nextFigure()
     {
-        this.figure = figure;
-        this.figureX = 0;
-        this.figureY = -3; // figure is in the pocket
+        this.figure = nextFigure;
+        this.figureX = nextFigureX;
+        this.figureY = nextFigureY;
+        nextFigureX = 0;
+        nextFigureY = -figureSize; // next figure sits in the pocket
+        nextFigure = new Figure(figureSize);
     }
 
     public Figure getFigure()
     {
         return figure;
+    }
+
+    public Figure getNextFigure()
+    {
+        return nextFigure;
     }
 
     public int getFigureX()
@@ -168,6 +179,16 @@ public class Board extends Matrix
     public int getFigureY()
     {
         return figureY;
+    }
+
+    public int getNextFigureX()
+    {
+        return nextFigureX;
+    }
+
+    public int getNextFigureY()
+    {
+        return nextFigureY;
     }
 
     public void moveFigureUp()
@@ -334,8 +355,7 @@ public class Board extends Matrix
                 }
             });
 
-            put(nextFigure);
-            nextFigure = new Figure(figureSize);
+            nextFigure();
         }
     }
 
