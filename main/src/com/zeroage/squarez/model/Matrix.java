@@ -33,14 +33,14 @@ public class Matrix<T>
 
     public void set(int x, int y, Block block)
     {
-        if (x >= 0 && y >= 0 && x < width && y < width) {
+        if (x >= 0 && y >= 0 && x < width && y < height) {
             board[x][y] = block;
         }
     }
 
     public Block get(int x, int y)
     {
-        return (x >= 0 && y >= 0 && x < width && y < width) ?  board[x][y] : null;
+        return (x >= 0 && y >= 0 && x < width && y < height) ?  board[x][y] : null;
     }
 
     public void fill(int x, int y, int width, int height, BlockType blockType)

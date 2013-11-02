@@ -37,13 +37,14 @@ public class GameScreen implements Screen
     boolean figureMoving = false;
 
     private Board board;
-    private Figure figure;
 
     private Vector3[] trail = new Vector3[15];
     private int trailPointer = 0;
     private float trailReduceCounter = 0f;
 
     private Random random = new Random();
+
+    private float figureChangeTimer = 0f;
 
 
     @Override
@@ -83,7 +84,7 @@ public class GameScreen implements Screen
         board.set(3, 13, new BasicBlock());
         board.set(10, 2, new BasicBlock());
 
-        figure = new Figure(3);
+        Figure figure = new Figure(3);
         figure.clear();
         figure.fill(0, 0, 3, 1, BlockType.BASIC);
         figure.fill(0, 0, 1, 3, BlockType.BASIC);
@@ -108,7 +109,17 @@ public class GameScreen implements Screen
 
     private void update(float delta)
     {
+        figureTimerTick(delta);
         reduceTrail(delta);
+    }
+
+    private void figureTimerTick(float delta)
+    {
+        figureChangeTimer += delta;
+        if (figureChangeTimer > 10) {
+            figureChangeTimer = 0;
+            board.action();
+        }
     }
 
     private void reduceTrail(float delta)
@@ -201,8 +212,8 @@ public class GameScreen implements Screen
     private void drawFigure(float delta)
     {
         debugRenderer.begin(ShapeRenderer.ShapeType.Filled);
-
         Figure fig = board.getFigure();
+
         final int figureX = board.getFigureX();
         final int figureY = board.getFigureY();
 
@@ -385,7 +396,7 @@ public class GameScreen implements Screen
         }
 
         FigureTouchDetector touchDetector = new FigureTouchDetector(board.getFigureX(), board.getFigureY(), v.x, v.y);
-        figure.iterate(touchDetector);
+        board.getFigure().iterate(touchDetector);
         return touchDetector.isTouched();
     }
 }
