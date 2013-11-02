@@ -11,6 +11,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.zeroage.squarez.model.*;
 
+import java.util.Arrays;
+import java.util.Random;
+
 public class GameScreen implements Screen
 {
 
@@ -35,6 +38,12 @@ public class GameScreen implements Screen
 
     private Board board;
     private Figure figure;
+
+    private Vector3[] trail = new Vector3[15];
+    private int trailPointer = 0;
+    private float trailReduceCounter = 0f;
+
+    private Random random = new Random();
 
 
     @Override
@@ -75,6 +84,9 @@ public class GameScreen implements Screen
         board.set(10, 2, new BasicBlock());
 
         figure = new Figure(3);
+        figure.clear();
+        figure.fill(0, 0, 3, 1, BlockType.BASIC);
+        figure.fill(0, 0, 1, 3, BlockType.BASIC);
         board.put(figure);
 
         Gdx.app.log("SQZ", String.format("p: %f, vW: %f, vH: %f, bW: %d, bH: %d", pixelsPerBlock, viewportWidth, viewportHeight, boardWidth, boardHeight));
@@ -82,7 +94,9 @@ public class GameScreen implements Screen
         camera.setToOrtho(true, viewportWidth, viewportHeight);
         camera.update();
 
-
+        for (int i = 0; i < trail.length; i++) {
+            trail[i] = new Vector3(random.nextInt(boardWidth), random.nextInt(boardHeight), 0);
+        }
     }
 
     @Override
@@ -94,19 +108,73 @@ public class GameScreen implements Screen
 
     private void update(float delta)
     {
+        reduceTrail(delta);
+    }
 
+    private void reduceTrail(float delta)
+    {
+        trailReduceCounter += delta;
+
+        if (trailReduceCounter > .02) {
+            trailReduceCounter = 0;
+            trail[trailPointer] = null;
+
+            trailPointer++;
+            if (trailPointer >= trail.length) {
+                trailPointer = 0;
+            }
+        }
+    }
+
+    private void updateTrail(Vector3 v)
+    {
+        trail[trailPointer] = v;
+        trailPointer++;
+        if (trailPointer >= trail.length) {
+            trailPointer = 0;
+        }
     }
 
     private void draw(float delta)
     {
         Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glEnable(GL10.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 
         debugRenderer.setProjectionMatrix(camera.combined);
 
         drawFrame(delta);
         drawBoard(delta);
         drawFigure(delta);
+        drawTrail(delta);
+        Gdx.gl.glDisable(GL10.GL_BLEND);
+    }
+
+    private void drawTrail(float delta)
+    {
+        debugRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
+        int ptr = trailPointer;
+
+        float a = .75f;
+        float d = (a - .1f) / trail.length;
+
+        for (int i = 0; i < trail.length; i++) {
+            ptr--;
+            if (ptr < 0) {
+                ptr = trail.length - 1;
+            }
+
+            Vector3 v = trail[ptr];
+            if (v != null) {
+                debugRenderer.setColor(1, 1, 1, a);
+                debugRenderer.circle(v.x, v.y, .5f, 10);
+            }
+            a -= d;
+        }
+
+        debugRenderer.end();
     }
 
     private void drawBoard(float delta)
@@ -128,8 +196,6 @@ public class GameScreen implements Screen
         });
 
         debugRenderer.end();
-
-
     }
 
     private void drawFigure(float delta)
@@ -141,10 +207,10 @@ public class GameScreen implements Screen
         final int figureY = board.getFigureY();
 
         if (figureTouched) {
-            debugRenderer.setColor(new Color(0, 1, 0.5f, 0.5f));
+            debugRenderer.setColor(new Color(0, 1, 0.5f, 0.9f));
         }
         else {
-            debugRenderer.setColor(new Color(0.2f, 0.2f, 0.2f, 0.5f));
+            debugRenderer.setColor(new Color(0.2f, 0.2f, 0.2f, 0.9f));
         }
 
         fig.iterate(new Matrix.Callback()
@@ -244,6 +310,8 @@ public class GameScreen implements Screen
         {
             if (figureTouched || figureMoving) {
                 Vector3 v = unproject(screenX, screenY);
+
+                updateTrail(v);
 
                 float deltaX = v.x - figureTouchX;
                 float deltaY = v.y - figureTouchY;
