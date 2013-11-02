@@ -21,6 +21,8 @@ public class BaseTest
     {
         board = new Board(BOARD_WIDTH, BOARD_HEIGHT);
         figure = new Figure(FIGURE_SIZE);
+        figure.clear();
+        figure.fill(0, 0, FIGURE_SIZE, FIGURE_SIZE, BlockType.BASIC);
 
         board.put(figure);
     }

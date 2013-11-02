@@ -17,21 +17,6 @@ public class BoardFigureInteractionTest extends BaseTest
     }
 
     @Test
-    public void testFigureMoveValid() throws Exception
-    {
-        assertThat(board.isMoveValid(0, -1, 0, 0), is(true));
-        assertThat(board.isMoveValid(0, 0, 0, -1), is(false)); // cannot go back to pocket
-        assertThat(board.isMoveValid(0, 0, -1, 0), is(false));
-        assertThat(board.isMoveValid(0, 0, 1, 0), is(true));
-
-        assertThat(board.isMoveValid(11, 0, 12, 0), is(true));
-        assertThat(board.isMoveValid(12, 0, 13, 0), is(false));
-
-        assertThat(board.isMoveValid(0, 11, 0, 12), is(true));
-        assertThat(board.isMoveValid(0, 12, 0, 13), is(false));
-    }
-
-    @Test
     public void testMoveOutOfPocket() throws Exception
     {
         // test can move only up
@@ -55,6 +40,80 @@ public class BoardFigureInteractionTest extends BaseTest
 
         assertThat(board.getFigureX(), is(0));
         assertThat(board.getFigureY(), is(0));
+    }
+
+    @Test
+    public void testSmallestFigureMoving() {
+
+        board.getFigure().clear();
+        board.getFigure().set(1, 1, new BasicBlock());
+
+        board.moveFigureUp();
+        board.moveFigureUp();
+
+        assertThat("X", board.getFigureX(), is(0));
+        assertThat("Y", board.getFigureY(), is(-1));
+
+        board.moveFigureLeft();
+
+        assertThat("X", board.getFigureX(), is(-1));
+        assertThat("Y", board.getFigureY(), is(-1));
+
+        board.moveFigureUp();
+
+        assertThat("X", board.getFigureX(), is(-1));
+        assertThat("Y", board.getFigureY(), is(0));
+
+        // move figure by the board perimeter
+
+        for (int i = 0; i < BOARD_HEIGHT + 5; i++) {
+            board.moveFigureUp();
+        }
+
+        assertThat("X", board.getFigureX(), is(-1));
+        assertThat("Y", board.getFigureY(), is(BOARD_HEIGHT - 2));
+
+        for (int i = 0; i < BOARD_WIDTH + 5; i++) {
+            board.moveFigureRight();
+        }
+
+        assertThat("X", board.getFigureX(), is(BOARD_WIDTH - 2));
+        assertThat("Y", board.getFigureY(), is(BOARD_HEIGHT - 2));
+
+        for (int i = 0; i < BOARD_HEIGHT + 5; i++) {
+            board.moveFigureDown();
+        }
+
+        assertThat("X", board.getFigureX(), is(BOARD_WIDTH - 2));
+        assertThat("Y", board.getFigureY(), is(-1));
+
+        for (int i = 0; i < BOARD_WIDTH + 5; i++) {
+            board.moveFigureLeft();
+        }
+
+        assertThat("X", board.getFigureX(), is(-1));
+        assertThat("Y", board.getFigureY(), is(-1));
+
+        board.moveFigureDown();
+
+        assertThat("X", board.getFigureX(), is(-1));
+        assertThat("Y", board.getFigureY(), is(-1));
+    }
+
+    @Test
+    public void testFigureInPocket() throws Exception
+    {
+        assertThat("Initial figure position is fully in pocket", board.figureInPocket(), is(true));
+        board.moveFigureDown();
+        assertThat("After moving down figure still in pocket", board.figureInPocket(), is(true));
+        board.moveFigureUp();
+        assertThat("After moving up 1 time figure still in pocket", board.figureInPocket(), is(true));
+        board.moveFigureUp();
+        assertThat("After moving up 2 times figure still in pocket", board.figureInPocket(), is(true));
+        board.moveFigureUp();
+        assertThat("After moving up 3 times figure is out of pocket", board.figureInPocket(), is(false));
+        board.moveFigureDown();
+        assertThat("Cannot go back to the pocket", board.figureInPocket(), is(false));
     }
 
     @Test
