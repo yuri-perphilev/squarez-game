@@ -227,4 +227,40 @@ public class BoardFigureInteractionTest extends BaseTest
         board.action();
         assertThat(board.isFilledWith(0, 0, FIGURE_SIZE, FIGURE_SIZE, BlockType.EMPTY), is(true));
     }
+
+    @Test
+    public void testAction() throws Exception
+    {
+        board.getFigure().clear();
+        board.getFigure().fill(0, 0, 1, FIGURE_SIZE, BlockType.BASIC);
+        board.moveFigureUp();
+        board.moveFigureUp();
+        board.moveFigureUp();
+
+        board.action();
+
+        System.out.println(board);
+
+        board.getFigure().clear();
+        board.getFigure().fill(1, 0, 1, FIGURE_SIZE, BlockType.BASIC);
+        board.moveFigureUp();
+        board.moveFigureUp();
+        board.moveFigureUp();
+
+        board.action();
+
+        System.out.println(board);
+
+        board.getFigure().clear();
+        board.getFigure().fill(2, 0, 1, FIGURE_SIZE, BlockType.BASIC);
+        board.moveFigureUp();
+        board.moveFigureUp();
+        board.moveFigureUp();
+
+        board.action();
+
+        System.out.println(board);
+
+        assertThat(board.isFilledWith(0, 0, FIGURE_SIZE, FIGURE_SIZE, BlockType.EMPTY), is(true));
+    }
 }

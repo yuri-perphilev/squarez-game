@@ -7,12 +7,15 @@ public class Board extends Matrix
     private int minAreaWidth = 3;
     private int minAreaHeight = 3;
     private Figure figure;
+    private Figure nextFigure;
     private int figureX;
     private int figureY;
+    private int figureSize = 3;
 
     public Board(int boardWidth, int boardHeight)
     {
         super(boardWidth, boardHeight);
+        nextFigure = new Figure(figureSize);
     }
 
     public void fill(Area area, BlockType blockType)
@@ -22,6 +25,7 @@ public class Board extends Matrix
 
     public void action()
     {
+        installFigure();
         List<Area> areas = findAreas();
         for (Area area : areas) {
             dissolve(area);
@@ -39,7 +43,7 @@ public class Board extends Matrix
 
     private void dissolveSingleBlock(int x, int y)
     {
-        System.out.printf("Dissolving at (%d, %d)%n", x, y);
+        // System.out.printf("Dissolving at (%d, %d)%n", x, y);
         Block block = get(x, y);
         if (block != null) {
             block.act(x, y, this);
@@ -246,7 +250,8 @@ public class Board extends Matrix
                 if (block != null) {
 
                     if (inPocket) {
-                        if (bx < 0 || bx >= 3 || by < -3) {
+                        // test pocket coordinates
+                        if (bx < 0 || bx >= figureSize || by < -figureSize) {
                             collisions++;
                         }
                     }
@@ -256,17 +261,6 @@ public class Board extends Matrix
                         }
                     }
                 }
-
-/*
-                // old version
-                if (block != null && by >= 0 && (bx < 0 || bx >= width || by >= height)) {
-                    collisions++;
-                }
-
-                if (block != null && by < 0 && (bx < 0 || bx >= 3 || by < -3)) {
-                    collisions++;
-                }
-*/
 
                 if (block != null && boardBlock != null) {
                     if (block.collidesWith(boardBlock) && boardBlock.collidesWith(block)) {
@@ -297,15 +291,19 @@ public class Board extends Matrix
             {
                 int bx = x + figureX;
                 int by = y + figureY;
-                if (block != null && (bx >= 0 && bx < 3 && by >= -3 && by < 0)) {
+                if (block != null && (bx >= 0 && bx < figureSize && by >= -figureSize && by < 0)) {
                     returnValue(true);
                 }
             }
         }
-
-        PocketDetector pocketDetector = new PocketDetector();
-        figure.iterate(pocketDetector);
-        return pocketDetector.getValue();
+        if (figureX >=0 && figureY >= 0) {
+            return false;
+        }
+        else {
+            PocketDetector pocketDetector = new PocketDetector();
+            figure.iterate(pocketDetector);
+            return pocketDetector.getValue();
+        }
     }
 
     public void applyNewFigurePosition() {
@@ -324,15 +322,20 @@ public class Board extends Matrix
 
     public void installFigure()
     {
-        if (figureX >= 0 && figureY >= 0) {
+        if (!figureInPocket()) {
             figure.iterate(new Callback()
             {
                 @Override
                 public void cell(int x, int y, Block block)
                 {
-                    Board.this.set(figureX + x, figureY + y, block);
+                    if (block != null) {
+                        Board.this.set(figureX + x, figureY + y, block);
+                    }
                 }
             });
+
+            put(nextFigure);
+            nextFigure = new Figure(figureSize);
         }
     }
 
