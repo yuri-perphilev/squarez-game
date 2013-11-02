@@ -17,6 +17,7 @@ import java.util.Random;
 public class GameScreen implements Screen
 {
 
+    public static final int FIGURE_LIFETIME = 10;
     private final float boardX = 0.5f;
     private final float boardY = 2.5f;
 
@@ -110,9 +111,9 @@ public class GameScreen implements Screen
     private void figureTimerTick(float delta)
     {
         figureChangeTimer += delta;
-        if (figureChangeTimer > 10) {
+        if (figureChangeTimer > FIGURE_LIFETIME) {
             figureChangeTimer = 0;
-            board.action();
+            action();
         }
     }
 
@@ -154,7 +155,19 @@ public class GameScreen implements Screen
         drawFigure(delta);
         drawNextFigure(delta);
         drawTrail(delta);
+        drawTimer(delta);
         Gdx.gl.glDisable(GL10.GL_BLEND);
+    }
+
+    private void drawTimer(float delta)
+    {
+        debugRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        debugRenderer.setColor(0.2f, 0.2f, 0.2f, 1);
+        debugRenderer.rect(0.5f, 1.6f, boardWidth, 0.4f);
+        debugRenderer.setColor(0.6f, 0.6f, 0.6f, 1);
+        float w = boardWidth * (1 - figureChangeTimer / FIGURE_LIFETIME);
+        debugRenderer.rect(0.5f, 1.6f, w, 0.4f);
+        debugRenderer.end();
     }
 
     private void drawTrail(float delta)
@@ -186,7 +199,6 @@ public class GameScreen implements Screen
     private void drawBoard(float delta)
     {
         debugRenderer.begin(ShapeRenderer.ShapeType.Filled);
-
 
         board.iterate(new Matrix.Callback()
         {
@@ -312,17 +324,29 @@ public class GameScreen implements Screen
 
     }
 
+    private void action()
+    {
+        board.action();
+        figureChangeTimer = 0;
+        figureTouched = false;
+        figureMoving = false;
+    }
+
     private class MyInputProcessor extends InputAdapter
     {
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button)
         {
             Vector3 v = unproject(screenX, screenY);
-            if (isFigureTouched(v)) {
+            boolean nextFigureTouched = isNextFigureTouched(v);
+            if (nextFigureTouched) {
+                action();
+            }
+            if (isFigureTouched(v) || nextFigureTouched) {
                 figureTouched = true;
                 figureTouchX = v.x;
                 figureTouchY = v.y;
-                Gdx.app.debug("SQZ", String.format("Touch x: %f, y: %f", figureTouchX, figureTouchY));
+                //Gdx.app.debug("SQZ", String.format("Touch x: %f, y: %f", figureTouchX, figureTouchY));
             }
             return true;
         }
@@ -387,43 +411,51 @@ public class GameScreen implements Screen
 
     private boolean isFigureTouched(Vector3 v)
     {
-        class FigureTouchDetector implements Matrix.Callback {
-            private int figureX;
-            private int figureY;
-            private float touchX;
-            private float touchY;
-            private boolean touched = false;
-
-            FigureTouchDetector(int figureX, int figureY, float touchX, float touchY)
-            {
-                this.figureX = figureX;
-                this.figureY = figureY;
-                this.touchX = touchX;
-                this.touchY = touchY;
-            }
-
-            @Override
-            public void cell(int x, int y, Block block)
-            {
-                if (block != null) {
-                    float blockX = boardX + figureX + x;
-                    float blockY = boardY + (boardHeight - figureY) - y - 1;
-
-                    if (touchX >= blockX && touchX < blockX + 1 &&
-                        touchY >= blockY && touchY < blockY + 1) {
-                        touched = true;
-                    }
-                }
-            }
-
-            boolean isTouched()
-            {
-                return touched;
-            }
-        }
-
         FigureTouchDetector touchDetector = new FigureTouchDetector(board.getFigureX(), board.getFigureY(), v.x, v.y);
         board.getFigure().iterate(touchDetector);
         return touchDetector.isTouched();
     }
+
+    private boolean isNextFigureTouched(Vector3 v)
+    {
+        FigureTouchDetector touchDetector = new FigureTouchDetector(board.getNextFigureX(), board.getNextFigureY(), v.x, v.y);
+        board.getNextFigure().iterate(touchDetector);
+        return touchDetector.isTouched();
+    }
+
+    class FigureTouchDetector implements Matrix.Callback {
+        private int figureX;
+        private int figureY;
+        private float touchX;
+        private float touchY;
+        private boolean touched = false;
+
+        FigureTouchDetector(int figureX, int figureY, float touchX, float touchY)
+        {
+            this.figureX = figureX;
+            this.figureY = figureY;
+            this.touchX = touchX;
+            this.touchY = touchY;
+        }
+
+        @Override
+        public void cell(int x, int y, Block block)
+        {
+            if (block != null) {
+                float blockX = boardX + figureX + x;
+                float blockY = boardY + (boardHeight - figureY) - y - 1;
+
+                if (touchX >= blockX && touchX < blockX + 1 &&
+                    touchY >= blockY && touchY < blockY + 1) {
+                    touched = true;
+                }
+            }
+        }
+
+        boolean isTouched()
+        {
+            return touched;
+        }
+    }
+
 }
