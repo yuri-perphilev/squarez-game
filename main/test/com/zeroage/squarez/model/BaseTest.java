@@ -20,11 +20,9 @@ public class BaseTest
     public void setUp() throws Exception
     {
         board = new Board(BOARD_WIDTH, BOARD_HEIGHT);
-        figure = new Figure(FIGURE_SIZE);
+        figure = board.getFigure();
         figure.clear();
         figure.fill(0, 0, FIGURE_SIZE, FIGURE_SIZE, BlockType.BASIC);
-
-        board.put(figure);
     }
 
     public void assertThatBoardIsEmpty()

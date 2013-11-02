@@ -84,13 +84,7 @@ public class GameScreen implements Screen
         board.set(3, 13, new BasicBlock());
         board.set(10, 2, new BasicBlock());
 
-        Figure figure = new Figure(3);
-        figure.clear();
-        figure.fill(0, 0, 3, 1, BlockType.BASIC);
-        figure.fill(0, 0, 1, 3, BlockType.BASIC);
-        board.put(figure);
-
-        Gdx.app.log("SQZ", String.format("p: %f, vW: %f, vH: %f, bW: %d, bH: %d", pixelsPerBlock, viewportWidth, viewportHeight, boardWidth, boardHeight));
+        // Gdx.app.log("SQZ", String.format("p: %f, vW: %f, vH: %f, bW: %d, bH: %d", pixelsPerBlock, viewportWidth, viewportHeight, boardWidth, boardHeight));
 
         camera.setToOrtho(true, viewportWidth, viewportHeight);
         camera.update();
@@ -158,6 +152,7 @@ public class GameScreen implements Screen
         drawFrame(delta);
         drawBoard(delta);
         drawFigure(delta);
+        drawNextFigure(delta);
         drawTrail(delta);
         Gdx.gl.glDisable(GL10.GL_BLEND);
     }
@@ -211,8 +206,9 @@ public class GameScreen implements Screen
 
     private void drawFigure(float delta)
     {
-        debugRenderer.begin(ShapeRenderer.ShapeType.Filled);
         Figure fig = board.getFigure();
+
+        debugRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
         final int figureX = board.getFigureX();
         final int figureY = board.getFigureY();
@@ -223,6 +219,37 @@ public class GameScreen implements Screen
         else {
             debugRenderer.setColor(new Color(0.2f, 0.2f, 0.2f, 0.9f));
         }
+
+        fig.iterate(new Matrix.Callback()
+        {
+            @Override
+            public void cell(int x, int y, Block block)
+            {
+                if (block != null) {
+                    float blockX = boardX + figureX + x;
+                    float blockY = boardY + (boardHeight - figureY) - y - 1;
+                    debugRenderer.rect(blockX, blockY, 1, 1);
+                }
+            }
+        });
+
+        debugRenderer.end();
+    }
+
+    private void drawNextFigure(float delta)
+    {
+        if (board.figureInPocket()) {
+            return;
+        }
+
+        Figure fig = board.getNextFigure();
+
+        debugRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
+        final int figureX = board.getNextFigureX();
+        final int figureY = board.getNextFigureY();
+
+        debugRenderer.setColor(new Color(0.3f, 0.3f, 0.3f, 0.9f));
 
         fig.iterate(new Matrix.Callback()
         {
@@ -308,7 +335,7 @@ public class GameScreen implements Screen
                     figureMoving = false;
                 }
                 else {
-                    board.rotateFigureRight();
+                    board.rotateFigureLeft();
                 }
 
                 figureTouched = false;
