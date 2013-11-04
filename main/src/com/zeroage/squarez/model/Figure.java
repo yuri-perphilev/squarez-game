@@ -126,4 +126,97 @@ public class Figure extends Matrix
         });
         this.board = fig;
     }
+
+    public void shiftLeft()
+    {
+        boolean emptyRow = true;
+        for (int y = 0; y < height; y++) {
+            if (board[0][y] != null) {
+                emptyRow = false;
+            }
+        }
+        if (emptyRow) {
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width - 1; x++) {
+                    board[x][y] = board[x + 1][y];
+                }
+                board[width - 1][y] = null;
+            }
+        }
+    }
+
+    public void shiftUp()
+    {
+        rotateRight();
+        shiftLeft();
+        rotateLeft();
+    }
+
+    public void shiftRight()
+    {
+        rotateRight();
+        rotateRight();
+        shiftLeft();
+        rotateLeft();
+        rotateLeft();
+    }
+
+    public void shiftDown()
+    {
+        rotateLeft();
+        shiftLeft();
+        rotateRight();
+    }
+
+    public void flipHorizontally()
+    {
+        final Block[][] fig = new Block[width][height];
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                fig[x][y] = board[width - x - 1][y];
+            }
+        }
+
+        board = fig;
+    }
+
+    public void flipVertically()
+    {
+        final Block[][] fig = new Block[width][height];
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                fig[x][y] = board[x][height- y - 1];
+            }
+        }
+
+        board = fig;
+    }
+
+    public int toCode() {
+        StringBuilder b = new StringBuilder((width + 1) * height);
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                b.append(get(i, j) == null ? "0" : "1");
+            }
+        }
+
+        return Integer.parseInt(b.toString(), 2);
+    }
+
+    public void fromCode(int n)
+    {
+        final Block[][] fig = new Block[width][height];
+
+        for (int y = height - 1; y >= 0; y--) {
+            for (int x = width - 1; x >= 0; x--) {
+                if ((n & 1) == 1) {
+                    fig[x][y] = new BasicBlock();
+                }
+                n >>= 1;
+            }
+        }
+        board = fig;
+    }
 }
