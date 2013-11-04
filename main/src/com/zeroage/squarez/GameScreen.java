@@ -8,11 +8,17 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.zeroage.squarez.model.*;
 
 import java.util.Arrays;
 import java.util.Random;
+
+import static com.badlogic.gdx.math.MathUtils.round;
+import static java.lang.Math.abs;
+import static java.lang.Math.max;
+
 
 public class GameScreen implements Screen
 {
@@ -69,7 +75,7 @@ public class GameScreen implements Screen
     private void setupBoardSize(int width, int height)
     {
         int w = Math.min(width, height);
-        int h = Math.max(width, height);
+        int h = max(width, height);
 
         viewportWidth = 16;
         pixelsPerBlock = w / viewportWidth;
@@ -375,27 +381,13 @@ public class GameScreen implements Screen
 
                 updateTrail(v);
 
-                float deltaX = v.x - figureTouchX;
-                float deltaY = v.y - figureTouchY;
+                // Gdx.app.debug("SQZ", String.format("Drag dx: %f, dy: %f", deltaX, deltaY));
 
-                Gdx.app.debug("SQZ", String.format("Drag dx: %f, dy: %f", deltaX, deltaY));
-
-                if (deltaX <= -1) {
-                    board.moveFigureLeft();
+                if (moveFigureTo(v.x, v.y)) {
                     figureTouchX = v.x;
-                }
-                else if (deltaX >= 1) {
-                    board.moveFigureRight();
-                    figureTouchX = v.x;
-                }
-                else if (deltaY <= -1) {
-                    board.moveFigureUp();
                     figureTouchY = v.y;
                 }
-                else if (deltaY >= 1) {
-                    board.moveFigureDown();
-                    figureTouchY = v.y;
-                }
+
                 figureMoving = true;
             }
             return true;
@@ -406,6 +398,51 @@ public class GameScreen implements Screen
             Vector3 vec = new Vector3(screenX, screenY, 0);
             camera.unproject(vec);
             return vec;
+        }
+    }
+
+    private boolean moveFigureTo(float x, float y)
+    {
+        float deltaX = x - figureTouchX;
+        float deltaY = y - figureTouchY;
+
+        Vector3 from = new Vector3(MathUtils.floor(figureTouchX), MathUtils.floor(figureTouchY), 0);
+        Vector3 to = new Vector3(MathUtils.floor(x), MathUtils.floor(y), 0);
+
+
+        long steps = round(max(abs(deltaX), abs(deltaY)));
+        float dx = (to.x - from.x) / steps;
+        float dy = (to.y - from.y) / steps;
+
+        float oldX = from.x;
+        float oldY = from.y;
+
+        if (steps > 0) {
+            for (int i = 0; i < steps; i++) {
+                float newX = oldX + dx;
+                float newY = oldY + dy;
+                moveFigure(round(newX) - round(oldX), round(newY) - round(oldY));
+
+                oldX = newX;
+                oldY = newY;
+            }
+        }
+        return steps > 0;
+    }
+
+    private void moveFigure(int dx, int dy)
+    {
+        if (dx > 0) {
+            board.moveFigureRight();
+        }
+        else if (dx < 0) {
+            board.moveFigureLeft();
+        }
+        if (dy > 0) {
+            board.moveFigureDown();
+        }
+        else if (dy < 0) {
+            board.moveFigureUp();
         }
     }
 
