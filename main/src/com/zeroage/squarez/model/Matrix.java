@@ -136,12 +136,14 @@ public class Matrix<T>
     public String toString()
     {
         StringBuilder b = new StringBuilder((width + 1) * height);
+        b.append("\n");
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 b.append(get(i, j) == null ? "." : get(i, j));
             }
             b.append("\n");
         }
+        b.append("\n");
 
         return b.toString();
     }
@@ -173,6 +175,13 @@ public class Matrix<T>
     @Override
     public int hashCode()
     {
-        return Arrays.deepHashCode(board);
+        StringBuilder b = new StringBuilder((width + 1) * height);
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                b.append(get(i, j) == null ? "." : "x");
+            }
+        }
+
+        return b.toString().hashCode();
     }
 }

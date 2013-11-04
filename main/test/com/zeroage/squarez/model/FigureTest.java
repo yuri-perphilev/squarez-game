@@ -1,9 +1,12 @@
 package com.zeroage.squarez.model;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -129,6 +132,128 @@ public class FigureTest extends BaseTest
                 assertThat(figure.get(x, y), is(block));
             }
         });
+    }
+
+    @Test
+    @Ignore
+    public void generateAllFigures()
+    {
+        Set<Figure> figs = new HashSet<Figure>();
+        for (int i = 0; i < 50000; i++) {
+            Figure fig = new Figure(FIGURE_SIZE);
+            figs.add(new Figure(fig));
+            fig.rotateLeft();
+            figs.add(new Figure(fig));
+            fig.rotateLeft();
+            figs.add(new Figure(fig));
+            fig.rotateLeft();
+            figs.add(new Figure(fig));
+        }
+
+        Set<Figure> uniqueFigs = new HashSet<Figure>();
+
+        for (Figure fig : figs) {
+            Set<Figure> mutationFigs = mutateFigure(fig);
+            boolean contains = false;
+            for (Figure mf : mutationFigs) {
+                if (uniqueFigs.contains(mf)) {
+                    contains = true;
+                    break;
+                }
+            }
+            if (!contains) {
+                uniqueFigs.add(fig);
+            }
+        }
+
+        System.out.println(uniqueFigs.size());
+        System.out.println(uniqueFigs);
+
+        System.out.println();
+        System.out.println();
+
+        Set<Figure> figs2 = new HashSet<Figure>();
+
+        for (Figure f : uniqueFigs) {
+            System.out.println(f.toCode());
+            Figure ff = new Figure(3);
+            ff.fromCode(f.toCode());
+            System.out.println(ff);
+        }
+    }
+
+    private Set<Figure> mutateFigure(Figure fig)
+    {
+        Set<Figure> figs = new HashSet<Figure>();
+
+        addAllShifts(fig, figs);
+
+        fig.flipHorizontally();
+
+        addAllShifts(fig, figs);
+
+        fig.flipVertically();
+
+        addAllShifts(fig, figs);
+
+        return figs;
+    }
+
+    private void addAllShifts(Figure fig, Set<Figure> figs)
+    {
+        addAllRotations(fig, figs);
+        fig.shiftLeft();
+        addAllRotations(fig, figs);
+        fig.shiftLeft();
+        addAllRotations(fig, figs);
+        fig.shiftUp();
+        addAllRotations(fig, figs);
+        fig.shiftUp();
+        addAllRotations(fig, figs);
+        fig.shiftRight();
+        addAllRotations(fig, figs);
+        fig.shiftRight();
+        addAllRotations(fig, figs);
+        fig.shiftDown();
+        addAllRotations(fig, figs);
+        fig.shiftDown();
+        addAllRotations(fig, figs);
+    }
+
+    private void addAllRotations(Figure fig, Set<Figure> figs)
+    {
+        figs.add(new Figure(fig));
+        fig.rotateLeft();
+        figs.add(new Figure(fig));
+        fig.rotateLeft();
+        figs.add(new Figure(fig));
+        fig.rotateLeft();
+        figs.add(new Figure(fig));
+        fig.rotateLeft();
+    }
+
+
+    @Test
+    public void testShiftFigure() throws Exception
+    {
+        Figure f = new Figure(FIGURE_SIZE);
+        f.clear();
+        f.set(0, 0, new BasicBlock());
+        System.out.println(f);
+        f.shiftRight();
+        System.out.println(f);
+        f.shiftRight();
+        System.out.println(f);
+        f.shiftRight();
+        System.out.println(f);
+        f.shiftUp();
+        System.out.println(f);
+        f.shiftUp();
+        System.out.println(f);
+        f.shiftUp();
+        System.out.println(f);
+        f.shiftUp();
+        System.out.println(f);
     }
 }
 
