@@ -2,6 +2,7 @@ package com.zeroage.squarez;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.zeroage.squarez.model.BasicBlock;
 import com.zeroage.squarez.model.Board;
 
 import java.util.ArrayList;
@@ -9,27 +10,33 @@ import java.util.List;
 
 public class GameController implements Controller
 {
-
     public static final int FIGURE_LIFETIME = 10;
 
     private List<Controller> controllers = new ArrayList<Controller>();
+
     private Board board;
     private Rectangle boardRectangle;
 
     private FrameController frame;
-
     private FigureController figure;
     private TimerController timer;
     private TrailController trail;
     private BoardController boardController;
 
-    public GameController(Board board, float viewportWidth, float viewportHeight)
+    public GameController(float viewportWidth, float viewportHeight)
     {
-        this.board = board;
-        float boardWidth = Math.round(viewportWidth) - 1; // half of a unit from the left and from the right
-        float boardHeight = Math.round(viewportHeight) - 7; // 2 (score line) + 3 (pocket) + 2 (spacers)
+        int boardWidth = Math.round(viewportWidth) - 1; // half of a unit from the left and from the right
+        int boardHeight = Math.round(viewportHeight) - 7; // 2 (score line) + 3 (pocket) + 2 (spacers)
 
         boardRectangle = new Rectangle(0.5f, 2.5f, boardWidth, boardHeight);
+
+        board = new Board(boardWidth, boardHeight);
+
+        board.set(5, 5, new BasicBlock());
+        board.set(11, 11, new BasicBlock());
+        board.set(3, 13, new BasicBlock());
+        board.set(10, 2, new BasicBlock());
+
 
         frame = addController(new FrameController(this));
         boardController = addController(new BoardController(this));

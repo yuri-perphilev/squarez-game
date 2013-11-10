@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
-import com.zeroage.squarez.model.BasicBlock;
-import com.zeroage.squarez.model.Board;
 
 import static java.lang.Math.max;
 
@@ -30,10 +28,9 @@ public class GameScreen implements Screen
         camera = new OrthographicCamera();
         batch = new SpriteBatch();
 
-//        Gdx.input.setInputProcessor(new GestureDetector(new MyGestureListener()));
         Gdx.input.setInputProcessor(new MyInputProcessor());
 
-        setupBoardSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        setupView(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     @Override
@@ -42,7 +39,7 @@ public class GameScreen implements Screen
 
     }
 
-    private void setupBoardSize(int width, int height)
+    private void setupView(int width, int height)
     {
         int w = Math.min(width, height);
         int h = max(width, height);
@@ -51,31 +48,17 @@ public class GameScreen implements Screen
         float pixelsPerBlock = w / viewportWidth;
         float viewportHeight = h / pixelsPerBlock;
 
-        int boardWidth = Math.round(viewportWidth) - 1;
-        int boardHeight = Math.round(viewportHeight) - 7;
-
-        Board board = new Board(boardWidth, boardHeight);
-
-        board.set(5, 5, new BasicBlock());
-        board.set(11, 11, new BasicBlock());
-        board.set(3, 13, new BasicBlock());
-        board.set(10, 2, new BasicBlock());
-
         camera.setToOrtho(true, viewportWidth, viewportHeight);
         camera.update();
 
-        gameController = new GameController(board, viewportWidth, viewportHeight);
+        gameController = new GameController(viewportWidth, viewportHeight);
     }
 
     @Override
     public void render(float delta)
     {
         gameController.update(delta);
-        draw(delta);
-    }
 
-    private void draw(float delta)
-    {
         Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glEnable(GL10.GL_BLEND);
@@ -85,12 +68,7 @@ public class GameScreen implements Screen
 
         gameController.renderDebug(renderer, delta);
 
-        drawBoard(delta);
         Gdx.gl.glDisable(GL10.GL_BLEND);
-    }
-
-    private void drawBoard(float delta)
-    {
     }
 
     @Override
