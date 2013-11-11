@@ -1,18 +1,20 @@
 package com.zeroage.squarez;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.zeroage.squarez.model.BasicBlock;
 import com.zeroage.squarez.model.Board;
+import com.zeroage.squarez.model.GameEventListener;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameController implements Controller
 {
     public static final int FIGURE_LIFETIME = 10;
 
-    private List<Controller> controllers = new ArrayList<Controller>();
+    private List<Controller> controllers = new CopyOnWriteArrayList<Controller>();
 
     private Board board;
     private Rectangle boardRectangle;
@@ -21,7 +23,7 @@ public class GameController implements Controller
     private FigureController figure;
     private TimerController timer;
     private TrailController trail;
-    private BoardController boardController;
+    private BoardController brd;
 
     public GameController(float viewportWidth, float viewportHeight)
     {
@@ -30,16 +32,15 @@ public class GameController implements Controller
 
         boardRectangle = new Rectangle(0.5f, 2.5f, boardWidth, boardHeight);
 
-        board = new Board(boardWidth, boardHeight);
+        board = new Board(boardWidth, boardHeight, new MyGameEventListener());
 
         board.set(5, 5, new BasicBlock());
         board.set(11, 11, new BasicBlock());
         board.set(3, 13, new BasicBlock());
         board.set(10, 2, new BasicBlock());
 
-
         frame = addController(new FrameController(this));
-        boardController = addController(new BoardController(this));
+        brd = addController(new BoardController(this));
         figure = addController(new FigureController(this));
         timer = addController(new TimerController(this));
         trail = addController(new TrailController(this));
@@ -111,9 +112,24 @@ public class GameController implements Controller
         return controller;
     }
 
+    public void removeController(BaseController controller)
+    {
+        Gdx.app.log("SQZ", "Removing controller " + controller);
+        controllers.remove(controller);
+
+    }
+
     public Rectangle getBoardRectangle()
     {
         return boardRectangle;
     }
 
+    private class MyGameEventListener implements GameEventListener
+    {
+        @Override
+        public void dissolving(List<Board.Area> areas)
+        {
+            addController(new DissolvingAreaController(GameController.this, areas));
+        }
+    }
 }

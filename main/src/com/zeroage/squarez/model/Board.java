@@ -14,12 +14,21 @@ public class Board extends Matrix
     private int nextFigureY;
     private int figureSize = 3;
 
+    private GameEventListener listener;
+
     public Board(int boardWidth, int boardHeight)
     {
+        this(boardWidth, boardHeight, null);
+    }
+
+    public Board(int boardWidth, int boardHeight, GameEventListener listener)
+    {
         super(boardWidth, boardHeight);
+        this.listener = listener;
         nextFigure();
         nextFigure();
     }
+
 
     public void fill(Area area, BlockType blockType)
     {
@@ -30,8 +39,15 @@ public class Board extends Matrix
     {
         installFigure();
         List<Area> areas = findAreas();
-        for (Area area : areas) {
-            dissolve(area);
+
+
+        if (areas != null && !areas.isEmpty()) {
+            if (listener != null) {
+                listener.dissolving(areas);
+            }
+            for (Area area : areas) {
+                dissolve(area);
+            }
         }
     }
 
