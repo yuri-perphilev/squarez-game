@@ -8,7 +8,7 @@ Common logic
 
 Block types
 -----------
-x Missle
+x Missile
 x Bomb
 x Shield
 x Steel Pyramid
@@ -34,7 +34,6 @@ x Cracked
 Game
 ----
 
-- When figure out of pocket, generate next one
 - Figure move trail
 - Bonus for the completely clean board
 - A game mode that starts with randomly filled board
