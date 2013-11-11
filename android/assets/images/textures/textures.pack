@@ -1,0 +1,145 @@
+
+textures.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+acid
+  rotate: false
+  xy: 22, 2
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+acid-container
+  rotate: false
+  xy: 2, 2
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+activator
+  rotate: false
+  xy: 42, 2
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+basic
+  rotate: false
+  xy: 62, 2
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+bomb
+  rotate: false
+  xy: 82, 2
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+cracked
+  rotate: false
+  xy: 102, 2
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+empty
+  rotate: false
+  xy: 122, 2
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+missile
+  rotate: false
+  xy: 142, 2
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+nosquarez
+  rotate: false
+  xy: 162, 2
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+punishment
+  rotate: false
+  xy: 182, 2
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+pyramid
+  rotate: false
+  xy: 202, 2
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+releaser
+  rotate: false
+  xy: 222, 2
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+shield
+  rotate: false
+  xy: 242, 2
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+shift-left
+  rotate: false
+  xy: 262, 2
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+shift-right
+  rotate: false
+  xy: 282, 2
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+spikes
+  rotate: false
+  xy: 302, 2
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+splooge
+  rotate: false
+  xy: 342, 2
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+splooge-container
+  rotate: false
+  xy: 322, 2
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+touch-activated
+  rotate: false
+  xy: 362, 2
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+unknown
+  rotate: false
+  xy: 382, 2
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
