@@ -7,6 +7,7 @@ import com.zeroage.squarez.model.BasicBlock;
 import com.zeroage.squarez.model.Board;
 import com.zeroage.squarez.model.GameEventListener;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -75,11 +76,15 @@ public class GameController implements Controller
     }
 
     @Override
-    public void update(float delta)
+    public boolean update(float delta)
     {
         for (Controller controller : controllers) {
-            controller.update(delta);
+            boolean remove = controller.update(delta);
+            if (remove) {
+                controllers.remove(controller);
+            }
         }
+        return false;
     }
 
     @Override

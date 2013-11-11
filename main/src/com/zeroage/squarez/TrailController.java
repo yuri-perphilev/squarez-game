@@ -60,7 +60,7 @@ public class TrailController extends BaseController
     }
 
     @Override
-    public void update(float delta)
+    public boolean update(float delta)
     {
         trailReduceCounter += delta;
 
@@ -73,18 +73,7 @@ public class TrailController extends BaseController
                 trailPointer = 0;
             }
         }
-    }
-
-    @Override
-    public void touchDown(float x, float y, int pointer, int button)
-    {
-
-    }
-
-    @Override
-    public void touchUp(float x, float y, int pointer, int button)
-    {
-
+        return false;
     }
 
     @Override

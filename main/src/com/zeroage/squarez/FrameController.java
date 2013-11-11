@@ -34,34 +34,4 @@ public class FrameController extends BaseController
 
         renderer.end();
     }
-
-    @Override
-    public void render(float delta)
-    {
-
-    }
-
-    @Override
-    public void update(float delta)
-    {
-
-    }
-
-    @Override
-    public void touchDown(float x, float y, int pointer, int button)
-    {
-
-    }
-
-    @Override
-    public void touchUp(float x, float y, int pointer, int button)
-    {
-
-    }
-
-    @Override
-    public void touchDragged(float x, float y, int pointer)
-    {
-
-    }
 }
