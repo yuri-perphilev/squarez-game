@@ -33,31 +33,14 @@ public class TimerController extends BaseController
     }
 
     @Override
-    public void update(float delta)
+    public boolean update(float delta)
     {
         figureChangeTimer += delta;
         if (figureChangeTimer > GameController.FIGURE_LIFETIME) {
             reset();
             getGameController().action();
         }
-    }
-
-    @Override
-    public void touchDown(float x, float y, int pointer, int button)
-    {
-
-    }
-
-    @Override
-    public void touchUp(float x, float y, int pointer, int button)
-    {
-
-    }
-
-    @Override
-    public void touchDragged(float x, float y, int pointer)
-    {
-
+        return false;
     }
 
     public void reset()

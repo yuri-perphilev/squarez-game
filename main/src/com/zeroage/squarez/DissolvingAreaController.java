@@ -65,11 +65,9 @@ public class DissolvingAreaController extends BaseController
     }
 
     @Override
-    public void update(float delta)
+    public boolean update(float delta)
     {
-        dissolveProgress -= delta * 100 / 2; // should dissolve completely in 3 sec
-        if (dissolveProgress < 0) {
-            removeMyself();
-        }
+        dissolveProgress -= delta * 100 * 2; // should dissolve completely in 1/2 sec
+        return dissolveProgress < 0;
     }
 }

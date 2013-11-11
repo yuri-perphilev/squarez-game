@@ -65,18 +65,6 @@ public class FigureController extends BaseController
     }
 
     @Override
-    public void render(float delta)
-    {
-
-    }
-
-    @Override
-    public void update(float delta)
-    {
-
-    }
-
-    @Override
     public void touchDown(float x, float y, int pointer, int button)
     {
         boolean nextFigureTouched = isNextFigureTouched(x, y);

@@ -29,9 +29,9 @@ public abstract class BaseController implements Controller
     }
 
     @Override
-    public void update(float delta)
+    public boolean update(float delta)
     {
-
+        return false;
     }
 
     @Override
@@ -50,10 +50,5 @@ public abstract class BaseController implements Controller
     public void touchDragged(float x, float y, int pointer)
     {
 
-    }
-
-    public void removeMyself()
-    {
-        gameController.removeController(this);
     }
 }
