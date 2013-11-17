@@ -37,6 +37,7 @@ Game
 - Figure move trail
 - Bonus for the completely clean board
 - A game mode that starts with randomly filled board
+- Game bonus: no borders - when moving near the certain edge, moving continues from the opposite edge
 
 Bugs
 ----
