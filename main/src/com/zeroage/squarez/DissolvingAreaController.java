@@ -19,14 +19,12 @@ public class DissolvingAreaController extends BaseController
     private float dissolveProgress = 100;
     private float dissolveTime = 0;
     private List<Board.Area> areas;
-    private TextureRegion basicBlock;
 
 
     protected DissolvingAreaController(GameController gameController, List<Board.Area> areas)
     {
         super(gameController);
         this.areas = areas;
-        basicBlock = gameController.getTexture(BlockType.BASIC);
     }
 
     @Override
@@ -72,13 +70,20 @@ public class DissolvingAreaController extends BaseController
                 float blockY = r.y + (r.height) - y - 1;
 
                 if (isBlockDissolving(x, y)) {
-                    batch.setColor(color.r, color.g, color.b, dissolveProgress / 100);
-                    batch.draw(basicBlock, blockX, blockY, 1, 1);
+                    BlockType  type;
+                    if (block == null) {
+                        batch.setColor(color.r, color.g, color.b, dissolveProgress / 100);
+                        type = BlockType.BASIC;
+                    }
+                    else {
+                        type = block.getType();
+                    }
+
+                    batch.draw(getGameController().getTexture(type), blockX, blockY, 1, 1);
+                    batch.setColor(color);
                 }
             }
         });
-
-        batch.setColor(color);
     }
 
     private boolean isBlockDissolving(int x, int y)

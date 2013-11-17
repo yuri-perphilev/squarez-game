@@ -6,10 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.zeroage.squarez.model.BasicBlock;
-import com.zeroage.squarez.model.BlockType;
-import com.zeroage.squarez.model.Board;
-import com.zeroage.squarez.model.GameEventListener;
+import com.zeroage.squarez.model.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +38,7 @@ public class GameController implements Controller
 
         boardRectangle = new Rectangle(0.5f, 2.5f, boardWidth, boardHeight);
 
-        board = new Board(boardWidth, boardHeight, new MyGameEventListener());
+        board = new Board3(boardWidth, boardHeight, new MyGameEventListener());
 
         board.set(5, 5, new BasicBlock());
         board.set(11, 11, new BasicBlock());
@@ -73,6 +70,11 @@ public class GameController implements Controller
     public void loadTextures()
     {
         blockTextures.put(BlockType.BASIC, atlas.findRegion("basic"));
+        blockTextures.put(BlockType.STEEL_PYRAMID, atlas.findRegion("pyramid"));
+        blockTextures.put(BlockType.CRACKED, atlas.findRegion("cracked"));
+        blockTextures.put(BlockType.SHIELD, atlas.findRegion("shield"));
+        blockTextures.put(BlockType.BOMB, atlas.findRegion("bomb"));
+        blockTextures.put(BlockType.MISSILE, atlas.findRegion("missile"));
     }
 
     public TextureRegion getTexture(BlockType blockType)
