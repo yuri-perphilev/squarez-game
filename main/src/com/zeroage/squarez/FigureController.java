@@ -99,7 +99,7 @@ public class FigureController extends BaseController
                         batch.draw(texture, blockX, blockY, 1, 1);
                     }
                     else {
-                        Gdx.app.error("SQZ", "Texture for block " + block.getType() + " not found!");
+                        Gdx.app.error("SQZ", String.format("Texture for block %s (%s) not found!", block.getType(), block.getClass().getSimpleName()));
                     }
                 }
             }
