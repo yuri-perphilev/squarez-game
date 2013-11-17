@@ -1,14 +1,19 @@
 package com.zeroage.squarez;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.zeroage.squarez.model.BasicBlock;
+import com.zeroage.squarez.model.BlockType;
 import com.zeroage.squarez.model.Board;
 import com.zeroage.squarez.model.GameEventListener;
 
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameController implements Controller
@@ -26,7 +31,10 @@ public class GameController implements Controller
     private TrailController trail;
     private BoardController brd;
 
-    public GameController(float viewportWidth, float viewportHeight)
+    private TextureAtlas atlas;
+    private Map<BlockType, TextureRegion> blockTextures = new HashMap<BlockType, TextureRegion>(32);
+
+    public GameController(float viewportWidth, float viewportHeight, TextureAtlas atlas)
     {
         int boardWidth = Math.round(viewportWidth) - 1; // half of a unit from the left and from the right
         int boardHeight = Math.round(viewportHeight) - 7; // 2 (score line) + 3 (pocket) + 2 (spacers)
@@ -39,6 +47,9 @@ public class GameController implements Controller
         board.set(11, 11, new BasicBlock());
         board.set(3, 13, new BasicBlock());
         board.set(10, 2, new BasicBlock());
+
+        this.atlas = atlas;
+        loadTextures();
 
         frame = addController(new FrameController(this));
         brd = addController(new BoardController(this));
@@ -59,6 +70,16 @@ public class GameController implements Controller
         timer.reset();
     }
 
+    public void loadTextures()
+    {
+        blockTextures.put(BlockType.BASIC, atlas.findRegion("basic"));
+    }
+
+    public TextureRegion getTexture(BlockType blockType)
+    {
+        return blockTextures.get(blockType);
+    }
+
     @Override
     public void renderDebug(ShapeRenderer renderer, float delta)
     {
@@ -68,10 +89,10 @@ public class GameController implements Controller
     }
 
     @Override
-    public void render(float delta)
+    public void render(SpriteBatch batch, float delta)
     {
         for (Controller controller : controllers) {
-            controller.render(delta);
+            controller.render(batch, delta);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.zeroage.squarez;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -54,7 +55,7 @@ public class TrailController extends BaseController
     }
 
     @Override
-    public void render(float delta)
+    public void render(SpriteBatch batch, float delta)
     {
 
     }

@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 
@@ -20,6 +21,10 @@ public class GameScreen implements Screen
     private ShapeRenderer renderer = new ShapeRenderer();
 
     private GameController gameController;
+    private TextureAtlas atlas;
+    private float pixelsPerBlock;
+    private float viewportWidth;
+    private float viewportHeight;
 
 
     @Override
@@ -44,14 +49,16 @@ public class GameScreen implements Screen
         int w = Math.min(width, height);
         int h = max(width, height);
 
-        float viewportWidth = 16;
-        float pixelsPerBlock = w / viewportWidth;
-        float viewportHeight = h / pixelsPerBlock;
+        viewportWidth = 16;
+        pixelsPerBlock = w / viewportWidth;
+        viewportHeight = h / pixelsPerBlock;
 
         camera.setToOrtho(true, viewportWidth, viewportHeight);
         camera.update();
 
-        gameController = new GameController(viewportWidth, viewportHeight);
+        atlas = new TextureAtlas(Gdx.files.internal("images/textures/textures.pack"));
+
+        gameController = new GameController(viewportWidth, viewportHeight, atlas);
     }
 
     @Override
@@ -65,10 +72,13 @@ public class GameScreen implements Screen
         Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 
         renderer.setProjectionMatrix(camera.combined);
-
         gameController.renderDebug(renderer, delta);
-
         Gdx.gl.glDisable(GL10.GL_BLEND);
+        
+        batch.begin();
+        batch.setProjectionMatrix(camera.combined);
+        gameController.render(batch, delta);
+        batch.end();
     }
 
     @Override
@@ -92,7 +102,7 @@ public class GameScreen implements Screen
     @Override
     public void dispose()
     {
-
+        atlas.dispose();
     }
 
     private class MyInputProcessor extends InputAdapter

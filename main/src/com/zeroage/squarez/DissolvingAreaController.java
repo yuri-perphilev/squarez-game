@@ -1,9 +1,14 @@
 package com.zeroage.squarez;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.zeroage.squarez.model.Block;
+import com.zeroage.squarez.model.BlockType;
 import com.zeroage.squarez.model.Board;
 import com.zeroage.squarez.model.Matrix;
 
@@ -14,20 +19,20 @@ public class DissolvingAreaController extends BaseController
     private float dissolveProgress = 100;
     private float dissolveTime = 0;
     private List<Board.Area> areas;
+    private TextureRegion basicBlock;
+
 
     protected DissolvingAreaController(GameController gameController, List<Board.Area> areas)
     {
         super(gameController);
         this.areas = areas;
-        Gdx.app.log("SQZ", "Dissolving " + areas.size() + " areas");
-        for (Board.Area area : areas) {
-            Gdx.app.log("SQZ", String.format("Area x: %d y: %d w: %d h: %d", area.getX(), area.getY(), area.getW(), area.getH()));
-        }
+        basicBlock = gameController.getTexture(BlockType.BASIC);
     }
 
     @Override
     public void renderDebug(final ShapeRenderer renderer, float delta)
     {
+/*
         final Rectangle r = getGameController().getBoardRectangle();
 
         renderer.begin(ShapeRenderer.ShapeType.Filled);
@@ -48,7 +53,32 @@ public class DissolvingAreaController extends BaseController
         });
 
         renderer.end();
+*/
+    }
 
+    @Override
+    public void render(final SpriteBatch batch, float delta)
+    {
+        final Rectangle r = getGameController().getBoardRectangle();
+
+        final Color color = batch.getColor();
+
+        getGameController().getBoard().iterate(new Matrix.Callback()
+        {
+            @Override
+            public void cell(int x, int y, Block block)
+            {
+                float blockX = r.x + x;
+                float blockY = r.y + (r.height) - y - 1;
+
+                if (isBlockDissolving(x, y)) {
+                    batch.setColor(color.r, color.g, color.b, dissolveProgress / 100);
+                    batch.draw(basicBlock, blockX, blockY, 1, 1);
+                }
+            }
+        });
+
+        batch.setColor(color);
     }
 
     private boolean isBlockDissolving(int x, int y)
