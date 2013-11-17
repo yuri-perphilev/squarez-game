@@ -1,5 +1,6 @@
 package com.zeroage.squarez;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -15,12 +16,9 @@ import java.util.List;
 
 public class BoardController extends BaseController
 {
-    private TextureRegion basicBlock;
-
     protected BoardController(GameController gameController)
     {
         super(gameController);
-        basicBlock = gameController.getTexture(BlockType.BASIC);
     }
 
     @Override
@@ -61,7 +59,13 @@ public class BoardController extends BaseController
                 if (block != null) {
                     float blockX = r.x + x;
                     float blockY = r.y + (r.height) - y - 1;
-                    batch.draw(basicBlock, blockX, blockY, 1, 1);
+                    TextureRegion texture = getGameController().getTexture(block.getType());
+                    if (texture != null) {
+                        batch.draw(texture, blockX, blockY, 1, 1);
+                    }
+                    else {
+                        Gdx.app.error("SQZ", "Texture for block " + block.getType() + " not found!");
+                    }
                 }
             }
         });

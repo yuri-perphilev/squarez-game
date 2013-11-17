@@ -1,5 +1,6 @@
 package com.zeroage.squarez;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -22,12 +23,9 @@ public class FigureController extends BaseController
     boolean figureTouched = false;
     boolean figureMoving = false;
 
-    private TextureRegion basicBlock;
-
     protected FigureController(GameController gameController)
     {
         super(gameController);
-        basicBlock = gameController.getTexture(BlockType.BASIC);
     }
 
     @Override
@@ -96,7 +94,13 @@ public class FigureController extends BaseController
                 if (block != null) {
                     float blockX = r.x + figureX + x;
                     float blockY = r.y + (r.height - figureY) - y - 1;
-                    batch.draw(basicBlock, blockX, blockY, 1, 1);
+                    TextureRegion texture = getGameController().getTexture(block.getType());
+                    if (texture != null) {
+                        batch.draw(texture, blockX, blockY, 1, 1);
+                    }
+                    else {
+                        Gdx.app.error("SQZ", "Texture for block " + block.getType() + " not found!");
+                    }
                 }
             }
         });
