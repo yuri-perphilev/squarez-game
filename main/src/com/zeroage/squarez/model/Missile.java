@@ -73,7 +73,7 @@ public class Missile implements Block
     {
         int n = direction.ordinal();
         n++;
-        if (n > Direction.values().length) {
+        if (n >= Direction.values().length) {
             n = 0;
         }
         direction = Direction.values()[n];
