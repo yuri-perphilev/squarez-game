@@ -17,7 +17,7 @@ public class Cracked implements Block, NeighbourAware
     @Override
     public BlockType getType()
     {
-        return null;
+        return BlockType.CRACKED;
     }
 
     @Override
