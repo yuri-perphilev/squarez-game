@@ -1,5 +1,7 @@
 package com.zeroage.squarez;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public abstract class BaseController implements Controller
@@ -23,7 +25,7 @@ public abstract class BaseController implements Controller
     }
 
     @Override
-    public void render(float delta)
+    public void render(SpriteBatch batch, float delta)
     {
 
     }
@@ -48,6 +50,11 @@ public abstract class BaseController implements Controller
 
     @Override
     public void touchDragged(float x, float y, int pointer)
+    {
+
+    }
+
+    private void loadTextures(TextureAtlas atlas)
     {
 
     }

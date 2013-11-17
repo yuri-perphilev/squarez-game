@@ -1,12 +1,14 @@
 package com.zeroage.squarez;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public interface Controller
 {
     void renderDebug(ShapeRenderer renderer, float delta);
 
-    void render(float delta);
+    void render(SpriteBatch batch, float delta);
 
     /**
      * Updates controller state

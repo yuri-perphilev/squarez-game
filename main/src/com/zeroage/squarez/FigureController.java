@@ -1,14 +1,14 @@
 package com.zeroage.squarez;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.zeroage.squarez.model.Block;
-import com.zeroage.squarez.model.Board;
-import com.zeroage.squarez.model.Figure;
-import com.zeroage.squarez.model.Matrix;
+import com.zeroage.squarez.model.*;
 
 import static com.badlogic.gdx.math.MathUtils.round;
 import static java.lang.Math.abs;
@@ -22,14 +22,18 @@ public class FigureController extends BaseController
     boolean figureTouched = false;
     boolean figureMoving = false;
 
+    private TextureRegion basicBlock;
+
     protected FigureController(GameController gameController)
     {
         super(gameController);
+        basicBlock = gameController.getTexture(BlockType.BASIC);
     }
 
     @Override
     public void renderDebug(final ShapeRenderer debugRenderer, float delta)
     {
+/*
         Board b = getGameController().getBoard();
         final Rectangle r = getGameController().getBoardRectangle();
 
@@ -39,6 +43,20 @@ public class FigureController extends BaseController
         if (!b.figureInPocket()) {
             Color nextFigColor = new Color(0.3f, 0.3f, 0.3f, 0.9f);
             renderFigure(debugRenderer, r, b.getNextFigure(), nextFigColor, b.getNextFigureX(), b.getNextFigureY());
+        }
+*/
+    }
+
+    @Override
+    public void render(SpriteBatch batch, float delta)
+    {
+        Board b = getGameController().getBoard();
+        final Rectangle r = getGameController().getBoardRectangle();
+
+        renderFigure(batch, r, b.getFigure(), b.getFigureX(), b.getFigureY());
+
+        if (!b.figureInPocket()) {
+            renderFigure(batch, r, b.getNextFigure(), b.getNextFigureX(), b.getNextFigureY());
         }
     }
 
@@ -63,6 +81,26 @@ public class FigureController extends BaseController
 
         renderer.end();
     }
+    private void renderFigure(final SpriteBatch batch,
+                              final Rectangle r,
+                              Figure figure,
+                              final int figureX,
+                              final int figureY)
+    {
+
+        figure.iterate(new Matrix.Callback()
+        {
+            @Override
+            public void cell(int x, int y, Block block)
+            {
+                if (block != null) {
+                    float blockX = r.x + figureX + x;
+                    float blockY = r.y + (r.height - figureY) - y - 1;
+                    batch.draw(basicBlock, blockX, blockY, 1, 1);
+                }
+            }
+        });
+    }
 
     @Override
     public void touchDown(float x, float y, int pointer, int button)
@@ -75,9 +113,7 @@ public class FigureController extends BaseController
             figureTouched = true;
             figureTouchX = x;
             figureTouchY = y;
-            //Gdx.app.debug("SQZ", String.format("Touch x: %f, y: %f", figureTouchX, figureTouchY));
         }
-
     }
 
     @Override
