@@ -9,7 +9,7 @@ public class Figure extends Matrix
 
     public static final int MIN_FIG_BLOCKS = 3;
 
-    private final Random random = new Random();
+    protected final Random random = new Random();
 
     private boolean useUniformDistribution = false;
 
@@ -49,7 +49,7 @@ public class Figure extends Matrix
             if (list.isEmpty()) {
                 int[] p = randomPoint();
                 list.add(p);
-                set(p[0], p[1], BlockType.BASIC.make());
+                set(p[0], p[1], makeBlock());
             }
             else {
                 List<int[]> neighbours;
@@ -64,9 +64,14 @@ public class Figure extends Matrix
                 int[] p = neighbours.get(m);
 
                 list.add(p);
-                set(p[0], p[1], BlockType.BASIC.make());
+                set(p[0], p[1], makeBlock());
             }
         }
+    }
+
+    protected Block makeBlock()
+    {
+        return BlockType.BASIC.make();
     }
 
     public List<int[]> findFreeNeighbours(int x, int y)
@@ -212,7 +217,7 @@ public class Figure extends Matrix
         for (int y = height - 1; y >= 0; y--) {
             for (int x = width - 1; x >= 0; x--) {
                 if ((n & 1) == 1) {
-                    fig[x][y] = new BasicBlock();
+                    fig[x][y] = makeBlock();
                 }
                 n >>= 1;
             }

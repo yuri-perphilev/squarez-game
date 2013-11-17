@@ -174,7 +174,12 @@ public class Board extends Matrix
         this.figureY = nextFigureY;
         nextFigureX = 0;
         nextFigureY = -figureSize; // next figure sits in the pocket
-        nextFigure = new Figure(figureSize);
+        nextFigure = makeFigure();
+    }
+
+    protected Figure makeFigure()
+    {
+        return new Figure(figureSize);
     }
 
     public Figure getFigure()
