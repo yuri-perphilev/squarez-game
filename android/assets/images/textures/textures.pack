@@ -87,6 +87,13 @@ releaser
   orig: 18, 18
   offset: 0, 0
   index: -1
+rocket
+  rotate: false
+  xy: 402, 5
+  size: 10, 15
+  orig: 10, 15
+  offset: 0, 0
+  index: -1
 shield
   rotate: false
   xy: 242, 2
@@ -106,6 +113,13 @@ shift-right
   xy: 282, 2
   size: 18, 18
   orig: 18, 18
+  offset: 0, 0
+  index: -1
+sparkle
+  rotate: false
+  xy: 414, 8
+  size: 12, 12
+  orig: 12, 12
   offset: 0, 0
   index: -1
 spikes
