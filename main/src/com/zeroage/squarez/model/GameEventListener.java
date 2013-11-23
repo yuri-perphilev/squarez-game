@@ -7,7 +7,7 @@ public interface GameEventListener
 {
     void dissolving(List<Board.Area> areas);
 
-    void bomb(Set<int[]> blocksToExplode);
+    void bomb(int x, int y, Set<int[]> blocksToExplode);
 
     void missile(int fromX, int fromY, int toX, int toY, int dX, int dY);
 }

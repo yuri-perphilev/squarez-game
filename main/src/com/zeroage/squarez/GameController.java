@@ -173,7 +173,7 @@ public class GameController implements Controller
         }
 
         @Override
-        public void bomb(Set<int[]> blocksToExplode)
+        public void bomb(int x, int y, Set<int[]> blocksToExplode)
         {
             addController(new BombExplosionController(GameController.this, blocksToExplode));
         }
