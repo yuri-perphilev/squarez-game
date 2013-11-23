@@ -35,7 +35,9 @@ public class Bomb implements Block
             // triangular distribution
             int x1 = x + (int) ((random.nextDouble() + random.nextDouble() + random.nextDouble() + random.nextDouble()) * diameter / 4) - diameter / 2;
             int y1 = y + (int) ((random.nextDouble() + random.nextDouble() + random.nextDouble() + random.nextDouble()) * diameter / 4) - diameter / 2;
-            blocksToExplode.add(new int[]{x1, y1});
+            if (x1 >= 0 && y1 >= 0 && x1 < board.getWidth() && y1 < board.getHeight()) {
+                blocksToExplode.add(new int[]{x1, y1});
+            }
         }
 
         for (int[] b : blocksToExplode) {
@@ -46,7 +48,7 @@ public class Bomb implements Block
             }
         }
 
-        board.getListener().bomb(blocksToExplode);
+        board.getListener().bomb(x, y, blocksToExplode);
     }
 
     @Override
