@@ -11,7 +11,11 @@ import com.zeroage.squarez.model.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import static com.zeroage.squarez.TextureType.SPARKLE;
+import static com.zeroage.squarez.model.BlockType.*;
 
 public class GameController implements Controller
 {
@@ -30,6 +34,7 @@ public class GameController implements Controller
 
     private TextureAtlas atlas;
     private Map<BlockType, TextureRegion> blockTextures = new HashMap<BlockType, TextureRegion>(32);
+    private Map<TextureType, TextureRegion> textures = new HashMap<TextureType, TextureRegion>(32);
 
     public GameController(float viewportWidth, float viewportHeight, TextureAtlas atlas)
     {
@@ -69,17 +74,24 @@ public class GameController implements Controller
 
     public void loadTextures()
     {
-        blockTextures.put(BlockType.BASIC, atlas.findRegion("basic"));
-        blockTextures.put(BlockType.STEEL_PYRAMID, atlas.findRegion("pyramid"));
-        blockTextures.put(BlockType.CRACKED, atlas.findRegion("cracked"));
-        blockTextures.put(BlockType.SHIELD, atlas.findRegion("shield"));
-        blockTextures.put(BlockType.BOMB, atlas.findRegion("bomb"));
-        blockTextures.put(BlockType.MISSILE, atlas.findRegion("missile"));
+        blockTextures.put(BASIC, atlas.findRegion("basic"));
+        blockTextures.put(STEEL_PYRAMID, atlas.findRegion("pyramid"));
+        blockTextures.put(CRACKED, atlas.findRegion("cracked"));
+        blockTextures.put(SHIELD, atlas.findRegion("shield"));
+        blockTextures.put(BOMB, atlas.findRegion("bomb"));
+        blockTextures.put(MISSILE, atlas.findRegion("missile"));
+
+        textures.put(SPARKLE, atlas.findRegion("sparkle"));
     }
 
     public TextureRegion getTexture(BlockType blockType)
     {
         return blockTextures.get(blockType);
+    }
+
+    public TextureRegion getTexture(TextureType blockType)
+    {
+        return textures.get(blockType);
     }
 
     @Override
@@ -158,6 +170,18 @@ public class GameController implements Controller
         public void dissolving(List<Board.Area> areas)
         {
             addController(new DissolvingAreaController(GameController.this, areas));
+        }
+
+        @Override
+        public void bomb(Set<int[]> blocksToExplode)
+        {
+            addController(new BombExplosionController(GameController.this, blocksToExplode));
+        }
+
+        @Override
+        public void missile(int fromX, int fromY, int toX, int toY, int dX, int dY)
+        {
+            addController(new MissileFlightController(GameController.this, fromX, fromY, toX, toY, dX, dY));
         }
     }
 }

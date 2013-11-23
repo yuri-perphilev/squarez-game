@@ -275,6 +275,11 @@ public class Board extends Matrix
         return noCollisionsDetected(figure, newX, newY);
     }
 
+    public GameEventListener getListener()
+    {
+        return listener;
+    }
+
     private boolean noCollisionsDetected(Figure f, final int newX, final int newY)
     {
         final boolean inPocket = figureInPocket();

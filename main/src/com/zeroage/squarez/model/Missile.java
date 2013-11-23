@@ -44,10 +44,12 @@ public class Missile implements Block
     @Override
     public void act(int x, int y, Board board)
     {
-        System.out.printf("Acting missile at %d, %d%n", x, y);
+        // System.out.printf("Acting missile at %d, %d%n", x, y);
+        int xorig = x;
+        int yorig = y;
         while (x >= 0 && x < board.width && y>= 0 && y < board.height) {
             Block block = board.get(x, y);
-            System.out.printf("Clearing at %d, %d%n", x, y);
+            // System.out.printf("Clearing at %d, %d%n", x, y);
             board.set(x, y, null);
             if (block != null && block != this) {
                 block.act(x, y, board);
@@ -55,6 +57,8 @@ public class Missile implements Block
             x += direction.getDx();
             y += direction.getDy();
         }
+
+        board.getListener().missile(xorig, yorig, x - direction.getDx(), y - direction.getDy(), direction.dx, direction.dy);
     }
 
     @Override
