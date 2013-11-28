@@ -3,7 +3,6 @@ package com.zeroage.squarez;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
@@ -46,7 +45,7 @@ public class FigureController extends BaseController
     }
 
     @Override
-    public void render(SpriteBatch batch, float delta)
+    public void render(SpriteBatch batch, float delta, GameScreen.RenderUtils renderUtils)
     {
         Board b = getGameController().getBoard();
         final Rectangle r = getGameController().getBoardRectangle();

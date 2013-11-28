@@ -103,10 +103,10 @@ public class GameController implements Controller
     }
 
     @Override
-    public void render(SpriteBatch batch, float delta)
+    public void render(SpriteBatch batch, float delta, GameScreen.RenderUtils renderUtils)
     {
         for (Controller controller : controllers) {
-            controller.render(batch, delta);
+            controller.render(batch, delta, renderUtils);
         }
     }
 

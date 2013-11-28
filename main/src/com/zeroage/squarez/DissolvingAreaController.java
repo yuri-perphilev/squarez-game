@@ -1,10 +1,7 @@
 package com.zeroage.squarez;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.zeroage.squarez.model.Block;
@@ -55,7 +52,7 @@ public class DissolvingAreaController extends BaseController
     }
 
     @Override
-    public void render(final SpriteBatch batch, float delta)
+    public void render(final SpriteBatch batch, float delta, GameScreen.RenderUtils renderUtils)
     {
         final Rectangle r = getGameController().getBoardRectangle();
 

@@ -42,7 +42,7 @@ public class BombExplosionController extends BaseController
     }
 
     @Override
-    public void render(SpriteBatch batch, float delta)
+    public void render(SpriteBatch batch, float delta, GameScreen.RenderUtils renderUtils)
     {
         for (Vector2 v: sparkles) {
             batch.draw(sparkleTexture, v.x, v.y, SPARKLES_SIZE, SPARKLES_SIZE);
