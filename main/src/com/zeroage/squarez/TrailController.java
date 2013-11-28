@@ -55,7 +55,7 @@ public class TrailController extends BaseController
     }
 
     @Override
-    public void render(SpriteBatch batch, float delta)
+    public void render(SpriteBatch batch, float delta, GameScreen.RenderUtils renderUtils)
     {
 
     }

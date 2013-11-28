@@ -25,7 +25,7 @@ public abstract class BaseController implements Controller
     }
 
     @Override
-    public void render(SpriteBatch batch, float delta)
+    public void render(SpriteBatch batch, float delta, GameScreen.RenderUtils renderUtils)
     {
 
     }

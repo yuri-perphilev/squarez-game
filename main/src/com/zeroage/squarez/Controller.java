@@ -8,7 +8,7 @@ public interface Controller
 {
     void renderDebug(ShapeRenderer renderer, float delta);
 
-    void render(SpriteBatch batch, float delta);
+    void render(SpriteBatch batch, float delta, GameScreen.RenderUtils renderUtils);
 
     /**
      * Updates controller state

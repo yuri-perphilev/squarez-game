@@ -25,6 +25,7 @@ public class GameScreen implements Screen
     private float pixelsPerBlock;
     private float viewportWidth;
     private float viewportHeight;
+    private RenderUtils renderUtils = new RenderUtils();
 
 
     @Override
@@ -77,7 +78,7 @@ public class GameScreen implements Screen
         
         batch.begin();
         batch.setProjectionMatrix(camera.combined);
-        gameController.render(batch, delta);
+        gameController.render(batch, delta, renderUtils);
         batch.end();
     }
 
@@ -137,5 +138,9 @@ public class GameScreen implements Screen
             camera.unproject(vec);
             return vec;
         }
+    }
+
+    public class RenderUtils
+    {
     }
 }

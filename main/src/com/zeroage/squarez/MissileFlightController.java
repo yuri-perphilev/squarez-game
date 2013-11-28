@@ -60,7 +60,7 @@ public class MissileFlightController extends BaseController
     }
 
     @Override
-    public void render(SpriteBatch batch, float delta)
+    public void render(SpriteBatch batch, float delta, GameScreen.RenderUtils renderUtils)
     {
         int n = min(round(ROCKET_SPEED * time), sparkles.length);
         int vanishIndex = TRAIL_LENGTH - round(TRAIL_VANISH_SPEED * time);
