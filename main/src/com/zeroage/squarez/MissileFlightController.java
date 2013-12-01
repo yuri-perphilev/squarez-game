@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 
 import static com.badlogic.gdx.math.MathUtils.random;
 import static com.badlogic.gdx.math.MathUtils.round;
@@ -62,6 +63,9 @@ public class MissileFlightController extends BaseController
     @Override
     public void render(SpriteBatch batch, float delta, GameScreen.RenderUtils renderUtils)
     {
+        Rectangle scissors = renderUtils.getScissors(getGameController().getBoardRectangle());
+        ScissorStack.pushScissors(scissors);
+
         int n = min(round(ROCKET_SPEED * time), sparkles.length);
         int vanishIndex = TRAIL_LENGTH - round(TRAIL_VANISH_SPEED * time);
 
@@ -74,6 +78,9 @@ public class MissileFlightController extends BaseController
                 batch.draw(sparkleTexture, v.x, v.y, SPARKLES_SIZE, SPARKLES_SIZE);
             }
         }
+
+        batch.flush();
+        ScissorStack.popScissors();
     }
 
     @Override
