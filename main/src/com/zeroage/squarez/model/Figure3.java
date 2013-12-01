@@ -24,6 +24,12 @@ public class Figure3 extends Figure
     public void generate()
     {
         fromCode(figures[random.nextInt(figures.length)]);
+        if (prob(50)) {
+            flipHorizontally();
+        }
+        if (prob(50)) {
+            flipVertically();
+        }
     }
 
     @Override
