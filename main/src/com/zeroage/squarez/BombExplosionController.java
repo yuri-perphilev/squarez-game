@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,10 +64,16 @@ public class BombExplosionController extends BaseController
     @Override
     public void render(SpriteBatch batch, float delta, GameScreen.RenderUtils renderUtils)
     {
+        Rectangle scissors = renderUtils.getScissors(getGameController().getBoardRectangle());
+        ScissorStack.pushScissors(scissors);
+
         for (int i = 0; i < Math.min(index, sparkles.size()); i++) {
             Sparkle s = sparkles.get(i);
             batch.draw(sparkleTexture, s.pos.x, s.pos.y, SPARKLES_SIZE, SPARKLES_SIZE);
         }
+
+        batch.flush();
+        ScissorStack.popScissors();
     }
 
     @Override

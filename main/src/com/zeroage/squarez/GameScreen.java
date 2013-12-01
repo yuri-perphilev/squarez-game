@@ -8,7 +8,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 
 import static java.lang.Math.max;
 
@@ -142,5 +144,11 @@ public class GameScreen implements Screen
 
     public class RenderUtils
     {
+        public Rectangle getScissors(Rectangle clipBounds)
+        {
+            Rectangle scissors = new Rectangle();
+            ScissorStack.calculateScissors(camera, batch.getTransformMatrix(), clipBounds, scissors);
+            return scissors;
+        }
     }
 }
