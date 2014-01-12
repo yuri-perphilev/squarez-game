@@ -40,10 +40,10 @@ public class Figure3 extends Figure
     {
         if (prob(EXTRA_BLOCK_RATE)) {
             BlockType extraBlock = EXTRA_BLOCKS[random.nextInt(EXTRA_BLOCKS.length)];
-            return extraBlock.make();
+            return BlockFactory.make(extraBlock);
         }
         else {
-            return BlockType.BASIC.make();
+            return BlockFactory.make(BlockType.BASIC);
         }
     }
 

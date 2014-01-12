@@ -11,9 +11,9 @@ public class StickyTest extends BaseTest
     public void testEmptyCell() throws Exception
     {
         board.getFigure().clear();
-        board.getFigure().set(0, 2, BlockType.STICKY.make());
+        board.getFigure().set(0, 2, BlockFactory.make(BlockType.STICKY));
 
-        board.set(0, 0, BlockType.BASIC.make());
+        board.set(0, 0, BlockFactory.make(BlockType.BASIC));
 
         board.moveFigureUp();
 

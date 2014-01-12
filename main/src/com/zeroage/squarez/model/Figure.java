@@ -71,7 +71,7 @@ public class Figure extends Matrix
 
     protected Block makeBlock()
     {
-        return BlockType.BASIC.make();
+        return BlockFactory.make(BlockType.BASIC);
     }
 
     public List<int[]> findFreeNeighbours(int x, int y)
