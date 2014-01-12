@@ -32,7 +32,7 @@ public class BaseTest
 
     public void assertThatBlockHasType(Block block, BlockType blockType)
     {
-        assertThat("Block is of type " + blockType, blockType.isOfType(block), is(true));
+        assertThat("Block is of type " + blockType, block.getType(), is(blockType));
     }
 
     public void printBoard()

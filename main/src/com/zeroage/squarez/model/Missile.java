@@ -75,6 +75,12 @@ public class Missile extends AbstractBlock
     }
 
     @Override
+    public boolean actsOnExplode()
+    {
+        return true;
+    }
+
+    @Override
     public String toString()
     {
         return "^";
