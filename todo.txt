@@ -39,7 +39,17 @@ Game
 - A game mode that starts with randomly filled board
 - Game bonus: no borders - when moving near the certain edge, moving continues from the opposite edge
 
+Render
+------
+
+- Delay for bombs & missiles chain: they should act after some delay, but not immediately
+- Dissolving blocks should be displayed using correct texture
+- Exploded blocks should be displayed using correct texture
+- Block texture should rotate along with block for missile
+- Missile sprite
+
 Bugs
 ----
 
 - Clicking figure in pocket resets timer
+- Rotating small 2x2 and 2x3 figures
