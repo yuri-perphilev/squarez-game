@@ -2,14 +2,15 @@ package com.zeroage.squarez.model;
 
 public enum BlockType
 {
-    EMPTY {
-        @Override
-        protected Block make()
-        {
-            return null;
-        }
+    EMPTY
+            {
+                @Override
+                protected Block make()
+                {
+                    return null;
+                }
 
-    },
+            },
     BASIC
             {
                 @Override
@@ -37,22 +38,24 @@ public enum BlockType
                 }
 
             },
-    MISSILE {
-        @Override
-        protected Block make()
-        {
-            return new Missile();
-        }
+    MISSILE
+            {
+                @Override
+                protected Block make()
+                {
+                    return new Missile();
+                }
 
-    },
-    BOMB {
-        @Override
-        protected Block make()
-        {
-            return new Bomb();
-        }
+            },
+    BOMB
+            {
+                @Override
+                protected Block make()
+                {
+                    return new Bomb();
+                }
 
-    },
+            },
     CRACKED
             {
                 @Override
@@ -62,14 +65,15 @@ public enum BlockType
                 }
 
             },
-    STICKY {
-        @Override
-        protected Block make()
-        {
-            return new Sticky();
-        }
+    STICKY
+            {
+                @Override
+                protected Block make()
+                {
+                    return new Sticky();
+                }
 
-    };
+            };
 
 
     protected abstract Block make();
