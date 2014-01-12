@@ -2,12 +2,24 @@ package com.zeroage.squarez.model;
 
 public enum BlockType
 {
-    EMPTY,
-    BASIC,
-    STEEL_PYRAMID,
-    SHIELD,
-    MISSILE,
-    BOMB,
-    CRACKED,
-    STICKY
+    EMPTY(BlockTexture.EMPTY),
+    BASIC(BlockTexture.BASIC),
+    STEEL_PYRAMID(BlockTexture.STEEL_PYRAMID),
+    SHIELD(BlockTexture.SHIELD_THREE),
+    MISSILE(null),
+    BOMB(BlockTexture.BOMB),
+    CRACKED(BlockTexture.CRACKED),
+    STICKY(BlockTexture.STICKY);
+
+    private BlockTexture defaultTexture;
+
+    BlockType(BlockTexture defaultTexture)
+    {
+        this.defaultTexture = defaultTexture;
+    }
+
+    public BlockTexture getDefaultTexture()
+    {
+        return defaultTexture;
+    }
 }

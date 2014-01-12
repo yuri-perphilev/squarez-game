@@ -24,6 +24,23 @@ public class Missile extends AbstractBlock
         return BlockType.MISSILE;
     }
 
+    @Override
+    public BlockTexture getTexture()
+    {
+        switch (direction) {
+            case INC_Y:
+                return BlockTexture.MISSILE_UP;
+            case INC_X:
+                return BlockTexture.MISSILE_RIGHT;
+            case DEC_Y:
+                return BlockTexture.MISSILE_DOWN;
+            case DEC_X:
+                return BlockTexture.MISSILE_LEFT;
+            default:
+                return null;
+        }
+    }
+
     public Direction getDirection()
     {
         return direction;

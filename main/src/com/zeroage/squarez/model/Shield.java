@@ -12,7 +12,6 @@ public class Shield extends AbstractBlock
             return this;
         }
         else {
-            System.out.println("Dissolving!!!");
             return null;
         }
     }
@@ -21,6 +20,21 @@ public class Shield extends AbstractBlock
     public BlockType getType()
     {
         return BlockType.SHIELD;
+    }
+
+    @Override
+    public BlockTexture getTexture()
+    {
+        switch (level) {
+            case 3:
+                return BlockTexture.SHIELD_THREE;
+            case 2:
+                return BlockTexture.SHIELD_TWO;
+            case 1:
+                return BlockTexture.SHIELD_ONE;
+            default:
+                return null;
+        }
     }
 
     @Override
