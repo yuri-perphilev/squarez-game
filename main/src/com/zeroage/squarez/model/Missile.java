@@ -2,7 +2,7 @@ package com.zeroage.squarez.model;
 
 import java.util.Random;
 
-public class Missile implements Block
+public class Missile extends AbstractBlock
 {
     private Direction direction;
 
@@ -16,18 +16,6 @@ public class Missile implements Block
     public Missile(Direction direction)
     {
         this.direction = direction;
-    }
-
-    @Override
-    public boolean canDissolve()
-    {
-        return true;
-    }
-
-    @Override
-    public Block dissolve()
-    {
-        return null;
     }
 
     @Override
@@ -81,12 +69,6 @@ public class Missile implements Block
             n = 0;
         }
         direction = Direction.values()[n];
-    }
-
-    @Override
-    public boolean collidesWith(Block block)
-    {
-        return true;
     }
 
     @Override
