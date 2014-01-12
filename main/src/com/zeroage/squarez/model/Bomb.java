@@ -31,7 +31,7 @@ public class Bomb extends AbstractBlock
         for (int[] b : blocksToExplode) {
             Block block = board.get(b[0], b[1]);
             board.set(b[0], b[1], null);
-            if (BlockType.MISSILE.isOfType(block) || BlockType.BOMB.isOfType(block)) {
+            if (block != null && block.actsOnExplode()) {
                 block.act(b[0], b[1], board);
             }
         }
@@ -46,5 +46,11 @@ public class Bomb extends AbstractBlock
     public String toString()
     {
         return "@";
+    }
+
+    @Override
+    public boolean actsOnExplode()
+    {
+        return true;
     }
 }

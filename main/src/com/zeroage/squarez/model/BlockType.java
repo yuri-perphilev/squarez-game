@@ -9,11 +9,6 @@ public enum BlockType
             return null;
         }
 
-        @Override
-        protected boolean isOfType(Block block)
-        {
-            return block == null;
-        }
     },
     BASIC
             {
@@ -23,11 +18,6 @@ public enum BlockType
                     return new BasicBlock();
                 }
 
-                @Override
-                protected boolean isOfType(Block block)
-                {
-                    return block instanceof BasicBlock;
-                }
             },
     STEEL_PYRAMID
             {
@@ -37,11 +27,6 @@ public enum BlockType
                     return new SteelPyramid();
                 }
 
-                @Override
-                protected boolean isOfType(Block block)
-                {
-                    return block instanceof SteelPyramid;
-                }
             },
     SHIELD
             {
@@ -51,11 +36,6 @@ public enum BlockType
                     return new Shield();
                 }
 
-                @Override
-                protected boolean isOfType(Block block)
-                {
-                    return block instanceof Shield;
-                }
             },
     MISSILE {
         @Override
@@ -64,11 +44,6 @@ public enum BlockType
             return new Missile();
         }
 
-        @Override
-        protected boolean isOfType(Block block)
-        {
-            return block instanceof Missile;
-        }
     },
     BOMB {
         @Override
@@ -77,11 +52,6 @@ public enum BlockType
             return new Bomb();
         }
 
-        @Override
-        protected boolean isOfType(Block block)
-        {
-            return block instanceof Bomb;
-        }
     },
     CRACKED
             {
@@ -91,11 +61,6 @@ public enum BlockType
                     return new Cracked();
                 }
 
-                @Override
-                protected boolean isOfType(Block block)
-                {
-                    return block instanceof Cracked;
-                }
             },
     STICKY {
         @Override
@@ -104,14 +69,8 @@ public enum BlockType
             return new Sticky();
         }
 
-        @Override
-        protected boolean isOfType(Block block)
-        {
-            return block instanceof Sticky;
-        }
     };
 
 
     protected abstract Block make();
-    protected abstract boolean isOfType(Block block);
 }

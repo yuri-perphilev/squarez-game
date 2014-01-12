@@ -60,7 +60,8 @@ public class Matrix<T>
     {
         for (int i = x; i < x + w; i++) {
             for (int j = y; j < y + h; j++) {
-                if (!blockType.isOfType(get(i, j))) {
+                Block block = get(i, j);
+                if ((block == null && blockType != BlockType.EMPTY) || (block != null && block.getType() != blockType)) {
                     return false;
                 }
             }
