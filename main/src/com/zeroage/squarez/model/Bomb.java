@@ -4,21 +4,9 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-public class Bomb implements Block
+public class Bomb extends AbstractBlock
 {
     private int diameter = 9;
-
-    @Override
-    public boolean canDissolve()
-    {
-        return true;
-    }
-
-    @Override
-    public Block dissolve()
-    {
-        return null;
-    }
 
     @Override
     public BlockType getType()
@@ -49,24 +37,6 @@ public class Bomb implements Block
         }
 
         board.getListener().bomb(x, y, blocksToExplode);
-    }
-
-    @Override
-    public void rotateRight()
-    {
-
-    }
-
-    @Override
-    public void rotateLeft()
-    {
-
-    }
-
-    @Override
-    public boolean collidesWith(Block block)
-    {
-        return true;
     }
 
     @Override

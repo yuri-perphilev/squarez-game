@@ -1,6 +1,6 @@
 package com.zeroage.squarez.model;
 
-public class SteelPyramid implements Block
+public class SteelPyramid extends AbstractBlock
 {
     @Override
     public boolean canDissolve()
@@ -18,30 +18,6 @@ public class SteelPyramid implements Block
     public BlockType getType()
     {
         return BlockType.STEEL_PYRAMID;
-    }
-
-    @Override
-    public void act(int x, int y, Board board)
-    {
-
-    }
-
-    @Override
-    public void rotateRight()
-    {
-
-    }
-
-    @Override
-    public void rotateLeft()
-    {
-
-    }
-
-    @Override
-    public boolean collidesWith(Block block)
-    {
-        return true;
     }
 
     @Override

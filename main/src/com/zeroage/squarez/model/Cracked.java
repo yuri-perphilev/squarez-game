@@ -1,47 +1,11 @@
 package com.zeroage.squarez.model;
 
-public class Cracked implements Block, NeighbourAware
+public class Cracked extends AbstractBlock implements NeighbourAware
 {
-    @Override
-    public boolean canDissolve()
-    {
-        return true;
-    }
-
-    @Override
-    public Block dissolve()
-    {
-        return null;
-    }
-
     @Override
     public BlockType getType()
     {
         return BlockType.CRACKED;
-    }
-
-    @Override
-    public void act(int x, int y, Board board)
-    {
-
-    }
-
-    @Override
-    public void rotateRight()
-    {
-
-    }
-
-    @Override
-    public void rotateLeft()
-    {
-
-    }
-
-    @Override
-    public boolean collidesWith(Block block)
-    {
-        return true;
     }
 
     @Override
