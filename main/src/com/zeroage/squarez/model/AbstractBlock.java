@@ -46,4 +46,10 @@ public abstract class AbstractBlock implements Block
     {
         return false;
     }
+
+    @Override
+    public BlockTexture getTexture()
+    {
+        return getType().getDefaultTexture();
+    }
 }

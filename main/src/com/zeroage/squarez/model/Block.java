@@ -50,4 +50,10 @@ public interface Block
      * @return true if block perform additional action when exploded
      */
     boolean actsOnExplode();
+
+    /**
+     * Returns block layout corresponding to the current block state
+     * @return block texture
+     */
+    BlockTexture getTexture();
 }
