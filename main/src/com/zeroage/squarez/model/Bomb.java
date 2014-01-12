@@ -36,7 +36,10 @@ public class Bomb extends AbstractBlock
             }
         }
 
-        board.getListener().bomb(x, y, blocksToExplode);
+        GameEventListener listener = board.getListener();
+        if (listener != null) {
+            listener.bomb(x, y, blocksToExplode);
+        }
     }
 
     @Override
