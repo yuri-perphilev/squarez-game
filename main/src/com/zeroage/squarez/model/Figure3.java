@@ -4,12 +4,15 @@ public class Figure3 extends Figure
 {
     private static int[] figures = {
             463, 434, 54, 506, 214, 509, 467, 63,
-            495, 411, 94, 510, 159, 443, 57, 47,
+            411, 94, 510, 159, 443, 57, 47,
             247, 180, 250, 7, 95, 178, 189, 466,
-            486, 186, 79, 471, 491, 52, 319, 179
+            486, 186, 79, 471, 52, 319, 179
     };
 
+    private static int PUNISHMENT_BOX = 495; // 491 also
+
     public static final int EXTRA_BLOCK_RATE = 10;
+
 
     private static final BlockType[] EXTRA_BLOCKS = {
             BlockType.BOMB, BlockType.CRACKED, BlockType.MISSILE, BlockType.SHIELD, BlockType.STEEL_PYRAMID
