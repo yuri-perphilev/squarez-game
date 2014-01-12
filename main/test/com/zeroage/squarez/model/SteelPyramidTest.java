@@ -11,7 +11,7 @@ public class SteelPyramidTest extends BaseTest
     public void testSteelPyramid() throws Exception
     {
         board.fill(1, 1, 3, 3, BlockType.BASIC);
-        board.set(3, 3, BlockType.STEEL_PYRAMID.make());
+        board.set(3, 3, BlockFactory.make(BlockType.STEEL_PYRAMID));
 
         printBoard();
         assertThat("Not solid area", board.isSolidArea(1, 1, 3, 3), is(false));
@@ -30,7 +30,7 @@ public class SteelPyramidTest extends BaseTest
     {
         board.fill(0, 0, 4, 4, BlockType.BASIC);
 
-        board.set(3, 3, BlockType.STEEL_PYRAMID.make());
+        board.set(3, 3, BlockFactory.make(BlockType.STEEL_PYRAMID));
 
         assertThat("Not solid area", board.isSolidArea(0, 0, 4, 4), is(false));
         assertThat("Solid area", board.isSolidArea(0, 0, 3, 3), is(true));

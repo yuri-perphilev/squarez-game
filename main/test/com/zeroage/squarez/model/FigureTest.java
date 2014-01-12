@@ -17,7 +17,7 @@ public class FigureTest extends BaseTest
     public void testCreateBlock() throws Exception
     {
         figure.clear();
-        figure.set(1, 1, BlockType.BASIC.make());
+        figure.set(1, 1, BlockFactory.make(BlockType.BASIC));
         assertThatBlockHasType(figure.get(1, 1), BlockType.BASIC);
     }
 
@@ -25,10 +25,10 @@ public class FigureTest extends BaseTest
     public void testFindFreeNeighbours() throws Exception
     {
         figure.clear();
-        figure.set(0, 0, BlockType.BASIC.make());
-        figure.set(0, 1, BlockType.BASIC.make());
-        figure.set(1, 0, BlockType.BASIC.make());
-        figure.set(1, 2, BlockType.BASIC.make());
+        figure.set(0, 0, BlockFactory.make(BlockType.BASIC));
+        figure.set(0, 1, BlockFactory.make(BlockType.BASIC));
+        figure.set(1, 0, BlockFactory.make(BlockType.BASIC));
+        figure.set(1, 2, BlockFactory.make(BlockType.BASIC));
 
         List<int[]> freeNeighbours1 = figure.findFreeNeighbours(0, 0);
         assertThat(freeNeighbours1, hasSize(0));
@@ -63,10 +63,10 @@ public class FigureTest extends BaseTest
     public void testRotateFigureRight() throws Exception
     {
         figure.clear();
-        figure.set(0, 0, BlockType.BASIC.make());
-        figure.set(1, 0, BlockType.BASIC.make());
-        figure.set(2, 0, BlockType.BASIC.make());
-        figure.set(1, 1, BlockType.BASIC.make());
+        figure.set(0, 0, BlockFactory.make(BlockType.BASIC));
+        figure.set(1, 0, BlockFactory.make(BlockType.BASIC));
+        figure.set(2, 0, BlockFactory.make(BlockType.BASIC));
+        figure.set(1, 1, BlockFactory.make(BlockType.BASIC));
 
         figure.rotateRight();
 
@@ -93,10 +93,10 @@ public class FigureTest extends BaseTest
     public void testRotateFigureLeft() throws Exception
     {
         figure.clear();
-        figure.set(0, 0, BlockType.BASIC.make());
-        figure.set(1, 0, BlockType.BASIC.make());
-        figure.set(2, 0, BlockType.BASIC.make());
-        figure.set(1, 1, BlockType.BASIC.make());
+        figure.set(0, 0, BlockFactory.make(BlockType.BASIC));
+        figure.set(1, 0, BlockFactory.make(BlockType.BASIC));
+        figure.set(2, 0, BlockFactory.make(BlockType.BASIC));
+        figure.set(1, 1, BlockFactory.make(BlockType.BASIC));
 
         figure.rotateLeft();
 

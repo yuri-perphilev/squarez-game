@@ -120,9 +120,9 @@ public class BoardFigureInteractionTest extends BaseTest
     public void testSimpleCollision() throws Exception
     {
         board.getFigure().clear();
-        board.getFigure().set(0, 2, BlockType.BASIC.make());
+        board.getFigure().set(0, 2, BlockFactory.make(BlockType.BASIC));
 
-        board.set(0, 0, BlockType.BASIC.make());
+        board.set(0, 0, BlockFactory.make(BlockType.BASIC));
 
         board.moveFigureUp();
 
@@ -134,9 +134,9 @@ public class BoardFigureInteractionTest extends BaseTest
     public void testSimpleCollision2() throws Exception
     {
         board.getFigure().clear();
-        board.getFigure().set(0, 2, BlockType.BASIC.make());
+        board.getFigure().set(0, 2, BlockFactory.make(BlockType.BASIC));
 
-        board.set(0, 1, BlockType.BASIC.make());
+        board.set(0, 1, BlockFactory.make(BlockType.BASIC));
 
         board.moveFigureUp();
         board.moveFigureUp();
@@ -150,12 +150,12 @@ public class BoardFigureInteractionTest extends BaseTest
     public void testSimpleCollisionWithRotation() throws Exception
     {
         board.getFigure().clear();
-        board.getFigure().set(0, 1, BlockType.BASIC.make());
-        board.getFigure().set(1, 1, BlockType.BASIC.make());
-        board.getFigure().set(2, 1, BlockType.BASIC.make());
+        board.getFigure().set(0, 1, BlockFactory.make(BlockType.BASIC));
+        board.getFigure().set(1, 1, BlockFactory.make(BlockType.BASIC));
+        board.getFigure().set(2, 1, BlockFactory.make(BlockType.BASIC));
 
-        board.set(0, 0, BlockType.BASIC.make());
-        board.set(2, 0, BlockType.BASIC.make());
+        board.set(0, 0, BlockFactory.make(BlockType.BASIC));
+        board.set(2, 0, BlockFactory.make(BlockType.BASIC));
 
         board.moveFigureUp();
         board.moveFigureUp();
@@ -178,12 +178,12 @@ public class BoardFigureInteractionTest extends BaseTest
     public void testRotateCollision() throws Exception
     {
         board.getFigure().clear();
-        board.getFigure().set(1, 0, BlockType.BASIC.make());
-        board.getFigure().set(1, 1, BlockType.BASIC.make());
-        board.getFigure().set(1, 2, BlockType.BASIC.make());
+        board.getFigure().set(1, 0, BlockFactory.make(BlockType.BASIC));
+        board.getFigure().set(1, 1, BlockFactory.make(BlockType.BASIC));
+        board.getFigure().set(1, 2, BlockFactory.make(BlockType.BASIC));
 
-        board.set(0, 1, BlockType.BASIC.make());
-        board.set(2, 1, BlockType.BASIC.make());
+        board.set(0, 1, BlockFactory.make(BlockType.BASIC));
+        board.set(2, 1, BlockFactory.make(BlockType.BASIC));
 
         board.moveFigureUp();
         board.moveFigureUp();

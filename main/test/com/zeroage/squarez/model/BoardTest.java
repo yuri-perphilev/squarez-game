@@ -15,7 +15,7 @@ public class BoardTest extends BaseTest {
     {
         assertThat(board, notNullValue());
 
-        board.set(1, 1, BlockType.BASIC.make());
+        board.set(1, 1, BlockFactory.make(BlockType.BASIC));
         assertThatBlockHasType(board.get(1, 1), BlockType.BASIC);
     }
 
