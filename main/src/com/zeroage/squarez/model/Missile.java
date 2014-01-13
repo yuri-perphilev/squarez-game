@@ -27,18 +27,7 @@ public class Missile extends AbstractBlock
     @Override
     public BlockTexture getTexture()
     {
-        switch (direction) {
-            case INC_Y:
-                return BlockTexture.MISSILE_UP;
-            case INC_X:
-                return BlockTexture.MISSILE_RIGHT;
-            case DEC_Y:
-                return BlockTexture.MISSILE_DOWN;
-            case DEC_X:
-                return BlockTexture.MISSILE_LEFT;
-            default:
-                return null;
-        }
+        return direction.getTexture();
     }
 
     public Direction getDirection()
@@ -98,6 +87,12 @@ public class Missile extends AbstractBlock
     }
 
     @Override
+    public Block copy()
+    {
+        return new Missile(direction);
+    }
+
+    @Override
     public String toString()
     {
         return "^";
@@ -105,18 +100,20 @@ public class Missile extends AbstractBlock
 
     public static enum Direction
     {
-        INC_Y(0, 1),
-        INC_X(1, 0),
-        DEC_Y(0, -1),
-        DEC_X(-1, 0);
+        INC_Y(0, 1, BlockTexture.MISSILE_DOWN),
+        INC_X(1, 0, BlockTexture.MISSILE_RIGHT),
+        DEC_Y(0, -1, BlockTexture.MISSILE_UP),
+        DEC_X(-1, 0, BlockTexture.MISSILE_LEFT);
 
         private final int dx;
         private final int dy;
+        private final BlockTexture texture;
 
-        private Direction(int dx, int dy)
+        private Direction(int dx, int dy, BlockTexture texture)
         {
             this.dx = dx;
             this.dy = dy;
+            this.texture = texture;
         }
 
         public int getDx()
@@ -127,6 +124,11 @@ public class Missile extends AbstractBlock
         public int getDy()
         {
             return dy;
+        }
+
+        public BlockTexture getTexture()
+        {
+            return texture;
         }
     }
 }
