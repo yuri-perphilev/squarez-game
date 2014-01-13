@@ -53,7 +53,7 @@ public class BoardController extends BaseController
                 if (block != null) {
                     float blockX = r.x + x;
                     float blockY = r.y + (r.height) - y - 1;
-                    TextureRegion texture = getGameController().getTexture(block.getType());
+                    TextureRegion texture = getGameController().getTexture(block);
                     if (texture != null) {
                         batch.draw(texture, blockX, blockY, 1, 1);
                     }

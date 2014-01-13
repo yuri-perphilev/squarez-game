@@ -4,10 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.zeroage.squarez.model.Block;
-import com.zeroage.squarez.model.BlockType;
-import com.zeroage.squarez.model.Board;
-import com.zeroage.squarez.model.Matrix;
+import com.zeroage.squarez.model.*;
 
 import java.util.List;
 
@@ -67,16 +64,11 @@ public class DissolvingAreaController extends BaseController
                 float blockY = r.y + (r.height) - y - 1;
 
                 if (isBlockDissolving(x, y)) {
-                    BlockType  type;
                     if (block == null) {
                         batch.setColor(color.r, color.g, color.b, dissolveProgress / 100);
-                        type = BlockType.BASIC;
-                    }
-                    else {
-                        type = block.getType();
                     }
 
-                    batch.draw(getGameController().getTexture(type), blockX, blockY, 1, 1);
+                    batch.draw(getGameController().getTexture(block != null ? block : new BasicBlock()), blockX, blockY, 1, 1);
                     batch.setColor(color);
                 }
             }
