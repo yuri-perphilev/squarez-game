@@ -62,22 +62,28 @@ public class MissileTest extends BaseTest
         figure.set(0, 0, new Missile(Missile.Direction.INC_Y));
 
         figure.rotateLeft();
-        assertThat(((Missile)figure.get(0, 2)).getDirection(), is(Missile.Direction.INC_X));
+        assertThat(((Missile) figure.get(0, 2)).getDirection(), is(Missile.Direction.INC_X));
+        assertThat(figure.get(0, 2).getTexture(), is(BlockTexture.MISSILE_RIGHT));
 
         figure.rotateLeft();
-        assertThat(((Missile)figure.get(2, 2)).getDirection(), is(Missile.Direction.DEC_Y));
+        assertThat(((Missile) figure.get(2, 2)).getDirection(), is(Missile.Direction.DEC_Y));
+        assertThat(figure.get(2, 2).getTexture(), is(BlockTexture.MISSILE_DOWN));
 
         figure.rotateLeft();
-        assertThat(((Missile)figure.get(2, 0)).getDirection(), is(Missile.Direction.DEC_X));
+        assertThat(((Missile) figure.get(2, 0)).getDirection(), is(Missile.Direction.DEC_X));
+        assertThat(figure.get(2, 0).getTexture(), is(BlockTexture.MISSILE_LEFT));
 
         figure.rotateRight();
-        assertThat(((Missile)figure.get(2, 2)).getDirection(), is(Missile.Direction.DEC_Y));
+        assertThat(((Missile) figure.get(2, 2)).getDirection(), is(Missile.Direction.DEC_Y));
+        assertThat(figure.get(2, 2).getTexture(), is(BlockTexture.MISSILE_DOWN));
 
         figure.rotateRight();
-        assertThat(((Missile)figure.get(0, 2)).getDirection(), is(Missile.Direction.INC_X));
+        assertThat(((Missile) figure.get(0, 2)).getDirection(), is(Missile.Direction.INC_X));
+        assertThat(figure.get(0, 2).getTexture(), is(BlockTexture.MISSILE_RIGHT));
 
         figure.rotateRight();
-        assertThat(((Missile)figure.get(0, 0)).getDirection(), is(Missile.Direction.INC_Y));
+        assertThat(((Missile) figure.get(0, 0)).getDirection(), is(Missile.Direction.INC_Y));
+        assertThat(figure.get(0, 0).getTexture(), is(BlockTexture.MISSILE_UP));
 
     }
 }
