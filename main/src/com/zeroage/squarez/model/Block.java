@@ -56,4 +56,10 @@ public interface Block
      * @return block texture
      */
     BlockTexture getTexture();
+
+    /**
+     * Creates a copy of block, cloning its internal state
+     * @return a new clone of block
+     */
+    Block copy();
 }
