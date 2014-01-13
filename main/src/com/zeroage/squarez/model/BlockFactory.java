@@ -25,4 +25,16 @@ public class BlockFactory
                 return null;
         }
     }
+
+    public static Block copy(Block block)
+    {
+        if (block != null) {
+            Block copyBlock = block.copy();
+            if (copyBlock == null) {
+                copyBlock = make(block.getType());
+            }
+            return copyBlock;
+        }
+        return null;
+    }
 }

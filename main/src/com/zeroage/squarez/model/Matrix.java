@@ -26,7 +26,7 @@ public class Matrix<T>
             @Override
             public void cell(int x, int y, Block block)
             {
-                Matrix.this.set(x, y, block);
+                Matrix.this.set(x, y, BlockFactory.copy(block));
             }
         });
     }

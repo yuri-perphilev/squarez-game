@@ -52,4 +52,10 @@ public abstract class AbstractBlock implements Block
     {
         return getType().getDefaultTexture();
     }
+
+    @Override
+    public Block copy()
+    {
+        return null;
+    }
 }
