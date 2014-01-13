@@ -5,154 +5,196 @@ filter: Nearest,Nearest
 repeat: none
 acid
   rotate: false
-  xy: 22, 2
+  xy: 2, 42
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
-acid-container
+acid_container
   rotate: false
-  xy: 2, 2
+  xy: 2, 22
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 activator
   rotate: false
-  xy: 42, 2
+  xy: 22, 42
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 basic
   rotate: false
-  xy: 62, 2
+  xy: 2, 2
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 bomb
   rotate: false
-  xy: 82, 2
+  xy: 22, 22
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 cracked
   rotate: false
-  xy: 102, 2
+  xy: 42, 42
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 empty
   rotate: false
-  xy: 122, 2
+  xy: 22, 2
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 missile
   rotate: false
-  xy: 142, 2
+  xy: 42, 22
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+missile_down
+  rotate: false
+  xy: 62, 42
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+missile_left
+  rotate: false
+  xy: 42, 2
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+missile_right
+  rotate: false
+  xy: 62, 22
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+missile_up
+  rotate: false
+  xy: 82, 42
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 nosquarez
   rotate: false
-  xy: 162, 2
+  xy: 62, 2
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 punishment
   rotate: false
-  xy: 182, 2
-  size: 18, 18
-  orig: 18, 18
-  offset: 0, 0
-  index: -1
-pyramid
-  rotate: false
-  xy: 202, 2
+  xy: 82, 22
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 releaser
   rotate: false
-  xy: 222, 2
+  xy: 102, 42
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 rocket
   rotate: false
-  xy: 402, 5
+  xy: 182, 45
   size: 10, 15
   orig: 10, 15
   offset: 0, 0
   index: -1
-shield
+shield_one
   rotate: false
-  xy: 242, 2
+  xy: 82, 2
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
-shift-left
+shield_three
   rotate: false
-  xy: 262, 2
+  xy: 102, 22
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
-shift-right
+shield_two
   rotate: false
-  xy: 282, 2
+  xy: 122, 42
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+shift_left
+  rotate: false
+  xy: 102, 2
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+shift_right
+  rotate: false
+  xy: 122, 22
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 sparkle
   rotate: false
-  xy: 414, 8
+  xy: 162, 8
   size: 12, 12
   orig: 12, 12
   offset: 0, 0
   index: -1
 spikes
   rotate: false
-  xy: 302, 2
+  xy: 142, 42
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 splooge
   rotate: false
-  xy: 342, 2
+  xy: 142, 22
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 splooge-container
   rotate: false
-  xy: 322, 2
+  xy: 122, 2
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+steel_pyramid
+  rotate: false
+  xy: 162, 42
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 touch-activated
   rotate: false
-  xy: 362, 2
+  xy: 142, 2
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 unknown
   rotate: false
-  xy: 382, 2
+  xy: 162, 22
   size: 18, 18
   orig: 18, 18
   offset: 0, 0

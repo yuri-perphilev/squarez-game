@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static com.zeroage.squarez.TextureType.SPARKLE;
-import static com.zeroage.squarez.model.BlockType.*;
+import static com.zeroage.squarez.model.BlockTexture.*;
 
 public class GameController implements Controller
 {
@@ -33,7 +33,7 @@ public class GameController implements Controller
     private BoardController brd;
 
     private TextureAtlas atlas;
-    private Map<BlockType, TextureRegion> blockTextures = new HashMap<BlockType, TextureRegion>(32);
+    private Map<BlockTexture, TextureRegion> blockTextures = new HashMap<BlockTexture, TextureRegion>(32);
     private Map<TextureType, TextureRegion> textures = new HashMap<TextureType, TextureRegion>(32);
 
     public GameController(float viewportWidth, float viewportHeight, TextureAtlas atlas)
@@ -74,19 +74,21 @@ public class GameController implements Controller
 
     public void loadTextures()
     {
-        blockTextures.put(BASIC, atlas.findRegion("basic"));
-        blockTextures.put(STEEL_PYRAMID, atlas.findRegion("pyramid"));
-        blockTextures.put(CRACKED, atlas.findRegion("cracked"));
-        blockTextures.put(SHIELD, atlas.findRegion("shield"));
-        blockTextures.put(BOMB, atlas.findRegion("bomb"));
-        blockTextures.put(MISSILE, atlas.findRegion("missile"));
+        for (BlockTexture texture : BlockTexture.values()) {
+            blockTextures.put(texture, atlas.findRegion(texture.toString().toLowerCase()));
+        }
 
         textures.put(SPARKLE, atlas.findRegion("sparkle"));
     }
 
-    public TextureRegion getTexture(BlockType blockType)
+    public TextureRegion getTexture(Block block)
     {
-        return blockTextures.get(blockType);
+        if (block != null) {
+            return blockTextures.get(block.getTexture());
+        }
+        else {
+            return null;
+        }
     }
 
     public TextureRegion getTexture(TextureType blockType)
