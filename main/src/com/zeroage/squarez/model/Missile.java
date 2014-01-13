@@ -75,7 +75,7 @@ public class Missile extends AbstractBlock
         int n = direction.ordinal();
         n--;
         if (n < 0) {
-            n = Direction.values().length;
+            n = Direction.values().length - 1;
         }
         direction = Direction.values()[n];
     }
@@ -108,8 +108,7 @@ public class Missile extends AbstractBlock
         INC_Y(0, 1),
         INC_X(1, 0),
         DEC_Y(0, -1),
-        DEC_X(-1, 0),
-        ;
+        DEC_X(-1, 0);
 
         private final int dx;
         private final int dy;
