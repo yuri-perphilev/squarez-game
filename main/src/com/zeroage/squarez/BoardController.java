@@ -43,24 +43,12 @@ public class BoardController extends BaseController
     @Override
     public void render(final SpriteBatch batch, float delta, GameScreen.RenderUtils renderUtils)
     {
-        final Rectangle r = getGameController().getBoardRectangle();
-
         getGameController().getBoard().iterate(new Matrix.Callback()
         {
             @Override
             public void cell(int x, int y, Block block)
             {
-                if (block != null) {
-                    float blockX = r.x + x;
-                    float blockY = r.y + (r.height) - y - 1;
-                    TextureRegion texture = getGameController().getTexture(block);
-                    if (texture != null) {
-                        batch.draw(texture, blockX, blockY, 1, 1);
-                    }
-                    else {
-                        Gdx.app.error("SQZ", String.format("Texture for block %s (%s) not found!", block.getType(), block.getClass().getSimpleName()));
-                    }
-                }
+                getGameController().drawBlock(batch, block, x, y);
             }
         });
     }

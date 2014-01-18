@@ -1,9 +1,7 @@
 package com.zeroage.squarez;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -54,12 +52,11 @@ public class FigureController extends BaseController
         ScissorStack.pushScissors(scissors);
 
         Board b = getGameController().getBoard();
-        final Rectangle r = getGameController().getBoardRectangle();
 
-        renderFigure(batch, r, b.getFigure(), b.getFigureX(), b.getFigureY());
+        renderFigure(batch, b.getFigure(), b.getFigureX(), b.getFigureY());
 
         if (!b.figureInPocket()) {
-            renderFigure(batch, r, b.getNextFigure(), b.getNextFigureX(), b.getNextFigureY());
+            renderFigure(batch, b.getNextFigure(), b.getNextFigureX(), b.getNextFigureY());
         }
 
         batch.flush();
@@ -88,7 +85,6 @@ public class FigureController extends BaseController
         renderer.end();
     }
     private void renderFigure(final SpriteBatch batch,
-                              final Rectangle r,
                               Figure figure,
                               final int figureX,
                               final int figureY)
@@ -99,17 +95,7 @@ public class FigureController extends BaseController
             @Override
             public void cell(int x, int y, Block block)
             {
-                if (block != null) {
-                    float blockX = r.x + figureX + x;
-                    float blockY = r.y + (r.height - figureY) - y - 1;
-                    TextureRegion texture = getGameController().getTexture(block);
-                    if (texture != null) {
-                        batch.draw(texture, blockX, blockY, 1, 1);
-                    }
-                    else {
-                        Gdx.app.error("SQZ", String.format("Texture for block %s (%s) not found!", block.getType(), block.getClass().getSimpleName()));
-                    }
-                }
+                getGameController().drawBlock(batch, block, figureX + x, figureY + y);
             }
         });
     }
