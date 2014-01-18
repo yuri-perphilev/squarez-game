@@ -22,6 +22,8 @@ public class FigureController extends BaseController
     boolean figureTouched = false;
     boolean figureMoving = false;
 
+    public static final float FIGURE_TOUCH_DELTA = 0.5f; // board units
+
     protected FigureController(GameController gameController)
     {
         super(gameController);
@@ -223,6 +225,8 @@ public class FigureController extends BaseController
         private boolean touched = false;
         private Rectangle r = getGameController().getBoardRectangle();
 
+
+
         FigureTouchDetector(int figureX, int figureY, float touchX, float touchY)
         {
             this.figureX = figureX;
@@ -238,8 +242,8 @@ public class FigureController extends BaseController
                 float blockX = r.x + figureX + x;
                 float blockY = r.y + (r.height - figureY) - y - 1;
 
-                if (touchX >= blockX && touchX < blockX + 1 &&
-                    touchY >= blockY && touchY < blockY + 1) {
+                if (touchX >= blockX - FIGURE_TOUCH_DELTA && touchX <= blockX + 1 + FIGURE_TOUCH_DELTA &&
+                    touchY >= blockY - FIGURE_TOUCH_DELTA && touchY <= blockY + 1 + FIGURE_TOUCH_DELTA) {
                     touched = true;
                 }
             }
