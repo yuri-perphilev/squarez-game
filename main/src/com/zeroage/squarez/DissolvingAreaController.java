@@ -60,15 +60,12 @@ public class DissolvingAreaController extends BaseController
             @Override
             public void cell(int x, int y, Block block)
             {
-                float blockX = r.x + x;
-                float blockY = r.y + (r.height) - y - 1;
-
                 if (isBlockDissolving(x, y)) {
                     if (block == null) {
                         batch.setColor(color.r, color.g, color.b, dissolveProgress / 100);
                     }
 
-                    batch.draw(getGameController().getTexture(block != null ? block : new BasicBlock()), blockX, blockY, 1, 1);
+                    getGameController().drawBlock(batch, block != null ? block : new BasicBlock(), x, y);
                     batch.setColor(color);
                 }
             }

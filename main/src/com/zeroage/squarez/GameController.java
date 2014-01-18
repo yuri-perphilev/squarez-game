@@ -15,7 +15,6 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static com.zeroage.squarez.TextureType.SPARKLE;
-import static com.zeroage.squarez.model.BlockTexture.*;
 
 public class GameController implements Controller
 {
@@ -96,6 +95,21 @@ public class GameController implements Controller
     public TextureRegion getTexture(TextureType blockType)
     {
         return textures.get(blockType);
+    }
+
+    public void drawBlock(final SpriteBatch batch, Block block, int x, int y)
+    {
+        if (block != null) {
+            float blockX = boardRectangle.x + x;
+            float blockY = boardRectangle.y + (boardRectangle.height) - y - 1;
+            TextureRegion texture = getTexture(block);
+            if (texture != null) {
+                batch.draw(texture, blockX, blockY, 1, 1);
+            }
+            else {
+                Gdx.app.error("SQZ", String.format("Texture for block %s (%s) not found!", block.getType(), block.getClass().getSimpleName()));
+            }
+        }
     }
 
     @Override
