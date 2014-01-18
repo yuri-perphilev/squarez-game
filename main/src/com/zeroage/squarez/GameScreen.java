@@ -147,7 +147,7 @@ public class GameScreen implements Screen
         public Rectangle getScissors(Rectangle clipBounds)
         {
             Rectangle scissors = new Rectangle();
-            ScissorStack.calculateScissors(camera, batch.getTransformMatrix(), clipBounds, scissors);
+            ScissorStack.calculateScissors(camera, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), batch.getTransformMatrix(), clipBounds, scissors);
             return scissors;
         }
     }
