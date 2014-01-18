@@ -25,6 +25,7 @@ public class GameController implements Controller
 
     private Board board;
     private Rectangle boardRectangle;
+    private Rectangle sceneRectangle;
 
     private FrameController frame;
     private FigureController figure;
@@ -42,6 +43,7 @@ public class GameController implements Controller
         int boardHeight = Math.round(viewportHeight) - 7; // 2 (score line) + 3 (pocket) + 2 (spacers)
 
         boardRectangle = new Rectangle(0.5f, 2.5f, boardWidth, boardHeight);
+        sceneRectangle = new Rectangle(0, 0, viewportWidth, viewportHeight);
 
         board = new Board3(boardWidth, boardHeight, new MyGameEventListener());
 
@@ -164,6 +166,11 @@ public class GameController implements Controller
     public Rectangle getBoardRectangle()
     {
         return boardRectangle;
+    }
+
+    public Rectangle getSceneRectangle()
+    {
+        return sceneRectangle;
     }
 
     private class MyGameEventListener implements GameEventListener
