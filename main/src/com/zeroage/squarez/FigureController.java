@@ -110,7 +110,7 @@ public class FigureController extends BaseController
     {
         boolean nextFigureTouched = isNextFigureTouched(x, y);
         if (nextFigureTouched) {
-            getGameController().action();
+            getGameController().nextFigureTouchedOrTimeout();
         }
         if (isFigureTouched(x, y) || nextFigureTouched) {
             figureTouched = true;
