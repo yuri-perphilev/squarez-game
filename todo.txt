@@ -52,5 +52,3 @@ Bugs
 
 - Clicking figure in pocket resets timer
 - Rotating small 2x2 and 2x3 figures
-- Next figure disappears during missile trail animation
-- Touch area should be increased

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.zeroage.squarez.model.*;
 
 import static com.badlogic.gdx.math.MathUtils.round;
@@ -49,6 +50,9 @@ public class FigureController extends BaseController
     @Override
     public void render(SpriteBatch batch, float delta, GameScreen.RenderUtils renderUtils)
     {
+        Rectangle scissors = renderUtils.getScissors(getGameController().getSceneRectangle());
+        ScissorStack.pushScissors(scissors);
+
         Board b = getGameController().getBoard();
         final Rectangle r = getGameController().getBoardRectangle();
 
@@ -57,6 +61,9 @@ public class FigureController extends BaseController
         if (!b.figureInPocket()) {
             renderFigure(batch, r, b.getNextFigure(), b.getNextFigureX(), b.getNextFigureY());
         }
+
+        batch.flush();
+        ScissorStack.popScissors();
     }
 
     private void renderFigure(final ShapeRenderer renderer, final Rectangle r, Figure figure, Color color, final int figureX, final int figureY)
