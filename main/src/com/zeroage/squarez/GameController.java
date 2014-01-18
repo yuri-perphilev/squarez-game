@@ -65,7 +65,7 @@ public class GameController implements Controller
         return board;
     }
 
-    public void action()
+    public void nextFigureTouchedOrTimeout()
     {
         board.action();
         figure.stopMoving();

@@ -39,7 +39,7 @@ public class TimerController extends BaseController
         figureChangeTimer += delta;
         if (figureChangeTimer > GameController.FIGURE_LIFETIME) {
             reset();
-            getGameController().action();
+            getGameController().nextFigureTouchedOrTimeout();
         }
         return false;
     }
