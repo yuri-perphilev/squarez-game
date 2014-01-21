@@ -36,9 +36,9 @@ public class Bomb extends AbstractBlock
             }
         }
 
-        GameEventListener listener = board.getListener();
-        if (listener != null) {
-            listener.bomb(x, y, blocksToExplode);
+        GameCallbacks callbacks = board.getCallbacks();
+        if (callbacks != null) {
+            callbacks.bomb(x, y, blocksToExplode);
         }
     }
 

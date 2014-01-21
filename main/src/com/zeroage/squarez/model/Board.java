@@ -14,17 +14,17 @@ public class Board extends Matrix
     private int nextFigureY;
     private int figureSize = 3;
 
-    private GameEventListener listener;
+    private GameCallbacks callbacks;
 
     public Board(int boardWidth, int boardHeight)
     {
         this(boardWidth, boardHeight, null);
     }
 
-    public Board(int boardWidth, int boardHeight, GameEventListener listener)
+    public Board(int boardWidth, int boardHeight, GameCallbacks callbacks)
     {
         super(boardWidth, boardHeight);
-        this.listener = listener;
+        this.callbacks = callbacks;
         nextFigure();
         nextFigure();
     }
@@ -42,8 +42,8 @@ public class Board extends Matrix
 
 
         if (areas != null && !areas.isEmpty()) {
-            if (listener != null) {
-                listener.dissolving(areas);
+            if (callbacks != null) {
+                callbacks.dissolving(areas);
             }
             for (Area area : areas) {
                 dissolve(area);
@@ -275,9 +275,9 @@ public class Board extends Matrix
         return noCollisionsDetected(figure, newX, newY);
     }
 
-    public GameEventListener getListener()
+    public GameCallbacks getCallbacks()
     {
-        return listener;
+        return callbacks;
     }
 
     private boolean noCollisionsDetected(Figure f, final int newX, final int newY)

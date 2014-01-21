@@ -15,9 +15,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import static com.zeroage.squarez.TextureType.ROCKET;
-import static com.zeroage.squarez.TextureType.SPARKLE;
-
 public class GameController implements Controller
 {
     public static final int FIGURE_LIFETIME = 10;
@@ -46,7 +43,7 @@ public class GameController implements Controller
         boardRectangle = new Rectangle(0.5f, 2.5f, boardWidth, boardHeight);
         sceneRectangle = new Rectangle(0, 0, viewportWidth, viewportHeight);
 
-        board = new Board3(boardWidth, boardHeight, new MyGameEventListener());
+        board = new Board3(boardWidth, boardHeight, new MainGameCallbacks());
 
         board.set(5, 5, new BasicBlock());
         board.set(11, 11, new BasicBlock());
@@ -201,7 +198,7 @@ public class GameController implements Controller
         return sceneRectangle;
     }
 
-    private class MyGameEventListener implements GameEventListener
+    private class MainGameCallbacks implements GameCallbacks
     {
         @Override
         public void dissolving(List<Board.Area> areas)

@@ -3,7 +3,7 @@ package com.zeroage.squarez.model;
 import java.util.List;
 import java.util.Set;
 
-public interface GameEventListener
+public interface GameCallbacks
 {
     void dissolving(List<Board.Area> areas);
 
