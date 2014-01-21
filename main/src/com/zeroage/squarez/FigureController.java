@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.zeroage.squarez.model.*;
@@ -75,9 +76,8 @@ public class FigureController extends BaseController
             public void cell(int x, int y, Block block)
             {
                 if (block != null) {
-                    float blockX = r.x + figureX + x;
-                    float blockY = r.y + (r.height - figureY) - y - 1;
-                    renderer.rect(blockX, blockY, 1, 1);
+                    Vector2 pos = getGameController().toGameCoords(figureX + x, figureY + y, 1);
+                    renderer.rect(pos.x, pos.y, 1, 1);
                 }
             }
         });
@@ -216,9 +216,6 @@ public class FigureController extends BaseController
         private float touchX;
         private float touchY;
         private boolean touched = false;
-        private Rectangle r = getGameController().getBoardRectangle();
-
-
 
         FigureTouchDetector(int figureX, int figureY, float touchX, float touchY)
         {
@@ -232,11 +229,10 @@ public class FigureController extends BaseController
         public void cell(int x, int y, Block block)
         {
             if (block != null) {
-                float blockX = r.x + figureX + x;
-                float blockY = r.y + (r.height - figureY) - y - 1;
+                Vector2 pos = getGameController().toGameCoords(figureX + x, figureY + y, 1);
 
-                if (touchX >= blockX - FIGURE_TOUCH_DELTA && touchX <= blockX + 1 + FIGURE_TOUCH_DELTA &&
-                    touchY >= blockY - FIGURE_TOUCH_DELTA && touchY <= blockY + 1 + FIGURE_TOUCH_DELTA) {
+                if (touchX >= pos.x - FIGURE_TOUCH_DELTA && touchX <= pos.x + 1 + FIGURE_TOUCH_DELTA &&
+                    touchY >= pos.y - FIGURE_TOUCH_DELTA && touchY <= pos.y + 1 + FIGURE_TOUCH_DELTA) {
                     touched = true;
                 }
             }
