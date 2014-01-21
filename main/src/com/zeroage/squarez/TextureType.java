@@ -2,5 +2,5 @@ package com.zeroage.squarez;
 
 public enum TextureType
 {
-    SPARKLE
+    ROCKET, SPARKLE
 }

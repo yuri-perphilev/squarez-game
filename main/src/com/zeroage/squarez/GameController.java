@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.zeroage.squarez.model.*;
 
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import static com.zeroage.squarez.TextureType.ROCKET;
 import static com.zeroage.squarez.TextureType.SPARKLE;
 
 public class GameController implements Controller
@@ -79,7 +81,9 @@ public class GameController implements Controller
             blockTextures.put(texture, atlas.findRegion(texture.toString().toLowerCase()));
         }
 
-        textures.put(SPARKLE, atlas.findRegion("sparkle"));
+        for (TextureType textureType : TextureType.values()) {
+            textures.put(textureType, atlas.findRegion(textureType.toString().toLowerCase()));
+        }
     }
 
     public TextureRegion getTexture(Block block)
@@ -110,6 +114,16 @@ public class GameController implements Controller
                 Gdx.app.error("SQZ", String.format("Texture for block %s (%s) not found!", block.getType(), block.getClass().getSimpleName()));
             }
         }
+    }
+
+    public Vector2 toGameCoords(float x, float y)
+    {
+        return new Vector2(boardRectangle.x + x, boardRectangle.y + (boardRectangle.height) - y);
+    }
+
+    public Vector2 toGameCoords(float x, float y, float size)
+    {
+        return new Vector2(boardRectangle.x + x, boardRectangle.y + (boardRectangle.height) - y - size);
     }
 
     @Override
@@ -202,9 +216,9 @@ public class GameController implements Controller
         }
 
         @Override
-        public void missile(int fromX, int fromY, int toX, int toY, int dX, int dY)
+        public void missile(int fromX, int fromY, int toX, int toY, int dX, int dY, List<PositionedBlock> blocksToHit)
         {
-            addController(new MissileFlightController(GameController.this, fromX, fromY, toX, toY, dX, dY));
+            addController(new MissileFlightController(GameController.this, fromX, fromY, toX, toY, dX, dY, blocksToHit));
         }
     }
 }
