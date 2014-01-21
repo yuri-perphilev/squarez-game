@@ -55,7 +55,7 @@ public class MissileFlightController extends BaseController
         sparkleTexture = gameController.getTexture(TextureType.SPARKLE);
         rocketTexture = gameController.getTexture(TextureType.ROCKET);
 
-        rocketPos = new Vector2(r.x + fromX, r.y + (r.height - fromY) - ROCKET_SIZE);
+        rocketPos = getGameController().toGameCoords(fromX, fromY, ROCKET_SIZE);
         rocketSpeed = new Vector2(ROCKET_SPEED * dX, -ROCKET_SPEED * dY);
         d = new Vector2(dX,  -dY);
 
@@ -74,7 +74,7 @@ public class MissileFlightController extends BaseController
             for (int j = 0; j < sparkle.length; j++) {
                 float x1 = sx + random((1 + abs(dX) * k - SPARKLES_SIZE));
                 float y1 = sy + random((1 + abs(dY) * k - SPARKLES_SIZE));
-                sparkle[j] = new Vector2(r.x + x1, r.y + (r.height - y1) - SPARKLES_SIZE);
+                sparkle[j] = getGameController().toGameCoords(x1, y1, SPARKLES_SIZE);
                 spd[j] = new Vector2(random(SPARKLE_MAX_SPEED) * dX, random(SPARKLE_MAX_SPEED) * dY);
             }
             k = (i == sparkles.length - 2) ? k1 : 1;

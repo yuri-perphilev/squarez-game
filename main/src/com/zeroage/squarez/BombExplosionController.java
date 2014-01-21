@@ -46,7 +46,7 @@ public class BombExplosionController extends BaseController
             for (int i = 0; i < SPARKLES_PER_UNIT; i++) {
                 float px = x + random((1 - SPARKLES_SIZE));
                 float py = y + random((1 - SPARKLES_SIZE));
-                Vector2 pos = new Vector2(r.x + px, r.y + (r.height - py) - SPARKLES_SIZE);
+                Vector2 pos = getGameController().toGameCoords(px, py, SPARKLES_SIZE);
 
                 float vx = random(1f);
                 float vy = random(1f);

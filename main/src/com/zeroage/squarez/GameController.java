@@ -104,14 +104,14 @@ public class GameController implements Controller
     public void drawBlock(final SpriteBatch batch, Block block, int x, int y)
     {
         if (block != null) {
-            float blockX = boardRectangle.x + x;
-            float blockY = boardRectangle.y + (boardRectangle.height) - y - 1;
+            Vector2 pos = toGameCoords(x, y, 1);
             TextureRegion texture = getTexture(block);
             if (texture != null) {
-                batch.draw(texture, blockX, blockY, 1, 1);
+                batch.draw(texture, pos.x, pos.y, 1, 1);
             }
             else {
-                Gdx.app.error("SQZ", String.format("Texture for block %s (%s) not found!", block.getType(), block.getClass().getSimpleName()));
+                Gdx.app
+                   .error("SQZ", String.format("Texture for block %s (%s) not found!", block.getType(), block.getClass().getSimpleName()));
             }
         }
     }
@@ -123,7 +123,7 @@ public class GameController implements Controller
 
     public Vector2 toGameCoords(float x, float y, float size)
     {
-        return new Vector2(boardRectangle.x + x, boardRectangle.y + (boardRectangle.height) - y - size);
+        return new Vector2(boardRectangle.x + x, boardRectangle.y + (boardRectangle.height - y) - size);
     }
 
     @Override
