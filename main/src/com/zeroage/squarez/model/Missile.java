@@ -1,5 +1,7 @@
 package com.zeroage.squarez.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Missile extends AbstractBlock
@@ -41,11 +43,15 @@ public class Missile extends AbstractBlock
         // System.out.printf("Acting missile at %d, %d%n", x, y);
         int xorig = x;
         int yorig = y;
+
+        List<PositionedBlock> blocksToHit = new ArrayList<PositionedBlock>();
+
         while (x >= 0 && x < board.width && y>= 0 && y < board.height) {
             Block block = board.get(x, y);
             // System.out.printf("Clearing at %d, %d%n", x, y);
             board.set(x, y, null);
             if (block != null && block != this) {
+                blocksToHit.add(new PositionedBlock(block, x, y));
                 block.act(x, y, board);
             }
             x += direction.getDx();
@@ -54,7 +60,7 @@ public class Missile extends AbstractBlock
 
         GameEventListener listener = board.getListener();
         if (listener != null) {
-            listener.missile(xorig, yorig, x - direction.getDx(), y - direction.getDy(), direction.dx, direction.dy);
+            listener.missile(xorig, yorig, x - direction.getDx(), y - direction.getDy(), direction.dx, direction.dy, blocksToHit);
         }
     }
 
