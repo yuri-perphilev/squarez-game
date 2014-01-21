@@ -14,7 +14,7 @@ public class DissolvingAreaController extends BaseController
     private float dissolveTime = 0;
     private List<Board.Area> areas;
 
-
+    // todo: use list of PositionedBlock-s instead of areas
     protected DissolvingAreaController(GameController gameController, List<Board.Area> areas)
     {
         super(gameController);

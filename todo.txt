@@ -45,10 +45,11 @@ Render
 - Delay for bombs & missiles chain: they should act after some delay, but not immediately
 - Dissolving blocks should be displayed using correct texture
 - Exploded blocks should be displayed using correct texture
-- Missile sprite
+- Missile sprite must have correct orientation
 
 Bugs
 ----
 
 - Clicking figure in pocket resets timer
 - Rotating small 2x2 and 2x3 figures
+- Resolve scissors issue
