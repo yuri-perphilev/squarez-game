@@ -58,9 +58,9 @@ public class Missile extends AbstractBlock
             y += direction.getDy();
         }
 
-        GameEventListener listener = board.getListener();
-        if (listener != null) {
-            listener.missile(xorig, yorig, x - direction.getDx(), y - direction.getDy(), direction.dx, direction.dy, blocksToHit);
+        GameCallbacks callbacks = board.getCallbacks();
+        if (callbacks != null) {
+            callbacks.missile(xorig, yorig, x - direction.getDx(), y - direction.getDy(), direction.dx, direction.dy, blocksToHit);
         }
     }
 

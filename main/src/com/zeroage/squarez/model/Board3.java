@@ -7,9 +7,9 @@ public class Board3 extends Board
         super(boardWidth, boardHeight);
     }
 
-    public Board3(int boardWidth, int boardHeight, GameEventListener listener)
+    public Board3(int boardWidth, int boardHeight, GameCallbacks callbacks)
     {
-        super(boardWidth, boardHeight, listener);
+        super(boardWidth, boardHeight, callbacks);
     }
 
     @Override
