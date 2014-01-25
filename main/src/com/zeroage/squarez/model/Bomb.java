@@ -15,7 +15,7 @@ public class Bomb extends AbstractBlock
     }
 
     @Override
-    public void act(int x, int y, Board board)
+    public void act(int x, int y, Board board, float delay)
     {
         Random random = new Random();
         Set<int[]> blocksToExplode = new HashSet<int[]>();
@@ -32,7 +32,7 @@ public class Bomb extends AbstractBlock
             Block block = board.get(b[0], b[1]);
             board.set(b[0], b[1], null);
             if (block != null && block.actsOnExplode()) {
-                block.act(b[0], b[1], board);
+                block.act(b[0], b[1], board, 0);
             }
         }
 
