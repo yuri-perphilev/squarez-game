@@ -6,5 +6,5 @@ public interface MissileCallback
 {
     float getHitTime(int x, int y);
 
-    void fire(List<PositionedBlock> blocksToHit);
+    void fire(List<PositionedBlock> blocksToHit, float delay);
 }

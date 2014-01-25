@@ -39,6 +39,7 @@ public class MissileFlightController extends BaseController implements MissileCa
     private final TextureRegion rocketTexture;
 
     private float time = 0;
+    private float delay = 0;
     private List<PositionedBlock> blocksToHit;
 
     private boolean fired = false;
@@ -90,7 +91,14 @@ public class MissileFlightController extends BaseController implements MissileCa
     @Override
     public void render(SpriteBatch batch, float delta, GameScreen.RenderUtils renderUtils)
     {
-        if (!fired) {
+        for (PositionedBlock block : blocksToHit) {
+            Vector2 pos = getGameController().toGameCoords(block.getX(), block.getY(), 1);
+            if ((pos.x - rocketPos.x) * d.x >= 0 && (pos.y - rocketPos.y) * d.y >= 0) {
+                getGameController().drawBlock(batch, block.getBlock(), block.getX(), block.getY());
+            }
+        }
+
+        if (!fired || delay > 0) {
             return;
         }
 
@@ -100,13 +108,6 @@ public class MissileFlightController extends BaseController implements MissileCa
 
         int n = min(round(ROCKET_SPEED * time), sparkles.length);
         int vanishIndex = TRAIL_LENGTH - round(TRAIL_VANISH_SPEED * time);
-
-        for (PositionedBlock block : blocksToHit) {
-            Vector2 pos = getGameController().toGameCoords(block.getX(), block.getY(), 1);
-            if ((pos.x - rocketPos.x) * d.x >= 0 && (pos.y - rocketPos.y) * d.y >= 0) {
-                getGameController().drawBlock(batch, block.getBlock(), block.getX(), block.getY());
-            }
-        }
 
         for (int i = 0; i < n; i++) {
             Vector2[] sparkle = sparkles[i];
@@ -131,6 +132,11 @@ public class MissileFlightController extends BaseController implements MissileCa
             return false;
         }
 
+        if (delay > 0) {
+            delay -= delta;
+            return false;
+        }
+
         time += delta;
 
         rocketPos.add(rocketSpeed.x * delta, rocketSpeed.y * delta);
@@ -150,14 +156,15 @@ public class MissileFlightController extends BaseController implements MissileCa
     @Override
     public float getHitTime(int x, int y)
     {
-        return 0;
+        return max(abs(x - from.x), abs(y - from.y)) / ROCKET_SPEED ;
     }
 
     @Override
-    public void fire(List<PositionedBlock> blocksToHit)
+    public void fire(List<PositionedBlock> blocksToHit, float delay)
     {
         this.blocksToHit = blocksToHit;
         this.fired = true;
+        this.delay = delay;
     }
 
     private class Sparkle {
