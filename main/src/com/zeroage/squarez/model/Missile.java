@@ -38,7 +38,7 @@ public class Missile extends AbstractBlock
     }
 
     @Override
-    public void act(int x, int y, Board board)
+    public void act(int x, int y, Board board, float delay)
     {
         MissileCallback missileCallback = null;
         GameCallbacks callbacks = board.getCallbacks();
@@ -53,7 +53,7 @@ public class Missile extends AbstractBlock
             board.set(x, y, null);
             if (block != null && block != this) {
                 blocksToHit.add(new PositionedBlock(block, x, y));
-                block.act(x, y, board);
+                block.act(x, y, board, 0);
             }
             x += direction.dx;
             y += direction.dy;

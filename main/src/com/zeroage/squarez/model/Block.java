@@ -25,8 +25,9 @@ public interface Block
      * @param x x-coordinate of the block on board
      * @param y y-coordinate of the block on board
      * @param board board
+     * @param delay
      */
-    void act(int x, int y, Board board);
+    void act(int x, int y, Board board, float delay);
 
     /**
      * Update block state upon figure right rotation

@@ -65,7 +65,7 @@ public class Board extends Matrix
         // System.out.printf("Dissolving at (%d, %d)%n", x, y);
         Block block = get(x, y);
         if (block != null) {
-            block.act(x, y, this);
+            block.act(x, y, this, 0);
             set(x, y, block.dissolve());
             notifyNeighbourBlocks(x, y);
         }

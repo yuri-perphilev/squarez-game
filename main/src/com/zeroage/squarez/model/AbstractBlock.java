@@ -18,7 +18,7 @@ public abstract class AbstractBlock implements Block
     }
 
     @Override
-    public void act(int x, int y, Board board)
+    public void act(int x, int y, Board board, float delay)
     {
 
     }
