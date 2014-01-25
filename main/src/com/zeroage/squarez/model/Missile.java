@@ -40,27 +40,27 @@ public class Missile extends AbstractBlock
     @Override
     public void act(int x, int y, Board board)
     {
-        // System.out.printf("Acting missile at %d, %d%n", x, y);
-        int xorig = x;
-        int yorig = y;
+        MissileCallback missileCallback = null;
+        GameCallbacks callbacks = board.getCallbacks();
+        if (callbacks != null) {
+            missileCallback = callbacks.missile(x, y, direction.dx, direction.dy);
+        }
 
         List<PositionedBlock> blocksToHit = new ArrayList<PositionedBlock>();
 
         while (x >= 0 && x < board.width && y>= 0 && y < board.height) {
             Block block = board.get(x, y);
-            // System.out.printf("Clearing at %d, %d%n", x, y);
             board.set(x, y, null);
             if (block != null && block != this) {
                 blocksToHit.add(new PositionedBlock(block, x, y));
                 block.act(x, y, board);
             }
-            x += direction.getDx();
-            y += direction.getDy();
+            x += direction.dx;
+            y += direction.dy;
         }
 
-        GameCallbacks callbacks = board.getCallbacks();
-        if (callbacks != null) {
-            callbacks.missile(xorig, yorig, x - direction.getDx(), y - direction.getDy(), direction.dx, direction.dy, blocksToHit);
+        if (missileCallback != null) {
+            missileCallback.fire(blocksToHit);
         }
     }
 

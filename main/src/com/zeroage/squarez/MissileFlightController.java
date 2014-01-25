@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
+import com.zeroage.squarez.model.Board;
+import com.zeroage.squarez.model.MissileCallback;
 import com.zeroage.squarez.model.PositionedBlock;
 
 import java.util.List;
@@ -15,7 +17,7 @@ import static java.lang.Math.abs;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-public class MissileFlightController extends BaseController
+public class MissileFlightController extends BaseController implements MissileCallback
 {
     public static final int TRAIL_LENGTH = 3;
     public static final int SPARKLES_PER_UNIT = 10;
@@ -31,6 +33,7 @@ public class MissileFlightController extends BaseController
     private Vector2 rocketPos;
     private Vector2 rocketSpeed;
     private Vector2 d;
+    private Vector2 from;
 
     private final TextureRegion sparkleTexture;
     private final TextureRegion rocketTexture;
@@ -38,19 +41,13 @@ public class MissileFlightController extends BaseController
     private float time = 0;
     private List<PositionedBlock> blocksToHit;
 
-    public MissileFlightController(GameController gameController,
-                                   int fromX,
-                                   int fromY,
-                                   int toX,
-                                   int toY,
-                                   int dX,
-                                   int dY,
-                                   List<PositionedBlock> blocksToHit)
+    private boolean fired = false;
+
+    public MissileFlightController(GameController gameController, int fromX, int fromY, int dX, int dY)
     {
         super(gameController);
-        this.blocksToHit = blocksToHit;
 
-        Rectangle r = getGameController().getBoardRectangle();
+        this.from = new Vector2(fromX, fromY);
 
         sparkleTexture = gameController.getTexture(TextureType.SPARKLE);
         rocketTexture = gameController.getTexture(TextureType.ROCKET);
@@ -59,7 +56,7 @@ public class MissileFlightController extends BaseController
         rocketSpeed = new Vector2(ROCKET_SPEED * dX, -ROCKET_SPEED * dY);
         d = new Vector2(dX,  -dY);
 
-        int len = max(abs(fromX - toX) + 1, abs(fromY - toY) + 1);
+        int len = calcVapourTrailLength(getGameController().getBoard(), from, d);
         sparkles = new Vector2[len][SPARKLES_PER_UNIT];
         speed = new Vector2[len][SPARKLES_PER_UNIT];
 
@@ -81,9 +78,22 @@ public class MissileFlightController extends BaseController
         }
     }
 
+    private int calcVapourTrailLength(Board board, Vector2 from, Vector2 d)
+    {
+        return Math.round(d.x > 0 ? board.getWidth() - from.x :
+                          d.x < 0 ? from.x + 1 :
+                          d.y < 0 ? board.getHeight() - from.y :
+                          d.y > 0 ? from.y + 1 :
+                          0);
+    }
+
     @Override
     public void render(SpriteBatch batch, float delta, GameScreen.RenderUtils renderUtils)
     {
+        if (!fired) {
+            return;
+        }
+
         Rectangle r = getGameController().getBoardRectangle();
         Rectangle scissors = renderUtils.getScissors(r);
         ScissorStack.pushScissors(scissors);
@@ -117,6 +127,10 @@ public class MissileFlightController extends BaseController
     @Override
     public boolean update(float delta)
     {
+        if (!fired) {
+            return false;
+        }
+
         time += delta;
 
         rocketPos.add(rocketSpeed.x * delta, rocketSpeed.y * delta);
@@ -131,6 +145,19 @@ public class MissileFlightController extends BaseController
         }
 
         return time >= LIFETIME;
+    }
+
+    @Override
+    public float getHitTime(int x, int y)
+    {
+        return 0;
+    }
+
+    @Override
+    public void fire(List<PositionedBlock> blocksToHit)
+    {
+        this.blocksToHit = blocksToHit;
+        this.fired = true;
     }
 
     private class Sparkle {
