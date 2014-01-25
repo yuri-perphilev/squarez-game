@@ -53,14 +53,16 @@ public class Missile extends AbstractBlock
             board.set(x, y, null);
             if (block != null && block != this) {
                 blocksToHit.add(new PositionedBlock(block, x, y));
-                block.act(x, y, board, 0);
+
+                float hitTime = missileCallback != null ? missileCallback.getHitTime(x, y) : 0;
+                block.act(x, y, board, delay + hitTime);
             }
             x += direction.dx;
             y += direction.dy;
         }
 
         if (missileCallback != null) {
-            missileCallback.fire(blocksToHit);
+            missileCallback.fire(blocksToHit, delay);
         }
     }
 
