@@ -245,7 +245,7 @@ public class Board extends Matrix
     }
 
     public void rotateFigureLeft() {
-        Figure f = new Figure(figure);
+        Figure f = figure.copy();
         f.rotateLeft();
         if (noCollisionsDetected(f, figureX, figureY)) {
             figure.rotateLeft();
@@ -254,7 +254,7 @@ public class Board extends Matrix
     }
 
     public void rotateFigureRight() {
-        Figure f = new Figure(figure);
+        Figure f = figure.copy();
         f.rotateRight();
         if (noCollisionsDetected(f, figureX, figureY)) {
             figure.rotateRight();
