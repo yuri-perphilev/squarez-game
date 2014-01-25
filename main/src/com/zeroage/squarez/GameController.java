@@ -213,9 +213,9 @@ public class GameController implements Controller
         }
 
         @Override
-        public void missile(int fromX, int fromY, int toX, int toY, int dX, int dY, List<PositionedBlock> blocksToHit)
+        public MissileCallback missile(int fromX, int fromY, int dX, int dY)
         {
-            addController(new MissileFlightController(GameController.this, fromX, fromY, toX, toY, dX, dY, blocksToHit));
+            return addController(new MissileFlightController(GameController.this, fromX, fromY, dX, dY));
         }
     }
 }
