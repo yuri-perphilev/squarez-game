@@ -1,7 +1,5 @@
 package com.zeroage.squarez.model;
 
-import java.util.Arrays;
-
 public class Matrix<T>
 {
     protected final int width;
@@ -90,6 +88,11 @@ public class Matrix<T>
             }
         }
         return null;
+    }
+
+    public <M extends Matrix<T>> M copy()
+    {
+        return (M) new Matrix<T>(this);
     }
 
     public static interface Callback<T>

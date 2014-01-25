@@ -1,10 +1,6 @@
 TODO:
 ====
 
-Common logic
-------------
-- Small 2x2 figure rotation (it should rotate within 2x2 bounds, not 3x3)
-
 
 Block types
 -----------
@@ -51,5 +47,4 @@ Bugs
 ----
 
 - Clicking figure in pocket resets timer
-- Rotating small 2x2 and 2x3 figures
 - Resolve scissors issue

@@ -33,6 +33,12 @@ public class Figure extends Matrix
         super(figure);
     }
 
+    @Override
+    public Figure copy()
+    {
+        return new Figure(this);
+    }
+
     public void generate()
     {
         List<int[]> list = new ArrayList<int[]>();
