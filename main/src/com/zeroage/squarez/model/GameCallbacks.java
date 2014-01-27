@@ -7,7 +7,7 @@ public interface GameCallbacks
 {
     void dissolving(List<Board.Area> areas);
 
-    void bomb(int x, int y, Set<int[]> blocksToExplode);
+    BombCallback bomb(int x, int y);
 
     MissileCallback missile(int fromX, int fromY, int dX, int dY);
 }

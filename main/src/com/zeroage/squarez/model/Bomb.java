@@ -1,8 +1,6 @@
 package com.zeroage.squarez.model;
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 public class Bomb extends AbstractBlock
 {
@@ -17,28 +15,37 @@ public class Bomb extends AbstractBlock
     @Override
     public void act(int x, int y, Board board, float delay)
     {
+        BombCallback bombCallback = null;
+        GameCallbacks callbacks = board.getCallbacks();
+        if (callbacks != null) {
+            bombCallback = callbacks.bomb(x, y);
+        }
+
         Random random = new Random();
-        Set<int[]> blocksToExplode = new HashSet<int[]>();
+        Set<int[]> cellsToExplode = new HashSet<int[]>();
         for (int i = 0; i < 100; i++) {
             // triangular distribution
             int x1 = x + (int) ((random.nextDouble() + random.nextDouble() + random.nextDouble() + random.nextDouble()) * diameter / 4) - diameter / 2;
             int y1 = y + (int) ((random.nextDouble() + random.nextDouble() + random.nextDouble() + random.nextDouble()) * diameter / 4) - diameter / 2;
             if (x1 >= 0 && y1 >= 0 && x1 < board.getWidth() && y1 < board.getHeight()) {
-                blocksToExplode.add(new int[]{x1, y1});
+                cellsToExplode.add(new int[]{x1, y1});
             }
         }
 
-        for (int[] b : blocksToExplode) {
+        List<PositionedBlock> blocksToExplode = new ArrayList<PositionedBlock>();
+        for (int[] b : cellsToExplode) {
             Block block = board.get(b[0], b[1]);
+            blocksToExplode.add(new PositionedBlock(block, b[0], b[1]));
             board.set(b[0], b[1], null);
             if (block != null && block.actsOnExplode()) {
-                block.act(b[0], b[1], board, 0);
+
+                float blastTime = bombCallback != null ? bombCallback.getBlastTime(x, y) : 0;
+                block.act(b[0], b[1], board, delay + blastTime);
             }
         }
 
-        GameCallbacks callbacks = board.getCallbacks();
-        if (callbacks != null) {
-            callbacks.bomb(x, y, blocksToExplode);
+        if (bombCallback != null) {
+            bombCallback.explode(blocksToExplode, delay);
         }
     }
 
