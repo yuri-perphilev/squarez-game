@@ -12,7 +12,6 @@ import com.zeroage.squarez.model.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameController implements Controller
@@ -207,9 +206,9 @@ public class GameController implements Controller
         }
 
         @Override
-        public void bomb(int x, int y, Set<int[]> blocksToExplode)
+        public BombCallback bomb(int x, int y)
         {
-            addController(new BombExplosionController(GameController.this, x, y, blocksToExplode));
+            return addController(new BombExplosionController(GameController.this, x, y));
         }
 
         @Override
