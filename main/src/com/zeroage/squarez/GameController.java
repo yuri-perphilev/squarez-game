@@ -200,9 +200,9 @@ public class GameController implements Controller
     private class MainGameCallbacks implements GameCallbacks
     {
         @Override
-        public void dissolving(List<Board.Area> areas)
+        public void dissolving(List<PositionedBlock> blocks)
         {
-            addController(new DissolvingAreaController(GameController.this, areas));
+            addController(new DissolvingAreaController(GameController.this, blocks));
         }
 
         @Override

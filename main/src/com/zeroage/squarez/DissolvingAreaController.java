@@ -10,15 +10,15 @@ import java.util.List;
 
 public class DissolvingAreaController extends BaseController
 {
+    private final List<PositionedBlock> blocks;
     private float dissolveProgress = 100;
     private float dissolveTime = 0;
-    private List<Board.Area> areas;
 
     // todo: use list of PositionedBlock-s instead of areas
-    protected DissolvingAreaController(GameController gameController, List<Board.Area> areas)
+    protected DissolvingAreaController(GameController gameController, List<PositionedBlock> blocks)
     {
         super(gameController);
-        this.areas = areas;
+        this.blocks = blocks;
     }
 
     @Override
@@ -51,38 +51,14 @@ public class DissolvingAreaController extends BaseController
     @Override
     public void render(final SpriteBatch batch, float delta, GameScreen.RenderUtils renderUtils)
     {
-        final Rectangle r = getGameController().getBoardRectangle();
-
         final Color color = batch.getColor();
 
-        getGameController().getBoard().iterate(new Matrix.Callback()
-        {
-            @Override
-            public void cell(int x, int y, Block block)
-            {
-                if (isBlockDissolving(x, y)) {
-                    if (block == null) {
-                        batch.setColor(color.r, color.g, color.b, dissolveProgress / 100);
-                    }
-
-                    getGameController().drawBlock(batch, block != null ? block : new BasicBlock(), x, y);
-                    batch.setColor(color);
-                }
-            }
-        });
-    }
-
-    private boolean isBlockDissolving(int x, int y)
-    {
-        if (areas != null) {
-            Board.Area blockArea = new Board.Area(x, y, 1, 1);
-            for (Board.Area area : areas) {
-                if (area.contains(blockArea)) {
-                    return true;
-                }
-            }
+        batch.setColor(color.r, color.g, color.b, dissolveProgress / 100);
+        for (PositionedBlock block : blocks) {
+            getGameController().drawBlock(batch, block.getBlock(), block.getX(), block.getY());
         }
-        return false;
+
+        batch.setColor(color);
     }
 
     @Override

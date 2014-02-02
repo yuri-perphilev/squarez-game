@@ -5,7 +5,7 @@ import java.util.Set;
 
 public interface GameCallbacks
 {
-    void dissolving(List<Board.Area> areas);
+    void dissolving(List<PositionedBlock> blocks);
 
     BombCallback bomb(int x, int y);
 

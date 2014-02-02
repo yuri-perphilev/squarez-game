@@ -43,12 +43,27 @@ public class Board extends Matrix
 
         if (areas != null && !areas.isEmpty()) {
             if (callbacks != null) {
-                callbacks.dissolving(areas);
+                callbacks.dissolving(areasToBlockList(areas));
             }
             for (Area area : areas) {
                 dissolve(area);
             }
         }
+    }
+
+    private List<PositionedBlock> areasToBlockList(List<Area> areas)
+    {
+        List<PositionedBlock> result = new ArrayList<PositionedBlock>();
+
+        for (Area area : areas) {
+            for (int x = area.getX(); x < area.getX() + area.getW(); x++) {
+                for (int y = area.getY(); y < area.getY() + area.getH(); y++) {
+                    result.add(new PositionedBlock(get(x, y), x, y));
+                }
+            }
+        }
+
+        return result;
     }
 
     public void dissolve(Area area)
