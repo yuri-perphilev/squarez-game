@@ -251,6 +251,17 @@ public class Board extends Matrix
             figure.rotateLeft();
             applyNewFigurePosition();
         }
+        else {
+            // try to move rotated figure away from the wall
+            int newX = adjustFigureNearWallXPos(figureX);
+            int newY = adjustFigureNearWallYPos(figureY);
+            if (noCollisionsDetected(f, newX, newY)) {
+                figure.rotateLeft();
+                figureX = newX;
+                figureY = newY;
+                applyNewFigurePosition();
+            }
+        }
     }
 
     public void rotateFigureRight() {
@@ -260,6 +271,27 @@ public class Board extends Matrix
             figure.rotateRight();
             applyNewFigurePosition();
         }
+        else {
+            // try to move rotated figure away from the wall
+            int newX = adjustFigureNearWallXPos(figureX);
+            int newY = adjustFigureNearWallYPos(figureY);
+            if (noCollisionsDetected(f, newX, newY)) {
+                figure.rotateRight();
+                figureX = newX;
+                figureY = newY;
+                applyNewFigurePosition();
+            }
+        }
+    }
+
+    private int adjustFigureNearWallXPos(int x)
+    {
+        return x <= 2 ? x + 1 : x >= width - 2 ? x - 1 : x;
+    }
+
+    private int adjustFigureNearWallYPos(int y)
+    {
+        return y <= 2 ? y + 1 : y >= height - 2 ? y - 1 : y;
     }
 
     public boolean isMoveValid(int x, int y, int newX, int newY)
