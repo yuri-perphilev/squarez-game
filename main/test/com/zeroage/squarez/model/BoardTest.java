@@ -167,6 +167,7 @@ public class BoardTest extends BaseTest {
             }
         });
     }
+
     @Test
     public void testIntersectingAreasWithHoleDissolve() throws Exception {
         board.fill(1, 1, 3, 3, BlockType.BASIC);
@@ -197,5 +198,61 @@ public class BoardTest extends BaseTest {
         });
     }
 
+    @Test
+    public void testSmallFigureRotationNearWalls() throws Exception
+    {
+        Figure f = board.getFigure();
+        f.clear();
+        f.set(0, 1, new BasicBlock());
+        f.set(1, 1, new BasicBlock());
+        f.set(2, 1, new BasicBlock());
 
+        for (int i = 0; i < board.getHeight() + 3; i++) {
+            board.moveFigureUp();
+        }
+
+        board.rotateFigureLeft();
+
+        assertThat("Figure rotated 1", f.get(1, 0), notNullValue());
+        assertThat("Figure rotated 1", f.get(1, 1), notNullValue());
+        assertThat("Figure rotated 1", f.get(1, 2), notNullValue());
+        assertThat("Figure rotated 4", f.get(0, 1), nullValue());
+        assertThat("Figure rotated 4", f.get(2, 1), nullValue());
+
+        board.moveFigureLeft();
+        board.moveFigureLeft();
+        board.moveFigureLeft();
+
+        board.rotateFigureLeft();
+
+        assertThat("Figure rotated 2", f.get(0, 1), notNullValue());
+        assertThat("Figure rotated 2", f.get(1, 1), notNullValue());
+        assertThat("Figure rotated 2", f.get(2, 1), notNullValue());
+        assertThat("Figure rotated 4", f.get(1, 0), nullValue());
+        assertThat("Figure rotated 4", f.get(1, 2), nullValue());
+
+        for (int i = 0; i < board.getWidth() + 3; i++) {
+            board.moveFigureRight();
+        }
+
+        board.rotateFigureLeft();
+
+        assertThat("Figure rotated 3", f.get(1, 0), notNullValue());
+        assertThat("Figure rotated 3", f.get(1, 1), notNullValue());
+        assertThat("Figure rotated 3", f.get(1, 2), notNullValue());
+        assertThat("Figure rotated 4", f.get(0, 1), nullValue());
+        assertThat("Figure rotated 4", f.get(2, 1), nullValue());
+
+        for (int i = 0; i < board.getHeight() + 3; i++) {
+            board.moveFigureDown();
+        }
+
+        board.rotateFigureLeft();
+
+        assertThat("Figure rotated 4", f.get(0, 1), notNullValue());
+        assertThat("Figure rotated 4", f.get(1, 1), notNullValue());
+        assertThat("Figure rotated 4", f.get(2, 1), notNullValue());
+        assertThat("Figure rotated 4", f.get(1, 0), nullValue());
+        assertThat("Figure rotated 4", f.get(1, 2), nullValue());
+    }
 }

@@ -62,7 +62,6 @@ public class Figure3 extends Figure
         super.rotateRight();
         if (shiftOnRotate) {
             shift();
-            shift();
         }
     }
 
@@ -71,7 +70,6 @@ public class Figure3 extends Figure
     {
         super.rotateLeft();
         if (shiftOnRotate) {
-            shift();
             shift();
         }
     }
