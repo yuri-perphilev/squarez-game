@@ -406,9 +406,26 @@ public class Board extends Matrix
             @Override
             public void cell(int x, int y, Block block)
             {
+                int boardX = figureX + x;
+                int boardY = figureY + y;
                 if (block instanceof PositionChangeAware) {
                     PositionChangeAware positionChangeAware = (PositionChangeAware) block;
-                    positionChangeAware.positionChanged(x, y, figureX + x, figureY + y, Board.this);
+                    positionChangeAware.positionChanged(x, y, boardX, boardY, Board.this);
+                }
+                Block boardBlock = get(boardX, boardY);
+                if (boardBlock instanceof Interactable) {
+                    Interactable.InteractedBlocks blocks =
+                            ((Interactable) boardBlock).interactWith(block, x, y, boardX, boardY, Board.this);
+
+                    set(boardX, boardY, blocks.getActiveBlock());
+                    figure.set(x, y, blocks.getPassiveBlock());
+                }
+                else if (block instanceof Interactable) {
+                    Interactable.InteractedBlocks blocks =
+                            ((Interactable) block).interactWith(boardBlock, x, y, boardX, boardY, Board.this);
+
+                    figure.set(x, y, blocks.getActiveBlock());
+                    set(boardX, boardY, blocks.getPassiveBlock());
                 }
             }
         });

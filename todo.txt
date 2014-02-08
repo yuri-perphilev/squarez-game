@@ -9,7 +9,7 @@ x Bomb
 x Shield
 x Steel Pyramid
 x Cracked
-- Empty cell
+x Empty cell
 - Arrows
 - Splooge
 - Splooge container

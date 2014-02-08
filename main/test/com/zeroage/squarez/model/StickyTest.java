@@ -8,10 +8,11 @@ import static org.hamcrest.Matchers.*;
 public class StickyTest extends BaseTest
 {
     @Test
-    public void testEmptyCell() throws Exception
+    public void testStickyCellInFigure() throws Exception
     {
         board.getFigure().clear();
         board.getFigure().set(0, 2, BlockFactory.make(BlockType.STICKY));
+        board.getFigure().set(0, 1, BlockFactory.make(BlockType.BASIC));
 
         board.set(0, 0, BlockFactory.make(BlockType.BASIC));
 
@@ -21,6 +22,37 @@ public class StickyTest extends BaseTest
         assertThat(board.getFigureY(), is(-2));
 
         assertThatBlockHasType(board.getFigure().get(0, 2), BlockType.BASIC);
-        assertThatBlockHasType(board.get(0, 0), BlockType.EMPTY);
+        assertThat("Block on board is absent",  board.get(0, 0), nullValue());
+
+        board.moveFigureUp();
+
+        assertThat(board.getFigureX(), is(0));
+        assertThat(board.getFigureY(), is(-1));
     }
+
+    @Test
+    public void testStickyCellOnBoard() throws Exception
+    {
+        board.getFigure().clear();
+        board.getFigure().set(0, 2, BlockFactory.make(BlockType.BASIC));
+        board.getFigure().set(0, 1, BlockFactory.make(BlockType.BASIC));
+
+        board.set(0, 0, BlockFactory.make(BlockType.STICKY));
+
+        board.moveFigureUp();
+
+        assertThat(board.getFigureX(), is(0));
+        assertThat(board.getFigureY(), is(-2));
+
+        assertThat("Block on figure is empty", board.getFigure().get(0, 2), nullValue());
+        assertThatBlockHasType(board.get(0, 0), BlockType.BASIC);
+
+        board.moveFigureUp();
+
+        // the second block at 0,1 will not allow to move up
+
+        assertThat(board.getFigureX(), is(0));
+        assertThat(board.getFigureY(), is(-2));
+    }
+
 }
