@@ -45,65 +45,58 @@ cracked
   orig: 18, 18
   offset: 0, 0
   index: -1
-empty
+missile
   rotate: false
   xy: 22, 2
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
-missile
+missile_down
   rotate: false
   xy: 42, 22
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
-missile_down
+missile_left
   rotate: false
   xy: 62, 42
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
-missile_left
+missile_right
   rotate: false
   xy: 42, 2
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
-missile_right
+missile_up
   rotate: false
   xy: 62, 22
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
-missile_up
+nosquarez
   rotate: false
   xy: 82, 42
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
-nosquarez
+punishment
   rotate: false
   xy: 62, 2
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
-punishment
-  rotate: false
-  xy: 82, 22
-  size: 18, 18
-  orig: 18, 18
-  offset: 0, 0
-  index: -1
 releaser
   rotate: false
-  xy: 102, 42
+  xy: 82, 22
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
@@ -117,35 +110,35 @@ rocket
   index: -1
 shield_one
   rotate: false
-  xy: 82, 2
+  xy: 102, 42
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 shield_three
   rotate: false
-  xy: 102, 22
+  xy: 82, 2
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 shield_two
   rotate: false
-  xy: 122, 42
+  xy: 102, 22
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 shift_left
   rotate: false
-  xy: 102, 2
+  xy: 122, 42
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 shift_right
   rotate: false
-  xy: 122, 22
+  xy: 102, 2
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
@@ -159,26 +152,33 @@ sparkle
   index: -1
 spikes
   rotate: false
-  xy: 142, 42
+  xy: 122, 22
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 splooge
   rotate: false
-  xy: 142, 22
+  xy: 122, 2
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 splooge-container
   rotate: false
-  xy: 122, 2
+  xy: 142, 42
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 steel_pyramid
+  rotate: false
+  xy: 142, 22
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+sticky
   rotate: false
   xy: 162, 42
   size: 18, 18
