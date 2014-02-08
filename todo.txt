@@ -11,7 +11,7 @@ x Steel Pyramid
 x Cracked
 x Empty cell
 - Arrows
-- Splooge
+x Splooge
 - Splooge container
 - Acid
 - Acid container

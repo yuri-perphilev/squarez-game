@@ -9,7 +9,8 @@ public enum BlockType
     MISSILE(null),
     BOMB(BlockTexture.BOMB),
     CRACKED(BlockTexture.CRACKED),
-    STICKY(BlockTexture.STICKY);
+    STICKY(BlockTexture.STICKY),
+    SPLODGE(BlockTexture.SPLODGE);
 
     private BlockTexture defaultTexture;
 

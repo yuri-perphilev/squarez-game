@@ -157,16 +157,16 @@ spikes
   orig: 18, 18
   offset: 0, 0
   index: -1
-splooge
+splodge
   rotate: false
-  xy: 122, 2
+  xy: 142, 42
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
-splooge-container
+splodge_container
   rotate: false
-  xy: 142, 42
+  xy: 122, 2
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
