@@ -21,6 +21,8 @@ public class BlockFactory
                 return new SteelPyramid();
             case STICKY:
                 return new Sticky();
+            case SPLODGE:
+                return new Splodge();
             default:
                 return null;
         }

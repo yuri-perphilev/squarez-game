@@ -14,5 +14,6 @@ public enum BlockTexture
     MISSILE_RIGHT,
     BOMB,
     CRACKED,
+    SPLODGE,
     STICKY
 }
