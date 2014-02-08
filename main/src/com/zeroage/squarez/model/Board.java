@@ -42,11 +42,12 @@ public class Board extends Matrix
 
 
         if (areas != null && !areas.isEmpty()) {
-            if (callbacks != null) {
-                callbacks.dissolving(areasToBlockList(areas));
-            }
+            List<PositionedBlock> dissolvedBlocks = new ArrayList<PositionedBlock>();
             for (Area area : areas) {
-                dissolve(area);
+                dissolvedBlocks.addAll(dissolve(area));
+            }
+            if (callbacks != null) {
+                callbacks.dissolving(dissolvedBlocks);
             }
         }
     }
@@ -66,28 +67,38 @@ public class Board extends Matrix
         return result;
     }
 
-    public void dissolve(Area area)
+    public List<PositionedBlock> dissolve(Area area)
     {
+        List<PositionedBlock> result = new ArrayList<PositionedBlock>();
+
         for (int x = area.getX(); x < area.getX() + area.getW(); x++) {
             for (int y = area.getY(); y < area.getY() + area.getH(); y++) {
-                dissolveSingleBlock(x, y);
+                result.addAll(dissolveSingleBlock(x, y));
             }
         }
+        return result;
     }
 
-    private void dissolveSingleBlock(int x, int y)
+    private List<PositionedBlock> dissolveSingleBlock(int x, int y)
     {
-        // System.out.printf("Dissolving at (%d, %d)%n", x, y);
+        List<PositionedBlock> result = new ArrayList<PositionedBlock>();
+
         Block block = get(x, y);
         if (block != null) {
+            result.add(new PositionedBlock(block, x, y));
+
             block.act(x, y, this, 0);
             set(x, y, block.dissolve());
-            notifyNeighbourBlocks(x, y);
+            result.addAll(notifyNeighbourBlocks(x, y));
         }
+
+        return result;
     }
 
-    private void notifyNeighbourBlocks(int x, int y)
+    private List<PositionedBlock> notifyNeighbourBlocks(int x, int y)
     {
+        List<PositionedBlock> result = new ArrayList<PositionedBlock>();
+
         int neighbours[][] = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
         for (int[] point : neighbours) {
             int newX = x + point[0];
@@ -100,10 +111,12 @@ public class Board extends Matrix
                     case IGNORE:
                         break;
                     case DISSOLVE:
-                        dissolveSingleBlock(newX, newY);
+                        result.addAll(dissolveSingleBlock(newX, newY));
                 }
             }
         }
+
+        return result;
     }
 
     public List<Area> findAreas()
@@ -325,6 +338,11 @@ public class Board extends Matrix
     public GameCallbacks getCallbacks()
     {
         return callbacks;
+    }
+
+    public void setCallbacks(GameCallbacks callbacks)
+    {
+        this.callbacks = callbacks;
     }
 
     private boolean noCollisionsDetected(Figure f, final int newX, final int newY)
