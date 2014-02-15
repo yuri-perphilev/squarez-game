@@ -51,7 +51,7 @@ public class Missile extends AbstractBlock
         while (x >= 0 && x < board.width && y>= 0 && y < board.height) {
             Block block = board.get(x, y);
             board.set(x, y, null);
-            if (block != null && block != this) {
+            if (block != null && block != this && block.isExplosive()) {
                 blocksToHit.add(new PositionedBlock(block, x, y));
 
                 float hitTime = missileCallback != null ? missileCallback.getHitTime(x, y) : 0;

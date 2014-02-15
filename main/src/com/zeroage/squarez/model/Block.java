@@ -63,4 +63,6 @@ public interface Block
      * @return a new clone of block
      */
     Block copy();
+
+    boolean isExplosive();
 }
