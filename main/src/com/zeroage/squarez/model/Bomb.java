@@ -36,9 +36,9 @@ public class Bomb extends AbstractBlock
         for (int[] b : cellsToExplode) {
             Block block = board.get(b[0], b[1]);
             blocksToExplode.add(new PositionedBlock(block, b[0], b[1]));
-            if (block.isExplosive()) {
+            if (block != null && block.isExplosive()) {
                 board.set(b[0], b[1], null);
-                if (block != null && block.actsOnExplode()) {
+                if (block.actsOnExplode()) {
 
                     float blastTime = bombCallback != null ? bombCallback.getBlastTime(x, y) : 0;
                     block.act(b[0], b[1], board, delay + blastTime);
