@@ -58,4 +58,10 @@ public abstract class AbstractBlock implements Block
     {
         return null;
     }
+
+    @Override
+    public boolean isExplosive()
+    {
+        return true;
+    }
 }
