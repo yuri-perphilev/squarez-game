@@ -46,6 +46,14 @@ public class Board extends Matrix
             for (Area area : areas) {
                 dissolvedBlocks.addAll(dissolve(area));
             }
+
+            for (PositionedBlock dissolvedBlock : dissolvedBlocks) {
+                if (dissolvedBlock instanceof PostActionBlock) {
+                    PostActionBlock postActionBlock = (PostActionBlock) dissolvedBlock;
+                    postActionBlock.postAction(this);
+                }
+            }
+
             if (callbacks != null) {
                 callbacks.dissolving(dissolvedBlocks);
             }
