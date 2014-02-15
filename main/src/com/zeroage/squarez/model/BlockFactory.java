@@ -23,6 +23,8 @@ public class BlockFactory
                 return new Sticky();
             case SPLODGE:
                 return new Splodge();
+            case SPLODGE_CONTAINER:
+                return new SplodgeContainer();
             default:
                 return null;
         }

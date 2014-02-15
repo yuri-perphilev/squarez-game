@@ -14,7 +14,8 @@ public class Figure3 extends Figure
     public static final int EXTRA_BLOCK_RATE = 10;
 
     private static final BlockType[] EXTRA_BLOCKS = {
-            BlockType.BOMB, BlockType.CRACKED, BlockType.MISSILE, BlockType.SHIELD, BlockType.STEEL_PYRAMID, BlockType.STICKY
+            BlockType.BOMB, BlockType.CRACKED, BlockType.MISSILE, BlockType.SHIELD, BlockType.STEEL_PYRAMID, BlockType.STICKY,
+            BlockType.SPLODGE_CONTAINER,
     };
 
     private boolean shiftOnRotate;
