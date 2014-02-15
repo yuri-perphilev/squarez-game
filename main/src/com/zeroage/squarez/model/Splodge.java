@@ -32,6 +32,12 @@ public class Splodge extends AbstractBlock implements Interactable
     }
 
     @Override
+    public boolean isExplosive()
+    {
+        return false;
+    }
+
+    @Override
     public String toString()
     {
         return "~";
