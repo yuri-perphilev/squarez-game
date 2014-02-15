@@ -48,8 +48,8 @@ public class Board extends Matrix
             }
 
             for (PositionedBlock dissolvedBlock : dissolvedBlocks) {
-                if (dissolvedBlock instanceof PostActionBlock) {
-                    PostActionBlock postActionBlock = (PostActionBlock) dissolvedBlock;
+                if (dissolvedBlock.getBlock() instanceof PostActionBlock) {
+                    PostActionBlock postActionBlock = (PostActionBlock) dissolvedBlock.getBlock();
                     postActionBlock.postAction(this);
                 }
             }
