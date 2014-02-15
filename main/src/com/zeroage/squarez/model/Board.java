@@ -60,21 +60,6 @@ public class Board extends Matrix
         }
     }
 
-    private List<PositionedBlock> areasToBlockList(List<Area> areas)
-    {
-        List<PositionedBlock> result = new ArrayList<PositionedBlock>();
-
-        for (Area area : areas) {
-            for (int x = area.getX(); x < area.getX() + area.getW(); x++) {
-                for (int y = area.getY(); y < area.getY() + area.getH(); y++) {
-                    result.add(new PositionedBlock(get(x, y), x, y));
-                }
-            }
-        }
-
-        return result;
-    }
-
     public List<PositionedBlock> dissolve(Area area)
     {
         List<PositionedBlock> result = new ArrayList<PositionedBlock>();
