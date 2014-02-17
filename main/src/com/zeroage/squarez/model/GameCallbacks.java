@@ -12,4 +12,6 @@ public interface GameCallbacks
     MissileCallback missile(int fromX, int fromY, int dX, int dY);
 
     void releaseSplodge(int x, int y, List<PositionedBlock> blocks, float delay);
+
+    void releaseAcid(int x, int y, List<PositionedBlock> blocks, float delay);
 }

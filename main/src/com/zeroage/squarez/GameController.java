@@ -222,5 +222,11 @@ public class GameController implements Controller
         {
             //addController(new SplodgeContainerController(blocks, delay)); // TODO
         }
+
+        @Override
+        public void releaseAcid(int x, int y, List<PositionedBlock> blocks, float delay)
+        {
+            //addController(new AcidContainerController(blocks, delay)); // TODO
+        }
     }
 }

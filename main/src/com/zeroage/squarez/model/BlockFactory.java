@@ -25,6 +25,10 @@ public class BlockFactory
                 return new Splodge();
             case SPLODGE_CONTAINER:
                 return new SplodgeContainer();
+            case ACID:
+                return new Acid();
+            case ACID_CONTAINER:
+                return new AcidContainer();
             default:
                 return null;
         }

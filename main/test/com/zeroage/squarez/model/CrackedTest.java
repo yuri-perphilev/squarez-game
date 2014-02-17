@@ -89,6 +89,12 @@ public class CrackedTest extends BaseTest
 
         }
 
+        @Override
+        public void releaseAcid(int x, int y, List<PositionedBlock> blocks, float delay)
+        {
+
+        }
+
         public List<PositionedBlock> getDissolvedBlocks()
         {
             return dissolvedBlocks;
