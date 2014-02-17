@@ -16,5 +16,5 @@ public enum BlockTexture
     CRACKED,
     SPLODGE,
     SPLODGE_CONTAINER,
-    STICKY
+    ACID, ACID_CONTAINER, STICKY
 }

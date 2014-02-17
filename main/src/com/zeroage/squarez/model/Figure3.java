@@ -15,7 +15,7 @@ public class Figure3 extends Figure
 
     private static final BlockType[] EXTRA_BLOCKS = {
             BlockType.BOMB, BlockType.CRACKED, BlockType.MISSILE, BlockType.SHIELD, BlockType.STEEL_PYRAMID, BlockType.STICKY,
-            BlockType.SPLODGE_CONTAINER,
+            BlockType.SPLODGE_CONTAINER, BlockType.ACID_CONTAINER,
     };
 
     private boolean shiftOnRotate;

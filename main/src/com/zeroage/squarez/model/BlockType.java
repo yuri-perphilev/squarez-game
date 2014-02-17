@@ -11,7 +11,9 @@ public enum BlockType
     CRACKED(BlockTexture.CRACKED),
     STICKY(BlockTexture.STICKY),
     SPLODGE(BlockTexture.SPLODGE),
-    SPLODGE_CONTAINER(BlockTexture.SPLODGE_CONTAINER);
+    SPLODGE_CONTAINER(BlockTexture.SPLODGE_CONTAINER),
+    ACID(BlockTexture.ACID),
+    ACID_CONTAINER(BlockTexture.ACID_CONTAINER);
 
     private BlockTexture defaultTexture;
 
