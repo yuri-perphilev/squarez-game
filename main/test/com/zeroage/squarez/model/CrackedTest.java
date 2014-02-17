@@ -83,6 +83,12 @@ public class CrackedTest extends BaseTest
             return null;
         }
 
+        @Override
+        public void releaseSplodge(int x, int y, List<PositionedBlock> blocks, float delay)
+        {
+
+        }
+
         public List<PositionedBlock> getDissolvedBlocks()
         {
             return dissolvedBlocks;
