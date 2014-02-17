@@ -1,7 +1,18 @@
 package com.zeroage.squarez.model;
 
+import java.util.Random;
+
 public class BlockFactory
 {
+    private static final BlockType[] EXTRA_BLOCKS = {
+            BlockType.BOMB, BlockType.CRACKED, BlockType.MISSILE, BlockType.SHIELD, BlockType.STEEL_PYRAMID, BlockType.STICKY,
+            BlockType.SPLODGE_CONTAINER, BlockType.ACID_CONTAINER,
+    };
+
+    public static final int EXTRA_BLOCK_RATE = 10;
+
+    private static Random random = new Random();
+
     public static Block make(BlockType type)
     {
         switch (type) {
@@ -32,6 +43,28 @@ public class BlockFactory
             default:
                 return null;
         }
+    }
+
+    public static Block makeRandomBlock()
+    {
+        if (prob(EXTRA_BLOCK_RATE)) {
+            return makeRandomExtraBlock();
+        }
+        else {
+            return BlockFactory.make(BlockType.BASIC);
+        }
+    }
+
+    public static Block makeRandomExtraBlock()
+    {
+        BlockType extraBlock = EXTRA_BLOCKS[random.nextInt(EXTRA_BLOCKS.length)];
+        return BlockFactory.make(extraBlock);
+    }
+
+
+    private static boolean prob(int rate)
+    {
+        return random.nextInt(100) < rate;
     }
 
     public static Block copy(Block block)

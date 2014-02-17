@@ -11,13 +11,6 @@ public class Figure3 extends Figure
 
     private static int RING_OF_SHIELD = 495; // 491 also may be used
 
-    public static final int EXTRA_BLOCK_RATE = 10;
-
-    private static final BlockType[] EXTRA_BLOCKS = {
-            BlockType.BOMB, BlockType.CRACKED, BlockType.MISSILE, BlockType.SHIELD, BlockType.STEEL_PYRAMID, BlockType.STICKY,
-            BlockType.SPLODGE_CONTAINER, BlockType.ACID_CONTAINER,
-    };
-
     private boolean shiftOnRotate;
 
     public Figure3()
@@ -119,13 +112,7 @@ public class Figure3 extends Figure
     @Override
     protected Block makeBlock()
     {
-        if (prob(EXTRA_BLOCK_RATE)) {
-            BlockType extraBlock = EXTRA_BLOCKS[random.nextInt(EXTRA_BLOCKS.length)];
-            return BlockFactory.make(extraBlock);
-        }
-        else {
-            return BlockFactory.make(BlockType.BASIC);
-        }
+        return BlockFactory.makeRandomBlock();
     }
 
     private boolean prob(int rate)
