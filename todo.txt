@@ -12,9 +12,9 @@ x Cracked
 x Empty cell
 - Arrows
 x Splooge
-- Splooge container
-- Acid
-- Acid container
+x Splooge container
+x Acid
+x Acid container
 - Unknown
 - Spikes
 - Activator
