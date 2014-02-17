@@ -12,6 +12,7 @@ import com.zeroage.squarez.model.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameController implements Controller
@@ -44,10 +45,7 @@ public class GameController implements Controller
 
         board = new Board3(boardWidth, boardHeight, new MainGameCallbacks());
 
-        board.set(5, 5, new BasicBlock());
-        board.set(11, 11, new BasicBlock());
-        board.set(3, 13, new BasicBlock());
-        board.set(10, 2, new BasicBlock());
+        fillBoardWithRandomBlocks(boardWidth, boardHeight);
 
         this.atlas = atlas;
         loadTextures();
@@ -57,6 +55,20 @@ public class GameController implements Controller
         figure = addController(new FigureController(this));
         timer = addController(new TimerController(this));
         trail = addController(new TrailController(this));
+    }
+
+    private void fillBoardWithRandomBlocks(int boardWidth, int boardHeight)
+    {
+        Random random = new Random();
+        int n = random.nextInt(15) + 5;
+
+        while (n > 0) {
+            int x = random.nextInt(boardWidth);
+            int y = random.nextInt(boardHeight);
+            if (x < 4 && y < 4) continue;
+            board.set(x, y, BlockFactory.makeRandomBlock());
+            n--;
+        }
     }
 
     public Board getBoard()
