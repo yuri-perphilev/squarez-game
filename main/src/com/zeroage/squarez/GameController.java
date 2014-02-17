@@ -216,5 +216,11 @@ public class GameController implements Controller
         {
             return addController(new MissileFlightController(GameController.this, fromX, fromY, dX, dY));
         }
+
+        @Override
+        public void releaseSplodge(int x, int y, List<PositionedBlock> blocks, float delay)
+        {
+            //addController(new SplodgeContainerController(blocks, delay)); // TODO
+        }
     }
 }

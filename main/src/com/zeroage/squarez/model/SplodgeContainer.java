@@ -1,5 +1,8 @@
 package com.zeroage.squarez.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SplodgeContainer extends AbstractBlock implements PostActionBlock
 {
     private int x;
@@ -29,12 +32,20 @@ public class SplodgeContainer extends AbstractBlock implements PostActionBlock
     @Override
     public void postAction(Board board)
     {
+        List<PositionedBlock> blocks = new ArrayList<PositionedBlock>();
         for (int bx = x - 1; bx < x + 2; bx++) {
             for (int by = y - 1; by < y + 2; by++) {
                 if (board.get(bx, by) == null) {
-                    board.set(bx, by, new Splodge());
+                    Splodge splodge = new Splodge();
+                    board.set(bx, by, splodge);
+                    blocks.add(new PositionedBlock(splodge, bx, by));
                 }
             }
+        }
+
+        GameCallbacks callbacks = board.getCallbacks();
+        if (callbacks != null) {
+            callbacks.releaseSplodge(x, y, blocks, delay);
         }
     }
 
