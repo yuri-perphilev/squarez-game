@@ -38,9 +38,6 @@ Game
 Render
 ------
 
-- Delay for bombs & missiles chain: they should act after some delay, but not immediately
-- Dissolving blocks should be displayed using correct texture
-- Exploded blocks should be displayed using correct texture
 - Missile sprite must have correct orientation
 
 Bugs
@@ -48,3 +45,6 @@ Bugs
 
 - Clicking figure in pocket resets timer
 - Resolve scissors issue
+- Shield sometimes disappears at the second pass
+- Acid & Splooge containers should release contents on explode/missile hit
+- After figure burning by acid/splooge rotation of small parts (1x2,2x2) is not correct sometimes (?)
