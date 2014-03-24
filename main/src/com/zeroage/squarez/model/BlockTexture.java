@@ -16,5 +16,11 @@ public enum BlockTexture
     CRACKED,
     SPLODGE,
     SPLODGE_CONTAINER,
-    ACID, ACID_CONTAINER, STICKY
+    ACID,
+    ACID_CONTAINER,
+    STICKY,
+    WALL_LEFT,
+    WALL_RIGHT,
+    WALL_UP,
+    WALL_DOWN
 }

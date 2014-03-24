@@ -6,7 +6,7 @@ public class BlockFactory
 {
     private static final BlockType[] EXTRA_BLOCKS = {
             BlockType.BOMB, BlockType.CRACKED, BlockType.MISSILE, BlockType.SHIELD, BlockType.STEEL_PYRAMID, BlockType.STICKY,
-            BlockType.SPLODGE_CONTAINER, BlockType.ACID_CONTAINER,
+            BlockType.SPLODGE_CONTAINER, BlockType.ACID_CONTAINER, BlockType.WALL_MOVE,
     };
 
     public static final int EXTRA_BLOCK_RATE = 10;
@@ -40,6 +40,8 @@ public class BlockFactory
                 return new Acid();
             case ACID_CONTAINER:
                 return new AcidContainer();
+            case WALL_MOVE:
+                return new WallMove();
             default:
                 return null;
         }

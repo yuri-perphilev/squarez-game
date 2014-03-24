@@ -13,7 +13,8 @@ public enum BlockType
     SPLODGE(BlockTexture.SPLODGE),
     SPLODGE_CONTAINER(BlockTexture.SPLODGE_CONTAINER),
     ACID(BlockTexture.ACID),
-    ACID_CONTAINER(BlockTexture.ACID_CONTAINER);
+    ACID_CONTAINER(BlockTexture.ACID_CONTAINER),
+    WALL_MOVE(null);
 
     private BlockTexture defaultTexture;
 
