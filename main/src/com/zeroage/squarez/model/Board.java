@@ -13,6 +13,8 @@ public class Board extends Matrix
     private int nextFigureX;
     private int nextFigureY;
     private int figureSize = 3;
+    private int horizontalWallY;
+    private int verticalWallX;
 
     private GameCallbacks callbacks;
 
@@ -24,6 +26,8 @@ public class Board extends Matrix
     public Board(int boardWidth, int boardHeight, GameCallbacks callbacks)
     {
         super(boardWidth, boardHeight);
+        horizontalWallY = boardHeight;
+        verticalWallX = boardWidth;
         this.callbacks = callbacks;
         nextFigure();
         nextFigure();
@@ -361,7 +365,7 @@ public class Board extends Matrix
                         }
                     }
                     else {
-                        if (bx < 0 || bx >= width || by < 0 || by >= height) {
+                        if (bx < 0 || bx >= width || bx >= verticalWallX || by < 0 || by >= height || by >= horizontalWallY) {
                             collisions++;
                         }
                     }
@@ -460,6 +464,49 @@ public class Board extends Matrix
         }
     }
 
+    public int getHorizontalWallY()
+    {
+        return horizontalWallY;
+    }
+
+    public int getVerticalWallX()
+    {
+        return verticalWallX;
+    }
+
+    public void moveWallLeft()
+    {
+        if (verticalWallX > 0) {
+            verticalWallX--;
+            for (int y = 0; y < height; y++) {
+                set(verticalWallX, y, null);
+            }
+        }
+    }
+
+    public void moveWallRight()
+    {
+        if (verticalWallX < width) {
+            verticalWallX++;
+        }
+    }
+
+    public void moveWallDown()
+    {
+        if (horizontalWallY > 0) {
+            horizontalWallY--;
+            for (int x = 0; x < width; x++) {
+                set(x, horizontalWallY, null);
+            }
+        }
+    }
+
+    public void moveWallUp()
+    {
+        if (horizontalWallY < height) {
+            horizontalWallY++;
+        }
+    }
 
     public static class Area
     {
